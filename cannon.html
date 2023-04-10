@@ -49,24 +49,24 @@
          <p>
             Register Form
          </p>
-         <form name="signUp" onsubmit="isValid()" method="POST" >
-            Username: <input type="text" id="username"> <br>
-            Password: <input type="password" id="pass1"> 
+         <form onsubmit="return isValid()">
+            Username: <input type="text" id="username" name="username"> <br>
+            Password: <input type="password" id="pass1" name="pass1"> 
             <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
-            Password: <input type="password" id="pass2"> 
+            Password: <input type="password" id="pass2" name="pass2"> 
             <input type="checkbox" onclick="showPass('pass2')">Show Password <br>
             <span id="errMsg1" class="err"></span> <br>
 
-            First Name: <input type="text" id="fname"> 
+            First Name: <input type="text" id="fname" name="fname"> 
             <span id="errMsg2" class="err"></span> <br>
 
-            Last Name: <input type="text" id="lname">
+            Last Name: <input type="text" id="lname" name="lname">
             <span id="errMsg3" class="err"></span> <br>
             
-            Email: <input type="email" id="email">             
+            Email: <input type="email" id="email" name="email">             
             <span id="errMsg4" class="err"></span> <br>
 
-            Birthday: <input type="date" id="lname"> 
+            Birthday: <input type="date" id="bday" name="bday"> 
             <br>
             <p> <span id="errMsg" class="err"></span>  </p>
             <br>
@@ -115,28 +115,37 @@
          } else {
             x.type = "password";
          }
-         document.getElementById("errMsg").innerHTML = "Please fill in all fields!"
 
       }
 
       function isValid() {
-      var details = []
-      details.push(document.getElementById(username)); // 0         
-      details.push(document.getElementById(pass1)); // 1
-      details.push(document.getElementById(pass2)); // 2
-      details.push(document.getElementById(fname)); // 3
-      details.push(document.getElementById(fname)); // 4
-      details.push(document.getElementById(email)); // 5
-      details.push(document.getElementById(bday)); // 6
+
+      var errMsgs = document.getElementsByClassName("err");
+      for(i=0; i<errMsgs.length; i++)
+      {         
+         errMsgs[i].value = ""
+      }
+
+
+      var details = [] 
+      details.push(document.getElementById("username").value);
+      details.push(document.getElementById("pass1").value); // 1
+      details.push(document.getElementById("pass2").value); // 2
+      details.push(document.getElementById("fname").value); // 3
+      details.push(document.getElementById("lname").value); // 4
+      details.push(document.getElementById("email").value); // 5
+      details.push(document.getElementById("bday").value); // 6
 
       for (let i = 0; i < details.length; i++) {
          if (details[i] == "")
          {
             document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
+            return false;
          }
       }
 
-      return false;
+      if(details[1] != )
+      return true;
       }
 
    </script>
