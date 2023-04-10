@@ -50,7 +50,7 @@
          <p>
             Register Form
          </p>
-         <form action="" onsubmit="return isValid()">
+         <form>
             Username: <input type="text" id="username" name="username" class="signUpField">             
             <span id="errMsg4" class="err"></span> <br>
             <br>
@@ -72,8 +72,9 @@
             <br>
             <p> <span id="errMsg" class="err"></span>  </p>
             <br>
-            <input type="submit" id="subForm" value="Submit" class="signUpField"> <br>
          </form>
+         <button id="subForm" onClick="isValid()">Submit <br>
+
 
       </div>
       
