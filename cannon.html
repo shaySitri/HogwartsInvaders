@@ -8,6 +8,8 @@
       <title>Cannon Game</title>
       <script src= "welcome.js"></script>
 	   <script src = "cannon.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
    </head>
    <header>
 
@@ -25,7 +27,14 @@
       </menu>
 
    <content>
-      <audio id = "blockerSound" preload = "auto">
+      <div id="welcome">
+         <p>WELCOME!</p>
+         <button id="regBut">Register</button>
+         <button id="gameBut">Start to Play</button>
+      </div>
+
+      <div id="game">
+         <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
          <source src = "target_hit.ogg" type = "audio/ogg"></audio>
@@ -34,11 +43,104 @@
       <canvas id = "theCanvas" width = "800" height = "600"></canvas> 
       <p><input id = "startButton" type = "button" value = "Start Game">
       </p>
+      </div>
+
+      <div id="reg">
+         <p>
+            Register Form
+         </p>
+         <form name="signUp" onsubmit="isValid()" method="POST" >
+            Username: <input type="text" id="username"> <br>
+            Password: <input type="password" id="pass1"> 
+            <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
+            Password: <input type="password" id="pass2"> 
+            <input type="checkbox" onclick="showPass('pass2')">Show Password <br>
+            <span id="errMsg1" class="err"></span> <br>
+
+            First Name: <input type="text" id="fname"> 
+            <span id="errMsg2" class="err"></span> <br>
+
+            Last Name: <input type="text" id="lname">
+            <span id="errMsg3" class="err"></span> <br>
+            
+            Email: <input type="email" id="email">             
+            <span id="errMsg4" class="err"></span> <br>
+
+            Birthday: <input type="date" id="lname"> 
+            <br>
+            <p> <span id="errMsg" class="err"></span>  </p>
+            <br>
+            <input type="submit" id="subForm" value="Submit"> <br>
+         </form>
+
+      </div>
+      
+
    </content>
    </body>
    <footer>
 
    </footer>
+
+   <script type="text/javascript"> 
+      $(document ).ready( function()
+      {
+         $( "#game" ).hide();
+         $( "#reg" ).hide();
+
+      }
+      );
+
+      $('#gameBut' ).click( function()
+      {
+         $( "#game" ).show();
+         $( "#welcome" ).hide();
+         
+      }
+      );
+
+      $('#regBut' ).click( function()
+      {
+         $( "#welcome" ).hide();
+         $( "#reg" ).show();
+
+         
+      }
+      );
+
+      function showPass(pass) {
+         var x = document.getElementById(pass);
+         if (x.type === "password") {
+            x.type = "text";
+         } else {
+            x.type = "password";
+         }
+         document.getElementById("errMsg").innerHTML = "Please fill in all fields!"
+
+      }
+
+      function isValid() {
+      var details = []
+      details.push(document.getElementById(username)); // 0         
+      details.push(document.getElementById(pass1)); // 1
+      details.push(document.getElementById(pass2)); // 2
+      details.push(document.getElementById(fname)); // 3
+      details.push(document.getElementById(fname)); // 4
+      details.push(document.getElementById(email)); // 5
+      details.push(document.getElementById(bday)); // 6
+
+      for (let i = 0; i < details.length; i++) {
+         if (details[i] == "")
+         {
+            document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
+         }
+      }
+
+      return false;
+      }
+
+   </script>
+
 </html>
 
 <!--
