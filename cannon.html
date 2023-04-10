@@ -6,6 +6,7 @@
    <head>
       <meta charset = "utf-8">
       <title>Cannon Game</title>
+      <script src= "signup.js"></script>
       <script src= "welcome.js"></script>
 	   <script src = "cannon.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -50,7 +51,9 @@
             Register Form
          </p>
          <form action="" onsubmit="return isValid()">
-            Username: <input type="text" id="username" name="username" class="signUpField"> <br>
+            Username: <input type="text" id="username" name="username" class="signUpField">             
+            <span id="errMsg4" class="err"></span> <br>
+            <br>
             Password: <input type="password" id="pass1" name="pass1" class="signUpField"> 
             <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
             Password: <input type="password" id="pass2" name="pass2" class="signUpField"> 
@@ -82,6 +85,8 @@
    </footer>
 
    <script type="text/javascript"> 
+   
+
       $(document ).ready( function()
       {
          $( "#game" ).hide();
@@ -108,6 +113,7 @@
       );
 
       function showPass(pass) {
+         
          var x = document.getElementById(pass);
          if (x.type === "password") {
             x.type = "text";
@@ -116,69 +122,7 @@
          }
 
       }
-
-      function isValid() {
-
-      var errMsgs = document.getElementsByClassName("err");
-      for(i=0; i<errMsgs.length; i++)
-      {         
-         errMsgs[i].innerHTML = ""
-      }
-
-      var details = document.getElementsByClassName("signUpField");
-
-      for (let i = 0; i < details.length; i++) {
-         if (details[i].value == "")
-         {
-            document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
-            return false;
-         }
-      }
-
-      if(details[1].value != details[2].value)
-      {
-         document.getElementById("errMsg1").innerHTML = "Please validate your password again!";
-         return false;
-      }
-
-      if(details[1].value.length < 8)
-      {
-         document.getElementById("errMsg1").innerHTML = "Your password is short.";
-         return false;
-      }
-
-      if(details[1].value.length < 7)
-      {
-         document.getElementById("errMsg1").innerHTML = "Your password is too short.";
-         return false;
-      }
-
-      if(((/[0-9]/i.test(details[3].value))))
-      {
-         document.getElementById("errMsg2").innerHTML = "Name field conatin only letters";
-         return false;
-      }
-      if(((/[0-9]/i.test(details[4].value))))
-      {
-         document.getElementById("errMsg3").innerHTML = "Name field conatin only letters";
-         return false;
-      }
-      if(!(/[a-z]/i.test(details[1].value)))
-      {
-         document.getElementById("errMsg1").innerHTML = "Your password weak. Add letters.";
-         return false;
-      }
-
-      if(!(/[0-9]/i.test(details[1].value)))
-      {
-         document.getElementById("errMsg1").innerHTML = "Your password weak. Add numbers.";
-         return false;
-      }
-
-      return true
-
-      }
-
+      
    </script>
 
 </html>

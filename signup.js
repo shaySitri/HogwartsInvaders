@@ -1,3 +1,5 @@
+var users = [{username: 'p', password: 'testuser'}];
+i = 0
 
 function isValid() {
     var errMsgs = document.getElementsByClassName("err");
@@ -9,11 +11,11 @@ function isValid() {
     var details = document.getElementsByClassName("signUpField");
 
     for (let i = 0; i < details.length; i++) {
-    if (details[i].value == "")
-    {
-        document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
-        return false;
-    }
+        if (details[i].value == "")
+        {
+            document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
+            return false;
+        }
     }
 
     if(details[1].value != details[2].value)
@@ -55,6 +57,22 @@ function isValid() {
         document.getElementById("errMsg1").innerHTML = "Your password weak. Add numbers.";
         return false;
     }
+
+    for(i = 0; i < users.length; i++)
+    {
+        if(details[0].value == users[i].username)
+        {
+            document.getElementById("errMsg4").innerHTML = "User already exist.";
+            return false;
+        }
+    }
+
+    i = i+1
+    users[i] = 
+    {
+        username: details[0].value,
+        password: details[1].value
+    };
 
     return true
 }
