@@ -49,28 +49,27 @@
          <p>
             Register Form
          </p>
-         <form onsubmit="return isValid()">
-            Username: <input type="text" id="username" name="username"> <br>
-            Password: <input type="password" id="pass1" name="pass1"> 
+         <form action="" onsubmit="return isValid()">
+            Username: <input type="text" id="username" name="username" class="signUpField"> <br>
+            Password: <input type="password" id="pass1" name="pass1" class="signUpField"> 
             <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
-            Password: <input type="password" id="pass2" name="pass2"> 
+            Password: <input type="password" id="pass2" name="pass2" class="signUpField"> 
             <input type="checkbox" onclick="showPass('pass2')">Show Password <br>
             <span id="errMsg1" class="err"></span> <br>
 
-            First Name: <input type="text" id="fname" name="fname"> 
+            First Name: <input type="text" id="fname" name="fname" class="signUpField"> 
             <span id="errMsg2" class="err"></span> <br>
 
-            Last Name: <input type="text" id="lname" name="lname">
+            Last Name: <input type="text" id="lname" name="lname" class="signUpField">
             <span id="errMsg3" class="err"></span> <br>
             
-            Email: <input type="email" id="email" name="email">             
-            <span id="errMsg4" class="err"></span> <br>
+            Email: <input type="email" id="email" name="email" class="signUpField">             
 
-            Birthday: <input type="date" id="bday" name="bday"> 
+            Birthday: <input type="date" id="bday" name="bday" class="signUpField"> 
             <br>
             <p> <span id="errMsg" class="err"></span>  </p>
             <br>
-            <input type="submit" id="subForm" value="Submit"> <br>
+            <input type="submit" id="subForm" value="Submit" class="signUpField"> <br>
          </form>
 
       </div>
@@ -123,48 +122,63 @@
       var errMsgs = document.getElementsByClassName("err");
       for(i=0; i<errMsgs.length; i++)
       {         
-         errMsgs[i].value = ""
+         errMsgs[i].innerHTML = ""
       }
 
-
-      var details = [] 
-      details.push(document.getElementById("username").value);
-      details.push(document.getElementById("pass1").value); // 1
-      details.push(document.getElementById("pass2").value); // 2
-      details.push(document.getElementById("fname").value); // 3
-      details.push(document.getElementById("lname").value); // 4
-      details.push(document.getElementById("email").value); // 5
-      details.push(document.getElementById("bday").value); // 6
+      var details = document.getElementsByClassName("signUpField");
 
       for (let i = 0; i < details.length; i++) {
-         if (details[i] == "")
+         if (details[i].value == "")
          {
             document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
             return false;
          }
       }
 
-      if(details[1] != )
-      return true;
+      if(details[1].value != details[2].value)
+      {
+         document.getElementById("errMsg1").innerHTML = "Please validate your password again!";
+         return false;
+      }
+
+      if(details[1].value.length < 8)
+      {
+         document.getElementById("errMsg1").innerHTML = "Your password is short.";
+         return false;
+      }
+
+      if(details[1].value.length < 7)
+      {
+         document.getElementById("errMsg1").innerHTML = "Your password is too short.";
+         return false;
+      }
+
+      if(((/[0-9]/i.test(details[3].value))))
+      {
+         document.getElementById("errMsg2").innerHTML = "Name field conatin only letters";
+         return false;
+      }
+      if(((/[0-9]/i.test(details[4].value))))
+      {
+         document.getElementById("errMsg3").innerHTML = "Name field conatin only letters";
+         return false;
+      }
+      if(!(/[a-z]/i.test(details[1].value)))
+      {
+         document.getElementById("errMsg1").innerHTML = "Your password weak. Add letters.";
+         return false;
+      }
+
+      if(!(/[0-9]/i.test(details[1].value)))
+      {
+         document.getElementById("errMsg1").innerHTML = "Your password weak. Add numbers.";
+         return false;
+      }
+
+      return true
+
       }
 
    </script>
 
 </html>
-
-<!--
-**************************************************************************
-* (C) Copyright 1992-2012 by Deitel & Associates, Inc. and               *
-* Pearson Education, Inc. All Rights Reserved.                           *
-*                                                                        *
-* DISCLAIMER: The authors and publisher of this book have used their     *
-* best efforts in preparing the book. These efforts include the          *
-* development, research, and testing of the theories and programs        *
-* to determine their effectiveness. The authors and publisher make       *
-* no warranty of any kind, expressed or implied, with regard to these    *
-* programs or to the documentation contained in these books. The authors *
-* and publisher shall not be liable in any event for incidental or       *
-* consequential damages in connection with, or arising out of, the       *
-* furnishing, performance, or use of these programs.                     *
-**************************************************************************
--->
