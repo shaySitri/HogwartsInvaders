@@ -43,7 +43,7 @@
          Username: <input type="text" id="login_username" name="login_username" class="login_fields"> <br>
          Password: <input type="password" id="login_pass" name="login_pass" class="login_fields">             
          <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
-         <br>
+         <span id="login_errmsg" class="login_errmsg"></span> <br>
          <p>
             <button id="login_but" onclick="login(login_username.value, login_pass.value)">Login</button>
          </p>
