@@ -21,39 +21,45 @@
       <menu>
          <div class="nav-links">
             <ul>
-            <li><a href="#photos">Register</a></li>
-            <li><a href="#playlist">Let's Play</a></li>
+            <li><a href="#registerpage" onclick="showReg()">Register</a></li>
+            <li><a href="#loginpage" onclick="showLogin()">Let's Play</a></li>
             <li><a href="#like">About</a></li>
             </ul>
           </div>
       </menu>
 
    <content>
+      
       <div id="welcome">
          <p>WELCOME!</p>
-         <button id="regBut">Register</button>
-         <button id="gameBut">Start to Play</button>
+         <button id="regBut" onclick="showReg()">Register</button>
+         <button id="gameBut" onclick="showLogin()">Start to Play</button>
       </div>
 
-      <div id="login">
-      <p>
-         Please log in
-      </p>
-      <p>
-         Username: <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> <br>
+      <section id="loginpage">
 
-         Password: <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
-         <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
-         <span id="login_errmsg" class="login_errmsg"></span> <br>
-         <p>
+         <div id="login">
+            <p>
+               Please log in
+            </p>
+      
+            Username: <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> <br>
+   
+            Password: <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
+            <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
+            <span id="login_errmsg" class="login_errmsg"></span> <br>
+            
             <button id="login_but" onclick="subLogin(login_username.value, login_pass.value)">Login</button>
-         </p>
-      </p>
-      </div>
+      
+      
+            </div>
+
+      </section>
+
 
       <div id="game">
          <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
-         <div id="logout"> <button id="logout_but" onclick="">Log Out</button> </div>
+         <div id="logout"> <button id="logout_but">Log Out</button> </div>
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
@@ -65,38 +71,40 @@
       </p>
       </div>
 
-      <div id="reg">
-         <p>
-            Register Form
-         </p>
-         <form>
-            Username: <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
-            <span id="errMsg4" class="err"></span> <br>
-            <br>
-            Password: <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
-            <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
-            Password: <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
-            <input type="checkbox" onclick="showPass('pass2')">Show Password <br>
-            <span id="errMsg1" class="err"></span> <br>
+      <section id="registerpage">
 
-            First Name: <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
-            <span id="errMsg2" class="err"></span> <br>
+         <div id="reg">
+            <p>
+               Register Form
+            </p>
+            <form>
+               Username: <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
+               <span id="errMsg4" class="err"></span> <br>
+               <br>
+               Password: <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
+               <input type="checkbox" onclick="showPass('pass1')" id="cb1">Show Password <br>
+               Password: <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
+               <input type="checkbox" onclick="showPass('pass2')" id="cb2">Show Password <br>
+               <span id="errMsg1" class="err"></span> <br>
+   
+               First Name: <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
+               <span id="errMsg2" class="err"></span> <br>
+   
+               Last Name: <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
+               <span id="errMsg3" class="err"></span> <br>
+               
+               Email: <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
+   
+               Birthday: <input type="date" id="bday" name="bday" class="signUpField"> 
+               <br>
+               <p> <span id="errMsg" class="err"></span>  </p>
+               <br>
+            </form>
+            <button id="subForm" onClick="isValid()">Submit </button>
+   
+         </div>   
 
-            Last Name: <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
-            <span id="errMsg3" class="err"></span> <br>
-            
-            Email: <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
-
-            Birthday: <input type="date" id="bday" name="bday" class="signUpField"> 
-            <br>
-            <p> <span id="errMsg" class="err"></span>  </p>
-            <br>
-         </form>
-         <button id="subForm" onClick="isValid()">Submit </button>
-
-
-      </div>
-      
+      </section>
 
    </content>
    </body>
@@ -105,7 +113,8 @@
    </footer>
 
    <script type="text/javascript"> 
-   
+
+      var logged = false;
 
       $(window ).load( function()
       {
@@ -122,30 +131,36 @@
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#welcome" ).show();
+         logged=false;
 
       }
       );
 
-      $('#gameBut' ).click( function()
+
+      function showLogin()
       {
+         if (!logged){
          $( "#game" ).hide();
          $( "#welcome" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).show();
+         }
+
+         else
+         {
+            alert("Log out first.")
+         }
 
       }
-      );
+      
 
-      $('#regBut' ).click( function()
+      function showReg()
       {
          $( "#welcome" ).hide();
          $( "#game" ).hide();
          $( "#reg" ).show();
          $( "#login" ).hide();
-
-         
       }
-      );
       
 
       function showPass(pass) {
@@ -163,9 +178,11 @@
       function inputAddEventListner(elem, but)
       {
          login = document.getElementById(elem);
+         done = false;
          login.addEventListener("keypress", function(event) {
-         if (event.key === "Enter") {
-         document.getElementById(but).click();
+         if (event.key === "Enter" && !done) {
+            document.getElementById(but).click();
+            done = true;
             };
          })
       }
