@@ -40,19 +40,20 @@
          Please log in
       </p>
       <p>
-         Username: <input type="text" id="login_username" name="login_username" class="login_fields"> <br>
-         Password: <input type="password" id="login_pass" name="login_pass" class="login_fields">             
+         Username: <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> <br>
+
+         Password: <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
          <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
          <span id="login_errmsg" class="login_errmsg"></span> <br>
          <p>
-            <button id="login_but" onclick="login(login_username.value, login_pass.value)">Login</button>
+            <button id="login_but" onclick="subLogin(login_username.value, login_pass.value)">Login</button>
          </p>
       </p>
       </div>
 
       <div id="game">
          <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
-
+         <div id="logout"> <button id="logout_but" onclick="">Log Out</button> </div>
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
@@ -69,22 +70,22 @@
             Register Form
          </p>
          <form>
-            Username: <input type="text" id="username" name="username" class="signUpField">             
+            Username: <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
             <span id="errMsg4" class="err"></span> <br>
             <br>
-            Password: <input type="password" id="pass1" name="pass1" class="signUpField"> 
+            Password: <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
             <input type="checkbox" onclick="showPass('pass1')">Show Password <br>
-            Password: <input type="password" id="pass2" name="pass2" class="signUpField"> 
+            Password: <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
             <input type="checkbox" onclick="showPass('pass2')">Show Password <br>
             <span id="errMsg1" class="err"></span> <br>
 
-            First Name: <input type="text" id="fname" name="fname" class="signUpField"> 
+            First Name: <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
             <span id="errMsg2" class="err"></span> <br>
 
-            Last Name: <input type="text" id="lname" name="lname" class="signUpField">
+            Last Name: <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
             <span id="errMsg3" class="err"></span> <br>
             
-            Email: <input type="email" id="email" name="email" class="signUpField">             
+            Email: <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
 
             Birthday: <input type="date" id="bday" name="bday" class="signUpField"> 
             <br>
@@ -106,7 +107,16 @@
    <script type="text/javascript"> 
    
 
-      $(document ).ready( function()
+      $(window ).load( function()
+      {
+         $( "#game" ).hide();
+         $( "#reg" ).hide();
+         $( "#login" ).hide();
+         $( "#welcome" ).show();
+      }  
+      );
+
+      $('#logout_but' ).click( function()
       {
          $( "#game" ).hide();
          $( "#reg" ).hide();
@@ -148,7 +158,18 @@
          }
 
       }
+
       
+      function inputAddEventListner(elem, but)
+      {
+         login = document.getElementById(elem);
+         login.addEventListener("keypress", function(event) {
+         if (event.key === "Enter") {
+         document.getElementById(but).click();
+            };
+         })
+      }
+
    </script>
 
 </html>
