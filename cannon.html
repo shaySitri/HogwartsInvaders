@@ -9,6 +9,7 @@
       <script src= "signup.js"></script>
       <script src= "welcome.js"></script>
 	   <script src = "cannon.js"></script>
+      <script src="login.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
    </head>
@@ -34,7 +35,24 @@
          <button id="gameBut">Start to Play</button>
       </div>
 
+      <div id="login">
+      <p>
+         Please log in
+      </p>
+      <p>
+         Username: <input type="text" id="login_username" name="login_username" class="login_fields"> <br>
+         Password: <input type="password" id="login_pass" name="login_pass" class="login_fields">             
+         <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
+         <br>
+         <p>
+            <button id="login_but" onclick="login(login_username.value, login_pass.value)">Login</button>
+         </p>
+      </p>
+      </div>
+
       <div id="game">
+         <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
+
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
@@ -73,7 +91,7 @@
             <p> <span id="errMsg" class="err"></span>  </p>
             <br>
          </form>
-         <button id="subForm" onClick="isValid()">Submit <br>
+         <button id="subForm" onClick="isValid()">Submit </button>
 
 
       </div>
@@ -92,26 +110,33 @@
       {
          $( "#game" ).hide();
          $( "#reg" ).hide();
+         $( "#login" ).hide();
+         $( "#welcome" ).show();
 
       }
       );
 
       $('#gameBut' ).click( function()
       {
-         $( "#game" ).show();
+         $( "#game" ).hide();
          $( "#welcome" ).hide();
-         
+         $( "#reg" ).hide();
+         $( "#login" ).show();
+
       }
       );
 
       $('#regBut' ).click( function()
       {
          $( "#welcome" ).hide();
+         $( "#game" ).hide();
          $( "#reg" ).show();
+         $( "#login" ).hide();
 
          
       }
       );
+      
 
       function showPass(pass) {
          
