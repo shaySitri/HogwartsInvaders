@@ -12,6 +12,9 @@
       <script src="login.js"></script>
       <script src="config.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <!-- <script src="/path/to/cdn/jquery.min.js"></script>
+      <script src="/path/to/dist/jquery.countdown360.min.js"></script> -->
+
    <!--validation script-->
    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
@@ -50,7 +53,7 @@
             Username: <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> <br>
    
             Password: <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
-            <input type="checkbox" onclick="showPass('login_pass')">Show Password <br>
+            <input type="checkbox" onclick="showPass('login_pass')" id="cb3">Show Password <br>
             <span id="login_errmsg" class="login_errmsg"></span> <br>
             
             <button id="login_but" onclick="subLogin(login_username.value, login_pass.value)">Login</button>
@@ -64,6 +67,7 @@
       <div id="game">
          <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
          <div id="logout"> <button id="logout_but">Log Out</button> </div>
+         <!-- <div id="countdown"></div> -->
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
@@ -110,13 +114,14 @@
       </section>
 
       <div id="config">
-         <!-- <select name="shooting_keys" id="shooting_keys">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="3">4</option>
-          </select> -->
-          Insert key to shot with: <input type="text" id="KeyToShot" name="KeyToShot" class="configClass" onkeydown="choseKey(event)" maxlength="0" > 
+         <p> 
+            Insert key to shot with: <input type="text" id="KeyToShot" name="KeyToShot" value="Space" class="configClass" onkeydown="choseKey(event)" maxlength="0" > 
+            <br> <p>
+               Minutes: <input type="number" id="numMin" name="numMin" min="2" onchange="changeMin()" value="2"> 
+               Seconds:  <input type="number" id="numSec" name="numSec" min="0" max="59" onchange="changeSec()" value="0">
+            </p>
+         </p>
+         <button id="saveConfig" onclick="saveConfig()"> Lets play!</button>
 
                        
       </div>
@@ -136,6 +141,7 @@
          $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
+         $( "#config" ).hide();
          $( "#welcome" ).show();
       }  
       );
@@ -145,6 +151,7 @@
          $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
+         $( "#config" ).hide();
          $( "#welcome" ).show();
          logged=false;
 
@@ -158,6 +165,7 @@
          $( "#game" ).hide();
          $( "#welcome" ).hide();
          $( "#reg" ).hide();
+         $( "#config" ).hide();
          $( "#login" ).show();
          }
 
@@ -175,6 +183,7 @@
          $( "#game" ).hide();
          $( "#reg" ).show();
          $( "#login" ).hide();
+         $( "#config" ).hide();
       }
       
 

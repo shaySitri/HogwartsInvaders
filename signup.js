@@ -101,4 +101,6 @@ function clearRegFields()
     }
     document.getElementById("cb1").checked = false;
     document.getElementById("cb2").checked = false;
+    document.getElementById("pass1").type = "password";
+    document.getElementById("pass2").type = "password";
 }

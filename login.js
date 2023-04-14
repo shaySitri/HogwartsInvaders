@@ -17,9 +17,11 @@ function subLogin(uname, pass)
                     document.getElementById("login_username").value = '';
                     document.getElementById("login_pass").value = '';
                     document.getElementById("login_errmsg").innerHTML = '';
-                    document.getElementById("cb1").checked = false;
+                    document.getElementById("cb3").checked = false;
+                    document.getElementById("login_pass").type = "password"
                     alert('Login Succeed!')
-                    $( "#game" ).show();
+                    $( "#game" ).hide();
+                    $( "#config" ).show();
                     $( "#welcome" ).hide();
                     $( "#reg" ).hide();
                     $( "#login" ).hide();

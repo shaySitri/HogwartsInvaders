@@ -53,6 +53,17 @@ var targetSound;
 var cannonSound;
 var blockerSound;
 
+
+// var countdown =document.getElementById( "#countdown" ).countdown360({
+//    radius      : 60,
+//    seconds     : 100,
+//    fontColor   : '#FFFFFF',
+//    autostart   : false,
+//    onComplete  : function () { console.log('done') }
+// });
+
+
+
 // called when the app first launches
 function setupGame()
 {
@@ -89,8 +100,15 @@ function setupGame()
 // set up interval timer to update game
 function startTimer()
 {
+
    canvas.addEventListener( "click", fireCannonball, false );
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
+
+   // countdown.start();
+
+
+
+
 } // end function startTimer
 
 // terminate interval timer
