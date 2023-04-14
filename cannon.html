@@ -10,6 +10,7 @@
       <script src= "welcome.js"></script>
 	   <script src = "cannon.js"></script>
       <script src="login.js"></script>
+      <script src="config.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
    <!--validation script-->
    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
@@ -109,13 +110,14 @@
       </section>
 
       <div id="config">
-         Shooting with: 
-         <select name="shooting_keys" id="shooting_keys">
+         <!-- <select name="shooting_keys" id="shooting_keys">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="3">4</option>
-          </select>
+          </select> -->
+          Insert key to shot with: <input type="text" id="KeyToShot" name="KeyToShot" class="configClass" onkeydown="choseKey(event)" maxlength="0" > 
+
                        
       </div>
 
