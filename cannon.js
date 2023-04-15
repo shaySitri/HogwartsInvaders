@@ -55,9 +55,20 @@ var blockerSound;
 
 var hero = new Image();
 var enemy = new Image();
-var fire = new Image();
+var enemyShoot = new Image();
 var enemyVelocity;
-var fireVelocity;
+
+// variables for the enemy shooter indices.
+var iShooter;
+var jShooter;
+var curiShooter;
+var curjShooter;
+var enemyShootVelocity;
+var enemyShoots;
+var canEnemyShoot;
+
+var ENEMY_I = 5;
+var ENEMY_J = 5;
 
 
 
@@ -107,10 +118,14 @@ function setupGame()
 
    hero.src = "pic/starship.jpg"
    enemy.src = "pic/bgud.jpg"
+   enemyShoot.src = "pic/fire.jpg"
    
    enemyPos = new Object();
    enemyPos.start = new Object();
    enemyPos.end = new Object();
+   enemyShoots = new Array(ENEMY_I);
+
+   
 
 
 
@@ -124,7 +139,6 @@ function startTimer()
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
 
    // countdown.start();
-
 
 
 
@@ -180,18 +194,29 @@ function resetElements()
 
    enemyPos.start.x = 180;
    enemyPos.end.x = 620;
-   enemyPos.start.y = canvasHeight / 8;
-   enemyPos.end.y = canvasHeight / 8;
+   enemyPos.start.y = canvasHeight / 25;
+   enemyPos.end.y = canvasHeight / 25;
    enemyVelocity = 100;
 
-
-   enemyPos.end = new Object();
-
+   enemyShootVelocity = 100;
 
 
 } // end function resetElements
 
+function initEnemyShoots()
+{
+   for (var i = 0; i < ENEMY_I; i++)
+   {
+      enemyShoots[i] = new Array(ENEMY_J)
+      for (var j = 0; j < ENEMY_J; j++)
+      {
+         enemyShoots[i][j] = new Object();
+         enemyShoots[i][j].on = new Object();
+         enemyShoots[i][j].pos = new Object();
+      }
+   }
 
+}
 // reset all the screen elements and start a new game
 function newGame()
 {
@@ -202,6 +227,7 @@ function newGame()
    for (var i = 0; i < TARGET_PIECES; ++i)
       hitStates[i] = false; // target piece not destroyed
 
+
    targetPiecesHit = 0; // no target pieces have been hit
    blockerVelocity = initialBlockerVelocity; // set initial velocity
    targetVelocity = initialTargetVelocity; // set initial velocity
@@ -211,24 +237,33 @@ function newGame()
    shotsFired = 0; // set the initial number of shots fired
    timeElapsed = 0; // set the time elapsed to zero
    enemyVelocity = 150;
+   canEnemyShoot = true; // enemy can shoot
+   initEnemyShoots()
+
+
+
    startTimer(); // starts the game loop
 } // end function newGame
+
 
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-   // // update the blocker's position
-   // var blockerUpdate = TIME_INTERVAL / 1000.0 * blockerVelocity;
-   // blocker.start.y += blockerUpdate;
-   // blocker.end.y += blockerUpdate;
 
    // update the target's position
    var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
-   // target.start.y += targetUpdate;
-   // target.end.y += targetUpdate;
-
    enemyPos.start.x += enemyUpdate;
    enemyPos.end.x += enemyUpdate;
+
+   // update the target's position
+   var enemyShootUpdate = TIME_INTERVAL / 1000.0 * enemyShootVelocity;
+   enemyPos.start.x += enemyUpdate;
+   enemyPos.end.x += enemyUpdate;
+
+   if (canEnemyShoot == true)
+   {
+      shoot();
+   }
 
    // if the blocker hit the top or bottom, reverse direction
    if (enemyPos.start.x < 0 || enemyPos.start.x > 460)
@@ -240,6 +275,33 @@ function updatePositions()
    // if the target hit the top or bottom, reverse direction
    if (target.start.y < 0 || target.end.y > canvasHeight)
       targetVelocity *= -1;
+
+   if (enemyShoots[iShooter][jShooter].pos.y > 450)
+   {
+      canEnemyShoot = true;
+   }
+
+   for (var i = 0; i < 5; i++)
+   {
+      for (var j = 0; j < 4; j++)
+      {
+         if (enemyShoots[i][j].on == true)
+         {
+            if(enemyShoots[i][j].pos.y < 600)
+            {
+               enemyShoots[i][j].pos.y += enemyShootUpdate;
+            }
+            else
+            {
+               enemyShoots[i][j].on == false
+               enemyShoots[i][j].pos = new Object();
+            }
+         }
+         
+      }
+   }
+
+   
 
    if (cannonballOnScreen) // if there is currently a shot fired
    {
@@ -304,6 +366,10 @@ function updatePositions()
             } // end if
          } // end if
       } // end else if
+
+
+
+
    } // end if
 
    ++timerCount; // increment the timer event counter
@@ -325,6 +391,30 @@ function updatePositions()
       showGameOverDialog("You lost"); // show the losing dialog
    } // end if
 } // end function updatePositions
+
+
+
+function shoot()
+{
+   // rand shooter
+   iShooter = Math.floor(Math.random() * 5); 
+   // jShooter = Math.floor(Math.random() * 4);
+   jShooter = 3;
+
+   curiShooter = iShooter;
+   curjShooter = jShooter;
+   // is shooter exist?
+
+   enemyShoots[iShooter][jShooter].on = true;
+   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + 60 * (iShooter + 1) + (10 * iShooter) - 30
+   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + 60 * (jShooter + 1) + (10 * jShooter)
+
+   canEnemyShoot = false;
+   
+}
+
+
+
 
 // fires a cannonball
 function fireCannonball(event)
@@ -464,8 +554,20 @@ function draw()
             extrax = 70 * i
             extary = 70 * j
             context.drawImage(enemy, extrax + enemyPos.start.x, canvasHeight/25 + extary, 60, 60);
+
          }
       } 
+      
+      for (var i = 0; i < 5; ++i)
+      {
+         for (var j = 0; j < 4; j++)
+         {
+            if (enemyShoots[i][j].on == true)
+            {
+               context.drawImage(enemyShoot,enemyShoots[i][j].pos.x, enemyShoots[i][j].pos.y, 40, 40);
+            }
+         }
+      }
 
 } // end function draw
 
