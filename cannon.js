@@ -37,7 +37,6 @@ var initialTargetVelocity; // initial target speed multiplier
 var targetVelocity; // target speed multiplier during game
 
 var lineWidth; // width of the target and blocker
-var hitStates; // is each target piece hit?
 var targetPiecesHit; // number of target pieces hit (out of 7)
 
 // variables for the cannon and cannonball
@@ -67,6 +66,7 @@ var heroShoot = new Image();
 const HERO_SHOOT_IMG = 30
 var heroShootVelocity;
 var heroShoots;
+var hitStates; // is each target piece hit?
 
 // variables for detremain the enemys
 var enemy = new Image();
@@ -127,8 +127,6 @@ function setupGame()
    cannonball = new Object(); // object representing cannonball point
    barrelEnd = new Object(); // object representing end of cannon barrel
 
-   // initialize hitStates as an array
-   hitStates = new Array(TARGET_PIECES);
 
    // get sounds
    targetSound = document.getElementById( "targetSound" );
@@ -147,6 +145,8 @@ function setupGame()
 
    heroPos = new Object();
    heroShoots = new Array();
+   // initialize hitStates as an array
+   hitStates = new Array(ENEMY_I);
 
 
    keysDown = {};
@@ -180,7 +180,7 @@ function setupGame()
 
 function validSpacePress()
 {
-   if ((now - then) < 0.32)
+   if ((now - then) < 0.75)
    {
       now = then
       return false
@@ -254,7 +254,7 @@ function resetElements()
    enemyPos.start.x = 180;
    enemyPos.end.x = 620;
    enemyPos.start.y = canvasHeight / 25;
-   enemyPos.end.y = canvasHeight / 25;
+   enemyPos.end.y = enemyPos.start.y + 4 * ENEMY_IMG + (ENEMY_J - 1) * 10;
    enemyVelocity = 100;
 
    enemyShootVelocity = 100;
@@ -268,14 +268,18 @@ function resetElements()
 
 function initEnemyShoots()
 {
+   // init enemy shoot and hits
    for (var i = 0; i < ENEMY_I; i++)
    {
       enemyShoots[i] = new Array(ENEMY_J)
+      hitStates[i] = new Array(ENEMY_J);
+
       for (var j = 0; j < ENEMY_J; j++)
       {
          enemyShoots[i][j] = new Object();
          enemyShoots[i][j].on = new Object();
          enemyShoots[i][j].pos = new Object();
+         hitStates[i][j] = false
       }
    }
 
@@ -394,14 +398,39 @@ function updatePositions()
       }
    }
 
+
    // update hero shoot positions
    heroShootUpdate = TIME_INTERVAL / 1000.0 * heroShootVelocity;
    for (var i = 0; i < heroShoots.length; i++)
    {
       heroShoots[i].y -= heroShootUpdate
+
+      var sectionx = 
+      Math.floor((heroShoots[i].x  - enemyPos.start.x) / ENEMY_IMG);
+      var sectiony = 
+      Math.floor((heroShoots[i].y  - enemyPos.start.y) / ENEMY_IMG);
+
       if (heroShoots[i].y < 0)
          heroShoots.splice(i, 1)
+      // check for collision with enemies
+      if ( 
+         heroShoots[i].x >= enemyPos.start.x &&
+         heroShoots[i].x + HERO_SHOOT_IMG  <= enemyPos.end.x && 
+         heroShoots[i].y >= enemyPos.start.y &&
+         heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
+         !hitStates[sectionx][sectiony])
+      {
+         blockerSound.play(); // play blocker hit 
+
+         hitStates[sectionx][sectiony] = true
+
+         heroShoots.splice(i, 1) // shoot blow
+
+         
+         timeLeft += MISS_PENALTY; // penalize the user
+      } // end if
    }
+
 
    if (cannonballOnScreen) // if there is currently a shot fired
    {
@@ -587,39 +616,6 @@ function draw()
    context.textBaseline = "top";
    context.fillText("Time remaining: " + timeLeft, 5, 5);
 
-   // if a cannonball is currently on the screen, draw it
-   if (cannonballOnScreen)
-   { 
-      context.fillStyle = "gray";
-      context.beginPath();
-      context.arc(cannonball.x, cannonball.y, cannonballRadius, 
-         0, Math.PI * 2);
-      context.closePath();
-      context.fill();
-   } // end if
-
-   // draw the cannon barrel
-   context.beginPath(); // begin a new path
-   context.strokeStyle = "black";
-   context.moveTo(0, canvasHeight / 2); // path origin
-   context.lineTo(barrelEnd.x, barrelEnd.y); 
-   context.lineWidth = lineWidth; // line width
-   context.stroke(); //draw path
-
-   // draw the cannon base
-   context.beginPath();
-   context.fillStyle = "gray";
-   context.arc(0, canvasHeight / 2, cannonBaseRadius, 0, Math.PI * 2);
-   context.closePath();
-   context.fill();
-
-   // // draw the blocker
-   // context.beginPath(); // begin a new path
-   // context.moveTo(blocker.start.x, blocker.start.y); // path origin
-   // context.lineTo(blocker.end.x, blocker.end.y); 
-   // context.lineWidth = lineWidth; // line width
-   // context.stroke(); //draw path
-
    // initialize currentPoint to the starting point of the target
    var currentPoint = new Object();
    currentPoint.x = target.start.x;
@@ -634,8 +630,10 @@ function draw()
          {
             extrai = (ENEMY_IMG + 10) * i
             extraj = (ENEMY_IMG + 10) * j
-
-            context.drawImage(enemy, extrai + enemyPos.start.x, canvasHeight / 25 + extraj, ENEMY_IMG, ENEMY_IMG);
+            if (hitStates[i][j] == false)
+            {
+               context.drawImage(enemy, extrai + enemyPos.start.x, canvasHeight / 25 + extraj, ENEMY_IMG, ENEMY_IMG);
+            }
 
          }
       } 
