@@ -55,6 +55,11 @@ var blockerSound;
 
 var hero = new Image();
 var enemy = new Image();
+var fire = new Image();
+var enemyVelocity;
+var fireVelocity;
+
+
 
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
@@ -76,9 +81,6 @@ function setupGame()
    // get the canvas, its context and setup its click event handler
    canvas = document.getElementById( "theCanvas" );
    context = canvas.getContext("2d");
-
-   context.fillStyle = 'rgb(191, 204, 181)';
-   context.fillRect(0, 0, canvas.width, canvas.height);
 
 
    // start a new game when user clicks Start Game button
@@ -105,6 +107,11 @@ function setupGame()
 
    hero.src = "pic/starship.jpg"
    enemy.src = "pic/bgud.jpg"
+   
+   enemyPos = new Object();
+   enemyPos.start = new Object();
+   enemyPos.end = new Object();
+
 
 
 } // end function setupGame
@@ -171,6 +178,15 @@ function resetElements()
    barrelEnd.x = cannonLength;
    barrelEnd.y = h / 2;
 
+   enemyPos.start.x = 180;
+   enemyPos.end.x = 620;
+   enemyPos.start.y = canvasHeight / 8;
+   enemyPos.end.y = canvasHeight / 8;
+   enemyVelocity = 100;
+
+
+   enemyPos.end = new Object();
+
 
 
 } // end function resetElements
@@ -194,23 +210,29 @@ function newGame()
    cannonballOnScreen = false; // the cannonball is not on the screen
    shotsFired = 0; // set the initial number of shots fired
    timeElapsed = 0; // set the time elapsed to zero
-
+   enemyVelocity = 150;
    startTimer(); // starts the game loop
 } // end function newGame
 
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-   // update the blocker's position
-   var blockerUpdate = TIME_INTERVAL / 1000.0 * blockerVelocity;
-   blocker.start.y += blockerUpdate;
-   blocker.end.y += blockerUpdate;
+   // // update the blocker's position
+   // var blockerUpdate = TIME_INTERVAL / 1000.0 * blockerVelocity;
+   // blocker.start.y += blockerUpdate;
+   // blocker.end.y += blockerUpdate;
 
    // update the target's position
-   var targetUpdate = TIME_INTERVAL / 1000.0 * targetVelocity;
-   target.start.y += targetUpdate;
-   target.end.y += targetUpdate;
+   var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
+   // target.start.y += targetUpdate;
+   // target.end.y += targetUpdate;
 
+   enemyPos.start.x += enemyUpdate;
+   enemyPos.end.x += enemyUpdate;
+
+   // if the blocker hit the top or bottom, reverse direction
+   if (enemyPos.start.x < 0 || enemyPos.start.x > 460)
+      enemyVelocity *= -1;
    // if the blocker hit the top or bottom, reverse direction
    if (blocker.start.y < 0 || blocker.end.y > canvasHeight)
       blockerVelocity *= -1;
@@ -370,10 +392,6 @@ function draw()
    context.textBaseline = "top";
    context.fillText("Time remaining: " + timeLeft, 5, 5);
 
-   context.rect(0, 0, 800, 600);
-   context.stroke();
-
-
    // if a cannonball is currently on the screen, draw it
    if (cannonballOnScreen)
    { 
@@ -400,12 +418,12 @@ function draw()
    context.closePath();
    context.fill();
 
-   // draw the blocker
-   context.beginPath(); // begin a new path
-   context.moveTo(blocker.start.x, blocker.start.y); // path origin
-   context.lineTo(blocker.end.x, blocker.end.y); 
-   context.lineWidth = lineWidth; // line width
-   context.stroke(); //draw path
+   // // draw the blocker
+   // context.beginPath(); // begin a new path
+   // context.moveTo(blocker.start.x, blocker.start.y); // path origin
+   // context.lineTo(blocker.end.x, blocker.end.y); 
+   // context.lineWidth = lineWidth; // line width
+   // context.stroke(); //draw path
 
    // initialize currentPoint to the starting point of the target
    var currentPoint = new Object();
@@ -436,13 +454,17 @@ function draw()
    //    currentPoint.y += pieceLength;
    // } // end for
 
-   context.drawImage(hero, canvasWidth/2, canvasHeight-100, 100, 100);
+   context.drawImage(hero, canvasWidth/2, canvasHeight-80, 80, 80);
    
       // draw the target
       for (var i = 0; i < 5; ++i)
       {
-         extra = 90 * i
-         context.drawImage(enemy, 130 + extra, canvasHeight/8, 80, 80);
+         for (var j = 0; j < 4; j++)
+         {
+            extrax = 70 * i
+            extary = 70 * j
+            context.drawImage(enemy, extrax + enemyPos.start.x, canvasHeight/25 + extary, 60, 60);
+         }
       } 
 
 } // end function draw
