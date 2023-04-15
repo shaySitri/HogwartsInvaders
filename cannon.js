@@ -9,6 +9,9 @@ var MISS_PENALTY = 2; // seconds deducted on a miss
 var HIT_REWARD = 3; // seconds added on a hit
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 
+
+var then;
+
 // variables for the game loop and tracking statistics
 var intervalTimer; // holds interval timer
 var timerCount; // number of times the timer fired since the last second
@@ -55,11 +58,13 @@ var blockerSound;
 
 // varibales for hero position
 var hero = new Image();
+const HERO_IMG = 80
 
 // variables for detremain the enemys
 var enemy = new Image();
 var enemyShoot = new Image();
 var enemyVelocity;
+const ENEMY_IMG = 60
 
 // variables for the enemy shooter indices.
 var iShooter;
@@ -69,10 +74,14 @@ var curjShooter;
 var enemyShootVelocity;
 var enemyShoots;
 var canEnemyShoot;
+const ENEMY_SHOOT_IMG = 40;
 
 const ENEMY_I = 5;
 const ENEMY_J = 4;
 
+
+// keys
+var keysDown;
 
 
 
@@ -128,7 +137,18 @@ function setupGame()
    enemyPos.end = new Object();
    enemyShoots = new Array(ENEMY_I);
 
+   hero.speed = 256
+   heroPos = new Object();
+
+   keysDown = {};
+
+   // Check for keys pressed where key represents the keycode captured
+	addEventListener("keydown", updateHeroPos()}, false);
+
+	addEventListener("keyup", function (e) {delete keysDown[e.keyCode];}, false);
    
+   then = Date.now();
+
 
 
 
@@ -203,6 +223,8 @@ function resetElements()
 
    enemyShootVelocity = 100;
 
+   heroPos.x = Math.floor(Math.random() * (800 - HERO_IMG));
+   heroPos.y = canvasHeight - HERO_IMG;
 
 } // end function resetElements
 
@@ -243,16 +265,40 @@ function newGame()
    canEnemyShoot = true; // enemy can shoot
    initEnemyShoots()
 
-
+   var now = Date.now();
+	var delta = now - then;
+	
+	updatePositions(delta / 1000);
 
    startTimer(); // starts the game loop
 } // end function newGame
 
 
+function updateHeroPost(e)
+{
+      // update player position
+      if ((38 in keyCode) ) { // Player holding up
+         if(heroPos.y>=20)
+         heroPos.y -= hero.speed * modifier;
+      }
+      if ((40 in keyCode) ) { // Player holding down
+         if(heroPos.y<=440)
+         heroPos.y += hero.speed * modifier;
+      }
+      if (37 in keyCode) { // Player holding left
+         if(heroPos.x>=20)
+         heroPos.x -= hero.speed * modifier;
+      }
+      if (39 in keyCode) { // Player holding right
+         if(heroPos.x<=492)
+         heroPos.x += hero.speed * modifier;	
+      }
+   
+}
+
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-
    // update the target's position
    var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
    enemyPos.start.x += enemyUpdate;
@@ -265,7 +311,7 @@ function updatePositions()
 
    if (canEnemyShoot == true)
    {
-      shoot();
+      randomShootingEnemy();
    }
 
    // if the blocker hit the top or bottom, reverse direction
@@ -397,7 +443,7 @@ function updatePositions()
 
 
 
-function shoot()
+function randomShootingEnemy()
 {
    // rand shooter
    iShooter = Math.floor(Math.random() * 5); 
@@ -409,8 +455,8 @@ function shoot()
    // is shooter exist?
 
    enemyShoots[iShooter][jShooter].on = true;
-   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + 60 * (iShooter + 1) + (10 * iShooter) - 30
-   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + 60 * (jShooter + 1) + (10 * jShooter)
+   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
+   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
 
    canEnemyShoot = false;
    
@@ -523,40 +569,17 @@ function draw()
    currentPoint.x = target.start.x;
    currentPoint.y = target.start.y; 
 
-   // // draw the target
-   // for (var i = 0; i < TARGET_PIECES; ++i)
-   // {
-   //    // if this target piece is not hit, draw it
-   //    if (!hitStates[i])
-   //    {
-   //       context.beginPath(); // begin a new path for target
-
-   //       // alternate coloring the pieces yellow and blue
-   //       if (i % 2 === 0)
-   //          context.strokeStyle = "yellow";
-   //       else
-   //          context.strokeStyle = "blue";
-
-   //       context.moveTo(currentPoint.x, currentPoint.y); // path origin
-   //       context.lineTo(currentPoint.x, currentPoint.y + pieceLength); 
-   //       context.lineWidth = lineWidth; // line width
-   //       context.stroke(); // draw path
-   //    } // end if
-	 
-   //    // move currentPoint to the start of the next piece
-   //    currentPoint.y += pieceLength;
-   // } // end for
-
-   context.drawImage(hero, canvasWidth/2, canvasHeight-80, 80, 80);
+   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
    
       // draw the target
       for (var i = 0; i < ENEMY_I; ++i)
       {
          for (var j = 0; j < ENEMY_J; j++)
          {
-            extrax = 70 * i
-            extary = 70 * j
-            context.drawImage(enemy, extrax + enemyPos.start.x, canvasHeight/25 + extary, 60, 60);
+            extrai = (ENEMY_IMG + 10) * i
+            extraj = (ENEMY_IMG + 10) * j
+
+            context.drawImage(enemy, extrai + enemyPos.start.x, canvasHeight / 25 + extraj, ENEMY_IMG, ENEMY_IMG);
 
          }
       } 
@@ -567,7 +590,7 @@ function draw()
          {
             if (enemyShoots[i][j].on == true)
             {
-               context.drawImage(enemyShoot,enemyShoots[i][j].pos.x, enemyShoots[i][j].pos.y, 40, 40);
+               context.drawImage(enemyShoot,enemyShoots[i][j].pos.x, enemyShoots[i][j].pos.y, ENEMY_SHOOT_IMG, ENEMY_SHOOT_IMG);
             }
          }
       }
@@ -582,19 +605,3 @@ function showGameOverDialog(message)
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
-
-
-/*************************************************************************
-* (C) Copyright 1992-2012 by Deitel & Associates, Inc. and               *
-* Pearson Education, Inc. All Rights Reserved.                           *
-*                                                                        *
-* DISCLAIMER: The authors and publisher of this book have used their     *
-* best efforts in preparing the book. These efforts include the          *
-* development, research, and testing of the theories and programs        *
-* to determine their effectiveness. The authors and publisher make       *
-* no warranty of any kind, expressed or implied, with regard to these    *
-* programs or to the documentation contained in these books. The authors *
-* and publisher shall not be liable in any event for incidental or       *
-* consequential damages in connection with, or arising out of, the       *
-* furnishing, performance, or use of these programs.                     *
-*************************************************************************/
