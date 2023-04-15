@@ -53,7 +53,10 @@ var targetSound;
 var cannonSound;
 var blockerSound;
 
+// varibales for hero position
 var hero = new Image();
+
+// variables for detremain the enemys
 var enemy = new Image();
 var enemyShoot = new Image();
 var enemyVelocity;
@@ -67,8 +70,8 @@ var enemyShootVelocity;
 var enemyShoots;
 var canEnemyShoot;
 
-var ENEMY_I = 5;
-var ENEMY_J = 5;
+const ENEMY_I = 5;
+const ENEMY_J = 4;
 
 
 
@@ -115,7 +118,7 @@ function setupGame()
    targetSound = document.getElementById( "targetSound" );
    cannonSound = document.getElementById( "cannonSound" );
    blockerSound = document.getElementById( "blockerSound" );
-
+   
    hero.src = "pic/starship.jpg"
    enemy.src = "pic/bgud.jpg"
    enemyShoot.src = "pic/fire.jpg"
@@ -281,9 +284,9 @@ function updatePositions()
       canEnemyShoot = true;
    }
 
-   for (var i = 0; i < 5; i++)
+   for (var i = 0; i < ENEMY_I; i++)
    {
-      for (var j = 0; j < 4; j++)
+      for (var j = 0; j < ENEMY_J; j++)
       {
          if (enemyShoots[i][j].on == true)
          {
@@ -398,8 +401,8 @@ function shoot()
 {
    // rand shooter
    iShooter = Math.floor(Math.random() * 5); 
-   // jShooter = Math.floor(Math.random() * 4);
-   jShooter = 3;
+   jShooter = Math.floor(Math.random() * 4);
+   // jShooter = 3;
 
    curiShooter = iShooter;
    curjShooter = jShooter;
@@ -547,9 +550,9 @@ function draw()
    context.drawImage(hero, canvasWidth/2, canvasHeight-80, 80, 80);
    
       // draw the target
-      for (var i = 0; i < 5; ++i)
+      for (var i = 0; i < ENEMY_I; ++i)
       {
-         for (var j = 0; j < 4; j++)
+         for (var j = 0; j < ENEMY_J; j++)
          {
             extrax = 70 * i
             extary = 70 * j
@@ -558,9 +561,9 @@ function draw()
          }
       } 
       
-      for (var i = 0; i < 5; ++i)
+      for (var i = 0; i < ENEMY_I; ++i)
       {
-         for (var j = 0; j < 4; j++)
+         for (var j = 0; j < ENEMY_J; j++)
          {
             if (enemyShoots[i][j].on == true)
             {
