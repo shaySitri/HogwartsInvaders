@@ -414,9 +414,9 @@ function updatePositions()
          heroShoots.splice(i, 1)
       // check for collision with enemies
       if ( 
-         heroShoots[i].x >= enemyPos.start.x &&
-         heroShoots[i].x + HERO_SHOOT_IMG  <= enemyPos.end.x && 
-         heroShoots[i].y >= enemyPos.start.y &&
+         heroShoots[i].x + HERO_SHOOT_IMG >= enemyPos.start.x &&
+         heroShoots[i].x + HERO_SHOOT_IMG <= enemyPos.end.x && 
+         heroShoots[i].y + HERO_SHOOT_IMG >= enemyPos.start.y &&
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          !hitStates[sectionx][sectiony])
       {
