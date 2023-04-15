@@ -53,6 +53,9 @@ var targetSound;
 var cannonSound;
 var blockerSound;
 
+var hero = new Image();
+var enemy = new Image();
+
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
 //    radius      : 60,
@@ -73,6 +76,10 @@ function setupGame()
    // get the canvas, its context and setup its click event handler
    canvas = document.getElementById( "theCanvas" );
    context = canvas.getContext("2d");
+
+   context.fillStyle = 'rgb(191, 204, 181)';
+   context.fillRect(0, 0, canvas.width, canvas.height);
+
 
    // start a new game when user clicks Start Game button
    document.getElementById( "startButton" ).addEventListener( 
@@ -95,6 +102,11 @@ function setupGame()
    targetSound = document.getElementById( "targetSound" );
    cannonSound = document.getElementById( "cannonSound" );
    blockerSound = document.getElementById( "blockerSound" );
+
+   hero.src = "pic/starship.jpg"
+   enemy.src = "pic/bgud.jpg"
+
+
 } // end function setupGame
 
 // set up interval timer to update game
@@ -145,20 +157,24 @@ function resetElements()
    blocker.end.y = blockerEnd;
 
    // configure instance variables related to the target
-   targetDistance = w * 7 / 8; // target 7/8 canvas width from left
-   targetBeginning = h / 8; // distance from top 1/8 canvas height
-   targetEnd = h * 7 / 8; // distance from top 7/8 canvas height
+   targetDistance = h * 7 / 8; // target 7/8 canvas width from left
+   targetBeginning = w / 8; // distance from top 1/8 canvas height
+   targetEnd = w * 7 / 8; // distance from top 7/8 canvas height
    pieceLength = (targetEnd - targetBeginning) / TARGET_PIECES;
    initialTargetVelocity = -h / 4; // initial target speed multiplier
-   target.start.x = targetDistance;
-   target.start.y = targetBeginning;
-   target.end.x = targetDistance;
-   target.end.y = targetEnd;
+   target.start.y = targetDistance;
+   target.start.x = targetBeginning;
+   target.end.y = targetDistance;
+   target.end.x = targetEnd;
 
    // end point of the cannon's barrel initially points horizontally
    barrelEnd.x = cannonLength;
    barrelEnd.y = h / 2;
+
+
+
 } // end function resetElements
+
 
 // reset all the screen elements and start a new game
 function newGame()
@@ -346,12 +362,17 @@ function alignCannon(event)
 function draw()
 {
    canvas.width = canvas.width; // clears the canvas (from W3C docs)
-
+   // context.rotate(-90 * Math.PI / 180);
+   // context.translate(-canvas.width, 0);
    // display time remaining
    context.fillStyle = "black";
    context.font = "bold 24px serif";
    context.textBaseline = "top";
    context.fillText("Time remaining: " + timeLeft, 5, 5);
+
+   context.rect(0, 0, 800, 600);
+   context.stroke();
+
 
    // if a cannonball is currently on the screen, draw it
    if (cannonballOnScreen)
@@ -391,29 +412,39 @@ function draw()
    currentPoint.x = target.start.x;
    currentPoint.y = target.start.y; 
 
-   // draw the target
-   for (var i = 0; i < TARGET_PIECES; ++i)
-   {
-      // if this target piece is not hit, draw it
-      if (!hitStates[i])
-      {
-         context.beginPath(); // begin a new path for target
+   // // draw the target
+   // for (var i = 0; i < TARGET_PIECES; ++i)
+   // {
+   //    // if this target piece is not hit, draw it
+   //    if (!hitStates[i])
+   //    {
+   //       context.beginPath(); // begin a new path for target
 
-         // alternate coloring the pieces yellow and blue
-         if (i % 2 === 0)
-            context.strokeStyle = "yellow";
-         else
-            context.strokeStyle = "blue";
+   //       // alternate coloring the pieces yellow and blue
+   //       if (i % 2 === 0)
+   //          context.strokeStyle = "yellow";
+   //       else
+   //          context.strokeStyle = "blue";
 
-         context.moveTo(currentPoint.x, currentPoint.y); // path origin
-         context.lineTo(currentPoint.x, currentPoint.y + pieceLength); 
-         context.lineWidth = lineWidth; // line width
-         context.stroke(); // draw path
-      } // end if
+   //       context.moveTo(currentPoint.x, currentPoint.y); // path origin
+   //       context.lineTo(currentPoint.x, currentPoint.y + pieceLength); 
+   //       context.lineWidth = lineWidth; // line width
+   //       context.stroke(); // draw path
+   //    } // end if
 	 
-      // move currentPoint to the start of the next piece
-      currentPoint.y += pieceLength;
-   } // end for
+   //    // move currentPoint to the start of the next piece
+   //    currentPoint.y += pieceLength;
+   // } // end for
+
+   context.drawImage(hero, canvasWidth/2, canvasHeight-100, 100, 100);
+   
+      // draw the target
+      for (var i = 0; i < 5; ++i)
+      {
+         extra = 90 * i
+         context.drawImage(enemy, 130 + extra, canvasHeight/8, 80, 80);
+      } 
+
 } // end function draw
 
 // display an alert when the game ends
