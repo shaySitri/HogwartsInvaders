@@ -143,11 +143,11 @@ function setupGame()
    keysDown = {};
 
    // Check for keys pressed where key represents the keycode captured
-	addEventListener("keydown", updateHeroPos()}, false);
+	// Check for keys pressed where key represents the keycode captured
+	addEventListener("keydown", function (e) {keysDown[e.keyCode] = true;}, false);
 
 	addEventListener("keyup", function (e) {delete keysDown[e.keyCode];}, false);
    
-   then = Date.now();
 
 
 
@@ -264,17 +264,14 @@ function newGame()
    enemyVelocity = 150;
    canEnemyShoot = true; // enemy can shoot
    initEnemyShoots()
-
-   var now = Date.now();
-	var delta = now - then;
 	
-	updatePositions(delta / 1000);
+	updatePositions(TIME_INTERVAL / 1000.0);
 
    startTimer(); // starts the game loop
 } // end function newGame
 
 
-function updateHeroPost(e)
+function updateHeroPost()
 {
       // update player position
       if ((38 in keyCode) ) { // Player holding up
