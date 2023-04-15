@@ -59,7 +59,7 @@ var blockerSound;
 // varibales for hero position
 var hero = new Image();
 const HERO_IMG = 80
-
+var heroVelocity;
 // variables for detremain the enemys
 var enemy = new Image();
 var enemyShoot = new Image();
@@ -137,9 +137,7 @@ function setupGame()
    enemyPos.end = new Object();
    enemyShoots = new Array(ENEMY_I);
 
-   hero.speed = 256
    heroPos = new Object();
-
    keysDown = {};
 
    // Check for keys pressed where key represents the keycode captured
@@ -223,6 +221,7 @@ function resetElements()
 
    enemyShootVelocity = 100;
 
+   heroVelocity = 256;
    heroPos.x = Math.floor(Math.random() * (800 - HERO_IMG));
    heroPos.y = canvasHeight - HERO_IMG;
 
@@ -265,7 +264,7 @@ function newGame()
    canEnemyShoot = true; // enemy can shoot
    initEnemyShoots()
 	
-	updatePositions(TIME_INTERVAL / 1000.0);
+	updatePositions();
 
    startTimer(); // starts the game loop
 } // end function newGame
@@ -273,22 +272,28 @@ function newGame()
 
 function updateHeroPost()
 {
+   var heroUpdate = TIME_INTERVAL / 1000.0 * heroVelocity;
+
       // update player position
-      if ((38 in keyCode) ) { // Player holding up
-         if(heroPos.y>=20)
-         heroPos.y -= hero.speed * modifier;
+      if ((38 in keysDown) ) { 
+         // Player holding up
+         if(heroPos.y > canvasHeight * 0.6)
+            heroPos.y -= heroUpdate;
       }
-      if ((40 in keyCode) ) { // Player holding down
-         if(heroPos.y<=440)
-         heroPos.y += hero.speed * modifier;
+      if ((40 in keysDown) ) { 
+         // Player holding down
+         if(heroPos.y <= canvasHeight - HERO_IMG)
+            heroPos.y += heroUpdate;
       }
-      if (37 in keyCode) { // Player holding left
-         if(heroPos.x>=20)
-         heroPos.x -= hero.speed * modifier;
+      if (37 in keysDown) { 
+         // Player holding left
+         if(heroPos.x >= 0)
+            heroPos.x -= heroUpdate;
       }
-      if (39 in keyCode) { // Player holding right
-         if(heroPos.x<=492)
-         heroPos.x += hero.speed * modifier;	
+      if (39 in keysDown) { 
+         // Player holding right
+         if(heroPos.x <= canvasWidth - HERO_IMG)
+            heroPos.x += heroUpdate;	
       }
    
 }
@@ -296,6 +301,7 @@ function updateHeroPost()
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
+   updateHeroPost()
    // update the target's position
    var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
    enemyPos.start.x += enemyUpdate;
