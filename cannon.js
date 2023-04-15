@@ -11,6 +11,7 @@ var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 
 
 var then;
+var now;
 
 // variables for the game loop and tracking statistics
 var intervalTimer; // holds interval timer
@@ -60,6 +61,13 @@ var blockerSound;
 var hero = new Image();
 const HERO_IMG = 80
 var heroVelocity;
+
+// variables for hero fire
+var heroShoot = new Image();
+const HERO_SHOOT_IMG = 30
+var heroShootVelocity;
+var heroShoots;
+
 // variables for detremain the enemys
 var enemy = new Image();
 var enemyShoot = new Image();
@@ -105,7 +113,6 @@ function setupGame()
    canvas = document.getElementById( "theCanvas" );
    context = canvas.getContext("2d");
 
-
    // start a new game when user clicks Start Game button
    document.getElementById( "startButton" ).addEventListener( 
       "click", newGame, false );
@@ -131,26 +138,57 @@ function setupGame()
    hero.src = "pic/starship.jpg"
    enemy.src = "pic/bgud.jpg"
    enemyShoot.src = "pic/fire.jpg"
-   
+   heroShoot.src = "pic/heroShoot.jpg"
+
    enemyPos = new Object();
    enemyPos.start = new Object();
    enemyPos.end = new Object();
    enemyShoots = new Array(ENEMY_I);
 
    heroPos = new Object();
+   heroShoots = new Array();
+
+
    keysDown = {};
+   
 
    // Check for keys pressed where key represents the keycode captured
 	// Check for keys pressed where key represents the keycode captured
 	addEventListener("keydown", function (e) {keysDown[e.keyCode] = true;}, false);
 
-	addEventListener("keyup", function (e) {delete keysDown[e.keyCode];}, false);
+	addEventListener("keyup", function (e) {
+
+      now = Date.now()
+      if (e.keyCode == 32 && validSpacePress) { 
+
+         updateHeroShoots();
+      }
+      else
+      {
+         delete keysDown[e.keyCode];
+
+      }
+
+   }, false);
    
 
 
 
 
 } // end function setupGame
+
+
+function validSpacePress()
+{
+   if ((now - then) < 0.32)
+   {
+      now = then
+      return false
+   }
+   else
+      now = then 
+      return true;
+}
 
 // set up interval timer to update game
 function startTimer()
@@ -222,6 +260,7 @@ function resetElements()
    enemyShootVelocity = 100;
 
    heroVelocity = 256;
+   heroShootVelocity = 256;
    heroPos.x = Math.floor(Math.random() * (800 - HERO_IMG));
    heroPos.y = canvasHeight - HERO_IMG;
 
@@ -244,6 +283,7 @@ function initEnemyShoots()
 // reset all the screen elements and start a new game
 function newGame()
 {
+   document.getElementById( "startButton" ).blur();
    resetElements(); // reinitialize all game elements
    stopTimer(); // terminate previous interval timer
 
@@ -262,15 +302,20 @@ function newGame()
    timeElapsed = 0; // set the time elapsed to zero
    enemyVelocity = 150;
    canEnemyShoot = true; // enemy can shoot
+   isHeroShoot = false;
+   keysDown = {};
    initEnemyShoots()
-	
+   heroShoots = new Array();
 	updatePositions();
+
+   // prevent double shooting from hero player
+   then = Date.now();
 
    startTimer(); // starts the game loop
 } // end function newGame
 
 
-function updateHeroPost()
+function updateHeroPos()
 {
    var heroUpdate = TIME_INTERVAL / 1000.0 * heroVelocity;
 
@@ -295,13 +340,16 @@ function updateHeroPost()
          if(heroPos.x <= canvasWidth - HERO_IMG)
             heroPos.x += heroUpdate;	
       }
+      // changed
+      
+      
    
 }
 
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-   updateHeroPost()
+   updateHeroPos();
    // update the target's position
    var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
    enemyPos.start.x += enemyUpdate;
@@ -320,13 +368,6 @@ function updatePositions()
    // if the blocker hit the top or bottom, reverse direction
    if (enemyPos.start.x < 0 || enemyPos.start.x > 460)
       enemyVelocity *= -1;
-   // if the blocker hit the top or bottom, reverse direction
-   if (blocker.start.y < 0 || blocker.end.y > canvasHeight)
-      blockerVelocity *= -1;
-
-   // if the target hit the top or bottom, reverse direction
-   if (target.start.y < 0 || target.end.y > canvasHeight)
-      targetVelocity *= -1;
 
    if (enemyShoots[iShooter][jShooter].pos.y > 450)
    {
@@ -353,7 +394,14 @@ function updatePositions()
       }
    }
 
-   
+   // update hero shoot positions
+   heroShootUpdate = TIME_INTERVAL / 1000.0 * heroShootVelocity;
+   for (var i = 0; i < heroShoots.length; i++)
+   {
+      heroShoots[i].y -= heroShootUpdate
+      if (heroShoots[i].y < 0)
+         heroShoots.splice(i, 1)
+   }
 
    if (cannonballOnScreen) // if there is currently a shot fired
    {
@@ -444,7 +492,13 @@ function updatePositions()
    } // end if
 } // end function updatePositions
 
-
+function updateHeroShoots()
+{
+   heroShootPos = new Object();
+   heroShootPos.x = heroPos.x;
+   heroShootPos.y = heroPos.y;
+   heroShoots.push(heroShootPos);
+}
 
 function randomShootingEnemy()
 {
@@ -462,7 +516,6 @@ function randomShootingEnemy()
    enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
 
    canEnemyShoot = false;
-   
 }
 
 
@@ -597,6 +650,12 @@ function draw()
             }
          }
       }
+
+      for (var i = 0; i < heroShoots.length; ++i)
+      {
+         context.drawImage(heroShoot,heroShoots[i].x,heroShoots[i].y, HERO_SHOOT_IMG, HERO_SHOOT_IMG);
+      }
+
 
 } // end function draw
 
