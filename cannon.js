@@ -531,19 +531,22 @@ function updateHeroShoots()
 
 function randomShootingEnemy()
 {
+   do {
    // rand shooter
    iShooter = Math.floor(Math.random() * 5); 
    jShooter = Math.floor(Math.random() * 4);
+   } while(hitStates[iShooter][jShooter] == true)
+
    // jShooter = 3;
 
    curiShooter = iShooter;
    curjShooter = jShooter;
-   // is shooter exist?
+   // only if enemy not kiiled 
 
    enemyShoots[iShooter][jShooter].on = true;
    enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
    enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
-
+   
    canEnemyShoot = false;
 }
 
