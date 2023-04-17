@@ -91,6 +91,8 @@ const ENEMY_J = 4;
 // keys
 var keysDown;
 
+// player points
+var pts;
 
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
@@ -150,6 +152,7 @@ function setupGame()
 
 
    keysDown = {};
+   pts = 0;
    
 
    // Check for keys pressed where key represents the keycode captured
@@ -159,7 +162,7 @@ function setupGame()
 	addEventListener("keyup", function (e) {
 
       now = Date.now()
-      if (e.keyCode == 32 && validSpacePress) { 
+      if (e.keyCode == keyCode && validSpacePress) { 
 
          updateHeroShoots();
       }
@@ -308,6 +311,7 @@ function newGame()
    canEnemyShoot = true; // enemy can shoot
    isHeroShoot = false;
    keysDown = {};
+   pts = 0;
    initEnemyShoots()
    heroShoots = new Array();
 	updatePositions();
@@ -322,6 +326,9 @@ function newGame()
 function updateHeroPos()
 {
    var heroUpdate = TIME_INTERVAL / 1000.0 * heroVelocity;
+
+
+
 
       // update player position
       if ((38 in keysDown) ) { 
@@ -345,7 +352,7 @@ function updateHeroPos()
             heroPos.x += heroUpdate;	
       }
       // changed
-      
+   
       
    
 }
@@ -384,7 +391,7 @@ function updatePositions()
       {
          if (enemyShoots[i][j].on == true)
          {
-            if(enemyShoots[i][j].pos.y < 600)
+            if(enemyShoots[i][j].pos.y < 0.75 * canvasWidth)
             {
                enemyShoots[i][j].pos.y += enemyShootUpdate;
             }
@@ -398,6 +405,7 @@ function updatePositions()
       }
    }
 
+   document.getElementById( "cords" ).innerHTML = pts;
 
    // update hero shoot positions
    heroShootUpdate = TIME_INTERVAL / 1000.0 * heroShootVelocity;
@@ -420,12 +428,25 @@ function updatePositions()
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          !hitStates[sectionx][sectiony])
       {
+         if (blockerSound.currentTime != 0)
+         {
+            blockerSound.pause()
+            blockerSound.currentTime = 0;
+         }
+
          blockerSound.play(); // play blocker hit 
 
          hitStates[sectionx][sectiony] = true
 
          heroShoots.splice(i, 1) // shoot blow
-
+         if (sectiony == 4)
+            pts += 5
+         else if (sectiony == 3)
+            pts += 10
+         else if (sectiony == 2)
+            pts += 15;
+         else if (sectiony == 1)
+            pts += 20
          
          timeLeft += MISS_PENALTY; // penalize the user
       } // end if
