@@ -426,7 +426,7 @@ function updatePositions()
          heroShoots[i].x + HERO_SHOOT_IMG <= enemyPos.end.x && 
          heroShoots[i].y + HERO_SHOOT_IMG >= enemyPos.start.y &&
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
-         !hitStates[sectionx][sectiony])
+         hitStates[sectionx][sectiony] == false)
       {
          if (blockerSound.currentTime != 0)
          {
