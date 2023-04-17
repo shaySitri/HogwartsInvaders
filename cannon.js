@@ -405,7 +405,6 @@ function updatePositions()
       }
    }
 
-   document.getElementById( "cords" ).innerHTML = pts;
 
    // update hero shoot positions
    heroShootUpdate = TIME_INTERVAL / 1000.0 * heroShootVelocity;
@@ -439,13 +438,13 @@ function updatePositions()
          hitStates[sectionx][sectiony] = true
 
          heroShoots.splice(i, 1) // shoot blow
-         if (sectiony == 4)
+         if (sectiony == 3)
             pts += 5
-         else if (sectiony == 3)
-            pts += 10
          else if (sectiony == 2)
-            pts += 15;
+            pts += 10
          else if (sectiony == 1)
+            pts += 15;
+         else if (sectiony == 0)
             pts += 20
          
          timeLeft += MISS_PENALTY; // penalize the user
@@ -556,7 +555,7 @@ function randomShootingEnemy()
    // rand shooter
    iShooter = Math.floor(Math.random() * 5); 
    jShooter = Math.floor(Math.random() * 4);
-   } while(hitStates[iShooter][jShooter] == true)
+   } while(hitStates[iShooter][jShooter] == true && pts < 250)
 
    // jShooter = 3;
 
@@ -681,11 +680,11 @@ function draw()
 
 } // end function draw
 
-// display an alert when the game ends
-function showGameOverDialog(message)
-{
-   alert(message + "\nShots fired: " + shotsFired + 
-      "\nTotal time: " + timeElapsed + " seconds ");
-} // end function showGameOverDialog
+// // display an alert when the game ends
+// function showGameOverDialog(message)
+// {
+//    alert(message + "\nShots fired: " + shotsFired + 
+//       "\nTotal time: " + timeElapsed + " seconds ");
+// } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
