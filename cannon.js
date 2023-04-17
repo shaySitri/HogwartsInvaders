@@ -94,6 +94,11 @@ var keysDown;
 // player points
 var pts;
 
+// hero life
+var life;
+
+// hero is dead
+var isDead;
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
 //    radius      : 60,
@@ -153,7 +158,8 @@ function setupGame()
 
    keysDown = {};
    pts = 0;
-   
+   life = 3;
+   isDead = false;
 
    // Check for keys pressed where key represents the keycode captured
 	// Check for keys pressed where key represents the keycode captured
@@ -260,12 +266,13 @@ function resetElements()
    enemyPos.end.y = enemyPos.start.y + 4 * ENEMY_IMG + (ENEMY_J - 1) * 10;
    enemyVelocity = 100;
 
-   enemyShootVelocity = 100;
+   enemyShootVelocity = 50;
 
    heroVelocity = 256;
    heroShootVelocity = 256;
    heroPos.x = Math.floor(Math.random() * (800 - HERO_IMG));
    heroPos.y = canvasHeight - HERO_IMG;
+   isDead = false;
 
 } // end function resetElements
 
@@ -315,6 +322,7 @@ function newGame()
    initEnemyShoots()
    heroShoots = new Array();
 	updatePositions();
+   life = 3;
 
    // prevent double shooting from hero player
    then = Date.now();
@@ -360,6 +368,7 @@ function updateHeroPos()
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
+   document.getElementById("cords").innerHTML = life;
    updateHeroPos();
    // update the target's position
    var enemyUpdate = TIME_INTERVAL / 1000.0 * enemyVelocity;
@@ -376,11 +385,12 @@ function updatePositions()
       randomShootingEnemy();
    }
 
+
    // if the blocker hit the top or bottom, reverse direction
    if (enemyPos.start.x < 0 || enemyPos.start.x > 460)
       enemyVelocity *= -1;
 
-   if (enemyShoots[iShooter][jShooter].pos.y > 450)
+   if (enemyShoots[iShooter][jShooter].pos.y > 0.75 * canvasHeight)
    {
       canEnemyShoot = true;
    }
@@ -389,17 +399,88 @@ function updatePositions()
    {
       for (var j = 0; j < ENEMY_J; j++)
       {
+
          if (enemyShoots[i][j].on == true)
          {
-            if(enemyShoots[i][j].pos.y < 0.75 * canvasWidth)
+            if(enemyShoots[i][j].pos.y < canvasHeight)
             {
                enemyShoots[i][j].pos.y += enemyShootUpdate;
+
+               // // check for collision with blocker
+               // if ( enemyShootVelocity > 0 && 
+               //    enemyShoots[i][j].pos.y + ENEMY_SHOOT_IMG >= heroPos.y &&
+               //       ((enemyShoot[i][j].pos.x >= heroPos.x &&
+               //       enemyShoot[i][j].pos.x <= heroPos.x + HERO_IMG) ||
+               //       (enemyShoot[i][j].pos.x + ENEMY_SHOOT_IMG >= heroPos.x && 
+               //          enemyShoot[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG)) )
+               // {
+               //    blockerSound.play(); // play blocker hit sound
+               //    // timeLeft -= MISS_PENALTY; // penalize the user
+               //    life = life - 1
+               // } // end if
+
+               
+               // check for collision with blocker
+               if ( 
+                  ((enemyShoots[i][j].pos.x  >= heroPos.x &&
+                  enemyShoots[i][j].pos.x  <= heroPos.x + HERO_IMG) ||
+                  (enemyShoots[i][j].pos.x + ENEMY_SHOOT_IMG  >= heroPos.x &&
+                  enemyShoots[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG)) &&
+                  enemyShoots[i][j].pos.y + ENEMY_SHOOT_IMG >= heroPos.y
+                  )
+               {
+                  blockerSound.play(); // play blocker hit sound
+                  // timeLeft -= MISS_PENALTY; // penalize the user
+                  life = life - 1
+               } // end if
+
+               // if ( 
+               //    enemyShoots[i][j].pos.x + ENEMY_SHOOT_IMG  >= heroPos.x &&
+               //    enemyShoots[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG &&
+               //    enemyShoots[i][j].pos.y + ENEMY_SHOOT_IMG >= heroPos.y
+               //    )
+               // {
+               //    blockerSound.play(); // play blocker hit sound
+               //    // timeLeft -= MISS_PENALTY; // penalize the user
+               //    life = life - 1
+               // } // end if
+
+
+
             }
             else
             {
                enemyShoots[i][j].on == false
                enemyShoots[i][j].pos = new Object();
             }
+
+            // if ( 
+            //    enemyShoot[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG && 
+            //    enemyShoot[i][j].pos.y >= heroPos.y - HERO_IMG &&
+            //    enemyShoot[i][j] <= heroPos.y )
+            // {
+            //    if (life > 0)
+            //    {
+            //       life = life - 1;
+            //       isDead = true;
+            //    }
+            // }
+            // // check if shoot hit the player
+            // if (((enemyShoots[i][j].pos.x < heroPos.x + HERO_IMG) ||             
+            //    ((enemyShoot[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG) &&
+            //    (enemyShoot[i][j].pos.y >= heroPos.y - HERO_IMG) &&
+            //    (enemyShoot[i][j] <= heroPos.y)))
+            // )
+            // {
+
+               
+            // }
+            // ||
+            // (enemyShoot[i][j].pos.x + ENEMY_SHOOT_IMG <= heroPos.x + HERO_IMG)) &&
+            // (enemyShoot[i][j].pos.y >= heroPos.y - HERO_IMG) &&
+            // (enemyShoot[i][j] <= heroPos.y))
+
+
          }
          
       }
@@ -413,13 +494,13 @@ function updatePositions()
       heroShoots[i].y -= heroShootUpdate
 
       var sectionx = 
-      Math.floor((heroShoots[i].x  - enemyPos.start.x) / ENEMY_IMG);
+      Math.floor((heroShoots[i].x + 0.5 * HERO_SHOOT_IMG  - enemyPos.start.x) / ENEMY_IMG);
       var sectiony = 
       Math.floor((heroShoots[i].y  - enemyPos.start.y) / ENEMY_IMG);
 
       if (heroShoots[i].y < 0)
          heroShoots.splice(i, 1)
-      // check for collision with enemies
+
       if ( 
          heroShoots[i].x + HERO_SHOOT_IMG >= enemyPos.start.x &&
          heroShoots[i].x + HERO_SHOOT_IMG <= enemyPos.end.x && 
@@ -452,74 +533,74 @@ function updatePositions()
    }
 
 
-   if (cannonballOnScreen) // if there is currently a shot fired
-   {
-      // update cannonball position
-      var interval = TIME_INTERVAL / 1000.0;
+   // if (cannonballOnScreen) // if there is currently a shot fired
+   // {
+   //    // update cannonball position
+   //    var interval = TIME_INTERVAL / 1000.0;
 
-      cannonball.x += interval * cannonballVelocityX;
-      cannonball.y += interval * cannonballVelocityY;
+   //    cannonball.x += interval * cannonballVelocityX;
+   //    cannonball.y += interval * cannonballVelocityY;
 
-      // check for collision with blocker
-      if ( cannonballVelocityX > 0 && 
-         cannonball.x + cannonballRadius >= blockerDistance &&
-         cannonball.x + cannonballRadius <= blockerDistance + lineWidth &&
-         cannonball.y - cannonballRadius > blocker.start.y &&
-         cannonball.y + cannonballRadius < blocker.end.y)
-      {
-         blockerSound.play(); // play blocker hit sound
-         cannonballVelocityX *= -1; // reverse cannonball's direction
-         timeLeft -= MISS_PENALTY; // penalize the user
-      } // end if
+   //    // check for collision with blocker
+   //    if ( cannonballVelocityX > 0 && 
+   //       cannonball.x + cannonballRadius >= blockerDistance &&
+   //       cannonball.x + cannonballRadius <= blockerDistance + lineWidth &&
+   //       cannonball.y - cannonballRadius > blocker.start.y &&
+   //       cannonball.y + cannonballRadius < blocker.end.y)
+   //    {
+   //       blockerSound.play(); // play blocker hit sound
+   //       cannonballVelocityX *= -1; // reverse cannonball's direction
+   //       timeLeft -= MISS_PENALTY; // penalize the user
+   //    } // end if
 
-      // check for collisions with left and right walls
-      else if (cannonball.x + cannonballRadius > canvasWidth || 
-         cannonball.x - cannonballRadius < 0)
-      {
-         cannonballOnScreen = false; // remove cannonball from screen
-      } // end else if
+   //    // check for collisions with left and right walls
+   //    else if (cannonball.x + cannonballRadius > canvasWidth || 
+   //       cannonball.x - cannonballRadius < 0)
+   //    {
+   //       cannonballOnScreen = false; // remove cannonball from screen
+   //    } // end else if
 
-      // check for collisions with top and bottom walls
-      else if (cannonball.y + cannonballRadius > canvasHeight || 
-         cannonball.y - cannonballRadius < 0)
-      {
-         cannonballOnScreen = false; // make the cannonball disappear
-      } // end else if
+   //    // check for collisions with top and bottom walls
+   //    else if (cannonball.y + cannonballRadius > canvasHeight || 
+   //       cannonball.y - cannonballRadius < 0)
+   //    {
+   //       cannonballOnScreen = false; // make the cannonball disappear
+   //    } // end else if
 
-      // check for cannonball collision with target
-      else if (cannonballVelocityX > 0 && 
-         cannonball.x + cannonballRadius >= targetDistance &&
-         cannonball.x + cannonballRadius <= targetDistance + lineWidth &&
-         cannonball.y - cannonballRadius > target.start.y &&
-         cannonball.y + cannonballRadius < target.end.y)
-      {
-         // determine target section number (0 is the top)
-         var section = 
-            Math.floor((cannonball.y  - target.start.y) / pieceLength);
+   //    // check for cannonball collision with target
+   //    else if (cannonballVelocityX > 0 && 
+   //       cannonball.x + cannonballRadius >= targetDistance &&
+   //       cannonball.x + cannonballRadius <= targetDistance + lineWidth &&
+   //       cannonball.y - cannonballRadius > target.start.y &&
+   //       cannonball.y + cannonballRadius < target.end.y)
+   //    {
+   //       // determine target section number (0 is the top)
+   //       var section = 
+   //          Math.floor((cannonball.y  - target.start.y) / pieceLength);
 
-         // check whether the piece hasn't been hit yet
-         if ((section >= 0 && section < TARGET_PIECES) && 
-            !hitStates[section])
-         {
-            targetSound.play(); // play target hit sound
-            hitStates[section] = true; // section was hit
-            cannonballOnScreen = false; // remove cannonball
-            timeLeft += HIT_REWARD; // add reward to remaining time
+   //       // check whether the piece hasn't been hit yet
+   //       if ((section >= 0 && section < TARGET_PIECES) && 
+   //          !hitStates[section])
+   //       {
+   //          targetSound.play(); // play target hit sound
+   //          hitStates[section] = true; // section was hit
+   //          cannonballOnScreen = false; // remove cannonball
+   //          timeLeft += HIT_REWARD; // add reward to remaining time
 
-            // if all pieces have been hit
-            if (++targetPiecesHit == TARGET_PIECES)
-            {
-               stopTimer(); // game over so stop the interval timer
-               draw(); // draw the game pieces one final time
-               showGameOverDialog("You Won!"); // show winning dialog
-            } // end if
-         } // end if
-      } // end else if
-
-
+   //          // if all pieces have been hit
+   //          if (++targetPiecesHit == TARGET_PIECES)
+   //          {
+   //             stopTimer(); // game over so stop the interval timer
+   //             draw(); // draw the game pieces one final time
+   //             showGameOverDialog("You Won!"); // show winning dialog
+   //          } // end if
+   //       } // end if
+   //    } // end else if
 
 
-   } // end if
+
+
+   // } // end if
 
    ++timerCount; // increment the timer event counter
 
@@ -644,7 +725,10 @@ function draw()
    currentPoint.x = target.start.x;
    currentPoint.y = target.start.y; 
 
-   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+   if (life == 3)
+      {
+         context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+      }
    
       // draw the target
       for (var i = 0; i < ENEMY_I; ++i)
@@ -679,6 +763,8 @@ function draw()
 
 
 } // end function draw
+
+
 
 // // display an alert when the game ends
 // function showGameOverDialog(message)
