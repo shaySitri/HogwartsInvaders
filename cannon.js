@@ -1,5 +1,3 @@
-// Fig. 14.27 cannon.js
-// Logic of the Cannon Game
 var canvas; // the canvas
 var context; // used for drawing on the canvas
 
@@ -9,6 +7,7 @@ var MISS_PENALTY = 2; // seconds deducted on a miss
 var HIT_REWARD = 3; // seconds added on a hit
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var SPEEDER = 5000; // axlerate enemies and enemies shot.
+var speed_interval;
 
 var then;
 var now;
@@ -17,7 +16,6 @@ var now;
 var intervalTimer; // holds interval timer
 var timerCount; // number of times the timer fired since the last second
 var timeLeft; // the amount of time left in seconds
-var shotsFired; // the number of shots the user has fired
 var timeElapsed; // the number of seconds elapsed
 
 // variables for the blocker and target
@@ -202,6 +200,7 @@ function validSpacePress()
 function startTimer()
 {
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
+   speed_interval = window.setInterval (updateSpeed, SPEEDER);
    // countdown.start();
 } // end function startTimer
 
@@ -209,6 +208,7 @@ function startTimer()
 function stopTimer()
 {
    window.clearInterval( intervalTimer );
+   window.clearInterval (speed_interval )
 } // end function stopTimer
 
 // called by function newGame to scale the size of the game elements
@@ -321,7 +321,11 @@ function newGame()
 
    startTimer(); // starts the game loop
 
-   setInterval(() => {
+
+} // end function newGame
+
+function updateSpeed()
+{
    if (Math.abs(enemyVelocity) < 300 && enemyShootVelocity < 300)
    {
       if (enemyVelocity > 0)
@@ -334,18 +338,12 @@ function newGame()
       }
       enemyShootVelocity += 50;
    }
-   }, SPEEDER);
-
-} // end function newGame
+}
 
 
 function updateHeroPos()
 {
    var heroUpdate = TIME_INTERVAL / 1000.0 * heroVelocity;
-
-
-
-
       // update player position
       if ((38 in keysDown) ) { 
          // Player holding up
@@ -425,7 +423,13 @@ function updatePositions()
                   enemyShoots[i][j].pos.y <= heroPos.y + HERO_IMG
                   )
                {
-                  blockerSound.play(); // play blocker hit sound
+                  if (blockerSound.currentTime != 0)
+                  {
+                     blockerSound.pause()
+                     blockerSound.currentTime = 0;
+                  }
+         
+                  blockerSound.play(); // play blocker hit 
                   life = life - 1 // update player life
                   canEnemyShoot = true;
                   enemyShoots[i][j].on == false
