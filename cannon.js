@@ -261,9 +261,42 @@ function resetElements()
    initialXpoint = heroPos.x;
    heroPos.y = canvasHeight - HERO_IMG;
 
-   extaraLife.on = false;
+   initPrizes();
 
 } // end function resetElements
+
+function initPrizes()
+{
+   prizes = 
+   [
+      // extra life
+      {
+         pic: extaraLife,
+         on: false,
+         posx: new Object(),
+         posy: new Object()
+      },
+
+      // clock
+      {
+         pic: clock,
+         on: false,
+         posx: new Object(),
+         posy: new Object()
+      },
+      // visibility
+      {
+         pic: cloap,
+         on: false,
+         posx: new Object(),
+         posy: new Object(),
+         active: false,
+         time : 0
+      }
+
+   ]
+
+}
 
 function initEnemyShoots()
 {
@@ -312,7 +345,7 @@ function newGame()
 
    // prevent double shooting from hero player
    then = Date.now();
-
+   initPrizes();
    startTimer(); // starts the game loop
 
 
@@ -377,7 +410,17 @@ function updateHeroPos()
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-   document.getElementById("cords").innerHTML = life;
+   document.getElementById("cords").innerHTML = 
+      "prize 1" +
+      prizes[0].on +
+      "prizes 2" + 
+      prizes[1].on +
+      "prizes 3" + 
+      prizes[2].on +
+      prizes[2].active
+      + "LIFE" + life
+
+   
 
    updateHeroPos();
    // update the target's position
@@ -501,44 +544,9 @@ function updatePositions()
          // timeLeft += MISS_PENALTY; // penalize the user
       } // end if
    }
-
-   prizeUpdate = TIME_INTERVAL / 1000.0 * prizesVelocity;
-   for (var i = 0; i < prizes.length; i++)
-   {
-      if(prizes[i].on == true)
-      {
-         prizes[i].posy += prizeUpdate
-
-         if (((prizes[i].posx  >= heroPos.x &&
-            prizes[i].posx  <= heroPos.x + HERO_IMG) ||
-            (prizes[i].posx + IMG_PRIZE  >= heroPos.x &&
-               prizes[i].posx + IMG_PRIZE <= heroPos.x + HERO_IMG)) &&
-               prizes[i].posy + IMG_PRIZE >= heroPos.y &&
-               prizes[i].posy <= heroPos.y + HERO_IMG
-            )
-
-            {
-               if(i == 0)
-               {
-                  life += 1
-                  prizes[i].on = false;
-               }
-               if(i == 1)
-               {
-                  timeLeft += 5
-                  prizes[i].on = false;
-               }
-               if( i == 2)
-                  prizes[2].on = false;
-                  prizes[2].active = true;
-   
-            }
-      }
-   }
    
 
    ++timerCount; // increment the timer event counter
-
 
    // if one second has passed
    if (TIME_INTERVAL * timerCount >= 1000)
@@ -552,7 +560,7 @@ function updatePositions()
          {
             prizes[2].time += 1
          }
-         else
+         else if (prizes[2].time == 6)
          {
             prizes[2].time = 0
             prizes[2].active = false
@@ -560,6 +568,46 @@ function updatePositions()
          
       }
    } // end if
+
+   prizeUpdate = TIME_INTERVAL / 1000.0 * prizesVelocity;
+   for (var i = 0; i < prizes.length; i++)
+   {
+      if(prizes[i].on == true)
+      {
+         prizes[i].posy += prizeUpdate
+         if (((prizes[i].posx  >= heroPos.x &&
+            prizes[i].posx  <= heroPos.x + HERO_IMG) ||
+            (prizes[i].posx + IMG_PRIZE  >= heroPos.x &&
+               prizes[i].posx + IMG_PRIZE <= heroPos.x + HERO_IMG)) &&
+               prizes[i].posy + IMG_PRIZE >= heroPos.y &&
+               prizes[i].posy <= heroPos.y + HERO_IMG
+            )
+   
+            {
+               if(i == 0)
+               {
+                  life += 1
+                  prizes[i].on = false;
+               }
+               else if(i == 1 )
+               {
+                  timeLeft += 5
+                  prizes[i].on = false;
+               }
+               else if( i == 2 )
+               {
+                  prizes[2].on = false;
+                  prizes[2].active = true
+               }
+            }
+         else if (prizes[i].posy > canvasHeight)
+         {
+            prizes[i].on = false;
+         }
+      }
+      
+   }
+
 
    draw(); // draw all elements at updated positions
 
@@ -635,11 +683,7 @@ function draw()
    context.fillText("Time remaining: " + timeLeft, 5, 5);
 
 
-   if(prizes[2].active == false)
-   {
-      context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
-   }
-      
+   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
    
    // draw the target
    for (var i = 0; i < ENEMY_I; ++i)
@@ -677,6 +721,10 @@ function draw()
       if(prizes[i].on == true)
       {
          context.drawImage(prizes[i].pic,prizes[i].posx,prizes[i].posy, IMG_PRIZE, IMG_PRIZE);
+      }
+      if(prizes[2].active == true)
+      {
+         context.clearRect(heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
       }
    }
 
