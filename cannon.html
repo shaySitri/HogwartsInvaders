@@ -28,7 +28,7 @@
 
    </header>
    <body>
-      <!-- <menu>
+      <menu>
          <div class="nav-links">
             <ul>
             <li><a href="#registerpage" onclick="showReg()">Register</a></li>
@@ -36,7 +36,7 @@
             <li><a href="#like">About</a></li>
             </ul>
           </div>
-      </menu> -->
+      </menu>
 
    <content>
       
@@ -68,8 +68,8 @@
 
 
       <div id="game">
-         <!-- <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
-         <div id="logout"> <button id="logout_but">Log Out</button> </div> -->
+         <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
+         <div id="logout"> <button id="logout_but">Log Out</button> </div>
          <!-- <div id="countdown"></div> -->
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
@@ -142,12 +142,11 @@
 
       $(window ).load( function()
       {
-         // $( "#game" ).hide();
+         $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#config" ).hide();
-         // !!!!!!!!!!!!!!!!!!!!!!!!!// welcomw show
-         $( "#welcome" ).hide();         
+         $( "#welcome" ).show();         
 
       }  
       );

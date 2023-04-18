@@ -3,8 +3,8 @@ var context; // used for drawing on the canvas
 
 // constants for game play
 var TARGET_PIECES = 20; // sections in the target
-var MISS_PENALTY = 2; // seconds deducted on a miss
-var HIT_REWARD = 3; // seconds added on a hit
+// var MISS_PENALTY = 2; // seconds deducted on a miss
+// var HIT_REWARD = 3; // seconds added on a hit
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var SPEEDER = 5000; // axlerate enemies and enemies shot.
 var speed_interval;
@@ -33,7 +33,7 @@ var heroVelocity;
 
 // variables for hero fire
 var heroShoot = new Image();
-const HERO_SHOOT_IMG = 30
+const HERO_SHOOT_IMG = 40
 var heroShootVelocity;
 var heroShoots;
 var hitStates; // is each target piece hit?
@@ -70,10 +70,18 @@ var life;
 // initial start point
 var initialXpoint;
 
+// prizes
+var prizes;
+var prizesVelocity = 150;
+var prizeFlag;
 // hearts
 var extaraLife = new Image();
-var extaraLifeVelocity = 150;
-var IMG_LIFE = 20;
+// clock
+var clock = new Image();
+// visibillity
+var cloap = new Image()
+// var extaraLifeVelocity = 150;
+var IMG_PRIZE = 60;
 
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
@@ -111,6 +119,8 @@ function setupGame()
    enemyShoot.src = "pic/fire.jpg"
    heroShoot.src = "pic/heroShoot.jpg"
    extaraLife.src = "pic/heart.jpg"
+   clock.src = "pic/clock.png"
+   cloap.src = "pic/visible.png"
 
    enemyPos = new Object();
    enemyPos.start = new Object();
@@ -121,8 +131,36 @@ function setupGame()
    heroShoots = new Array();
    // initialize hitStates as an array
    hitStates = new Array(ENEMY_I);
+   prizeFlag = false;
+   prizes = 
+   [
+      // extra life
+      {
+         pic: extaraLife,
+         on: false,
+         posx: new Object(),
+         posy: new Object()
+      },
 
-   extaraLifePos = new Object();
+      // clock
+      {
+         pic: clock,
+         on: false,
+         posx: new Object(),
+         posy: new Object()
+      },
+      // visibility
+      {
+         pic: cloap,
+         on: false,
+         posx: new Object(),
+         posy: new Object(),
+         active: false,
+         time : 0
+      }
+
+   ]
+   
 
 
    keysDown = {};
@@ -154,16 +192,19 @@ function setupGame()
 
 } // end function setupGame
 
-function prizes()
+function createPrizes()
 {
-   lucky_number = Math.floor(Math.random() * 2);
 
-   if (lucky_number == 7 && extaraLife.on == false)
-   {
-      extaraLife.on = true;
-      extaraLife.x = Math.floor(Math.random() * canvasWidth);
-      extaraLife.y = canvasWidth;
-   }
+
+   // lucky_number = Math.floor(Math.random() * (prizes.length));
+   rand = Math.floor(Math.random() * (prizes.length)); 
+
+
+         prizes[rand].on = true;
+         prizes[rand].posx = Math.floor(Math.random() * (canvasWidth - IMG_PRIZE));
+         prizes[rand].posy = 0
+
+   
 
 }
 
@@ -255,7 +296,7 @@ function newGame()
 
 
    targetPiecesHit = 0; // no target pieces have been hit
-   timeLeft = 10; // start the countdown at 10 seconds
+   timeLeft = newsec; // start the countdown at 10 seconds
    timerCount = 0; // the timer has fired 0 times so far
    shotsFired = 0; // set the initial number of shots fired
    timeElapsed = 0; // set the time elapsed to zero
@@ -266,7 +307,6 @@ function newGame()
    pts = 0;
    initEnemyShoots()
    heroShoots = new Array();
-   extaraLifePos = new Object();
 	updatePositions();
    life = 3;
 
@@ -280,6 +320,15 @@ function newGame()
 
 function updateSpeed()
 {
+   if (prizeFlag == false)
+   {
+      prizeFlag = true
+   }
+   else
+   {
+      prizeFlag = false;
+      createPrizes();
+   }
    if (Math.abs(enemyVelocity) < 300 && enemyShootVelocity < 300)
    {
       if (enemyVelocity > 0)
@@ -449,24 +498,44 @@ function updatePositions()
          else if (sectiony == 0)
             pts += 20
          
-         timeLeft += MISS_PENALTY; // penalize the user
+         // timeLeft += MISS_PENALTY; // penalize the user
       } // end if
    }
 
-   if(extaraLife.on == true)
+   prizeUpdate = TIME_INTERVAL / 1000.0 * prizesVelocity;
+   for (var i = 0; i < prizes.length; i++)
    {
-      extarLifeUpdate = TIME_INTERVAL / 1000.0 * heroShootVelocity;
-      extaraLifePos.y += extarLifeUpdate
-      if (heroPos.x + HERO_IMG >= extaraLifePos.x &&
-         heroPos.x + HERO_IMG <= extaraLifePos.x + IMG_LIFE && 
-         heroPos.y + HERO_IMG >= extaraLifePos.y &&
-         heroPos.y + HERO_IMG <= extaraLifePos.y + IMG_LIFE)
-         {
-            life += 1
-            extaraLife.on = false;
+      if(prizes[i].on == true)
+      {
+         prizes[i].posy += prizeUpdate
 
-         }
+         if (((prizes[i].posx  >= heroPos.x &&
+            prizes[i].posx  <= heroPos.x + HERO_IMG) ||
+            (prizes[i].posx + IMG_PRIZE  >= heroPos.x &&
+               prizes[i].posx + IMG_PRIZE <= heroPos.x + HERO_IMG)) &&
+               prizes[i].posy + IMG_PRIZE >= heroPos.y &&
+               prizes[i].posy <= heroPos.y + HERO_IMG
+            )
+
+            {
+               if(i == 0)
+               {
+                  life += 1
+                  prizes[i].on = false;
+               }
+               if(i == 1)
+               {
+                  timeLeft += 5
+                  prizes[i].on = false;
+               }
+               if( i == 2)
+                  prizes[2].on = false;
+                  prizes[2].active = true;
+   
+            }
+      }
    }
+   
 
    ++timerCount; // increment the timer event counter
 
@@ -477,6 +546,19 @@ function updatePositions()
       --timeLeft; // decrement the timer
       ++timeElapsed; // increment the time elapsed
       timerCount = 0; // reset the count
+      if (prizes[2].active == true)
+      {
+         if (prizes[2].time < 6)
+         {
+            prizes[2].time += 1
+         }
+         else
+         {
+            prizes[2].time = 0
+            prizes[2].active = false
+         }
+         
+      }
    } // end if
 
    draw(); // draw all elements at updated positions
@@ -486,14 +568,16 @@ function updatePositions()
    {
       stopTimer();
       showGameOverDialog("Champion!");
+      pts = 0;
    }
    // if the timer reached zero
-   if ((life == 0))
+   else if ((life == 0))
    {
       stopTimer();
-      showGameOverDialog("You lost"); // show the losing dialog
+      showGameOverDialog("You lost");
+      life = 3;
    } // end if
-   if (timeLeft <= 0)
+   else if (timeLeft <= 0)
    {
       stopTimer();
       if (pts < 100)
@@ -504,8 +588,8 @@ function updatePositions()
       {
          showGameOverDialog("Winner!"); 
       }
+      pts = 0;
    } // end if
-
 } // end function updatePositions
 
 function updateHeroShoots()
@@ -544,8 +628,6 @@ function randomShootingEnemy()
 function draw()
 {
    canvas.width = canvas.width; // clears the canvas (from W3C docs)
-   // context.rotate(-90 * Math.PI / 180);
-   // context.translate(-canvas.width, 0);
    // display time remaining
    context.fillStyle = "black";
    context.font = "bold 24px serif";
@@ -553,8 +635,10 @@ function draw()
    context.fillText("Time remaining: " + timeLeft, 5, 5);
 
 
-   
-   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+   if(prizes[2].active == false)
+   {
+      context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+   }
       
    
    // draw the target
@@ -588,10 +672,14 @@ function draw()
       context.drawImage(heroShoot,heroShoots[i].x,heroShoots[i].y, HERO_SHOOT_IMG, HERO_SHOOT_IMG);
    }
 
-   if (extaraLife.on == true)
+   for (var i = 0; i < prizes.length; i++)
    {
-      context.drawImage(IMG_LIFE,extaraLifePos.x,extaraLifePos.y, IMG_LIFE, IMG_LIFE);
+      if(prizes[i].on == true)
+      {
+         context.drawImage(prizes[i].pic,prizes[i].posx,prizes[i].posy, IMG_PRIZE, IMG_PRIZE);
+      }
    }
+
 
 
 } // end function draw
@@ -601,7 +689,10 @@ function draw()
 // display an alert when the game ends
 function showGameOverDialog(message)
 {
+   draw();
+   updateRecords(pts);
    alert(message);
+
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
