@@ -15,12 +15,6 @@
       <link rel="stylesheet" href="style.css">
 
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-      <!-- <script src="/path/to/cdn/jquery.min.js"></script>
-      <script src="/path/to/dist/jquery.countdown360.min.js"></script> -->
-
-   <!--validation script-->
-   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 
    </head>
    <header>
@@ -28,7 +22,7 @@
 
    </header>
    <body>
-      <menu>
+      <!-- <menu>
          <div class="nav-links">
             <ul>
             <li><a href="#registerpage" onclick="showReg()">Register</a></li>
@@ -36,7 +30,7 @@
             <li><a href="#like">About</a></li>
             </ul>
           </div>
-      </menu>
+      </menu> -->
 
    <content>
       
@@ -77,8 +71,9 @@
          <source src = "target_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "cannonSound" preload = "auto">
          <source src = "cannon_fire.ogg" type = "audio/ogg"></audio>
-      <canvas id = "theCanvas" width = "800" height = "600" autofocus></canvas> 
-      <span id="cords"></span>
+      <canvas id = "theCanvas" autofocus></canvas> 
+      <span id="cords"></span> <br>
+      
       <p><input id = "startButton" type = "button" value = "Start Game">
       </p>
       </div>
@@ -142,11 +137,11 @@
 
       $(window ).load( function()
       {
-         $( "#game" ).hide();
+         $( "#game" ).show();
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#config" ).hide();
-         $( "#welcome" ).show();         
+         $( "#welcome" ).hide();    
 
       }  
       );
