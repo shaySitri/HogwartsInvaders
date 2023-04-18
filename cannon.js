@@ -120,11 +120,11 @@ function setupGame()
    cannonSound = document.getElementById( "cannonSound" );
    blockerSound = document.getElementById( "blockerSound" );
    
-   hero.src = "pic/starship.jpg"
-   enemy.src = "pic/bgud.jpg"
-   enemyShoot.src = "pic/fire.jpg"
-   heroShoot.src = "pic/heroShoot.jpg"
-   extaraLife.src = "pic/heart.jpg"
+   hero.src = "pic/hero.png"
+   enemy.src = "pic/enemy.png"
+   enemyShoot.src = "pic/enemyshoot.png"
+   heroShoot.src = "pic/heroshoot.png"
+   extaraLife.src = "pic/snitch.gif"
    clock.src = "pic/clock.png"
    cloap.src = "pic/visible.png"
 

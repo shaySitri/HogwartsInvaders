@@ -12,6 +12,7 @@
 	   <script src = "cannon.js"></script>
       <script src="login.js"></script>
       <script src="config.js"></script>
+      <script src="style.css"></script>
       <link rel="stylesheet" href="style.css">
 
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -22,7 +23,7 @@
 
    </header>
    <body>
-      <!-- <menu>
+      <menu>
          <div class="nav-links">
             <ul>
             <li><a href="#registerpage" onclick="showReg()">Register</a></li>
@@ -30,14 +31,16 @@
             <li><a href="#like">About</a></li>
             </ul>
           </div>
-      </menu> -->
+      </menu>
 
    <content>
       
       <div id="welcome">
-         <p>WELCOME!</p>
-         <button id="regBut" onclick="showReg()">Register</button>
-         <button id="gameBut" onclick="showLogin()">Start to Play</button>
+         <p id="p1">Hogwarts Invaders</p>
+         <p id="p2">
+         <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button> 
+         <button id="gameBut" onclick="showLogin()" class="welcomeBut">Start to Play</button>
+         </p>
       </div>
 
       <section id="loginpage">
@@ -139,11 +142,11 @@
 
       $(window ).load( function()
       {
-         $( "#game" ).show();
+         $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#config" ).hide();
-         $( "#welcome" ).hide();    
+         $( "#welcome" ).show();    
 
       }  
       );

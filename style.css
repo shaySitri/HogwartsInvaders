@@ -12,8 +12,287 @@
     margin-left: 50px;
 } */
 
-#theCanvas
+/* #theCanvas
 {
     background-color: green;
+} */
+
+body
+{
+    background-image: url("pic/background.jpg");
+    font-family: 'Parry Hotter Regular';
 }
 
+@font-face {
+    font-family: 'Parry Hotter Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Parry Hotter Regular'), url('ParryHotter.woff') format('woff');
+}
+
+#welcome
+{
+    text-align: center;
+    font-size: 80%;
+    transition: .5s;
+    /* -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;   */
+}
+
+
+/* x-sign{
+    --interval: 1s;
+    display: block;
+    text-shadow: 
+      0 0 10px var(azure ),
+      0 0 20px var(aqua),
+      0 0 40px var(dodgerblue),
+      0 0 80px var(blue);
+    will-change: filter, color;
+    filter: saturate(60%);
+    animation: flicker steps(100) var(--interval) 1s infinite;
+} */
+/* 
+@keyframes flicker {
+    50% {
+      color: rgb(95, 150, 182);
+      filter: saturate(200%) hue-rotate(20deg);
+    }
+} */
+
+/* #p1
+{
+    color: white;
+    opacity: 0.8;
+} */
+
+
+@-webkit-keyframes 
+    glow { from {
+      text-shadow: 0 0 10px #2989b6, 0 0 20px #31c562, 0 0 30px #36959c9c, 0 0 40px #1ac06d, 0 0 50px #00c0f0, 0 0 60px #00d9ff, 0 0 70px #5bdeff;
+    }
+    to {
+      text-shadow: 0 0 10px #9dff00a8, 0 0 20px #459435, 0 0 30px #4dffbb, 0 0 40px #74ccaf93, 0 0 60px #3ace15, 0 0 50px #a2f7f2, 0 0 50px #2380b6;
+    }}
+
+
+#p1 {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+  opacity: 0.8;
+  background-image: radial-gradient(
+    ellipse 50% 35% at 50% 50%,
+    azure,
+    transparent
+  );
+  transform: translate(-50%, -50%);
+  letter-spacing: 2;
+  left: 50%;
+  top: 20%;
+  text-transform: uppercase;
+  font-size: 6em;
+  color: #7fadcc8c;
+  text-shadow: 0 0 0.6rem #49d5ee, 0 0 1.5rem #18d5e2,
+    -0.2rem 0.1rem 1rem #65edff, 0.2rem 0.1rem 1rem #ff65bd,
+    0 -0.5rem 2rem #24ffff, 0 0.5rem 3rem #197599;
+  animation: shine 2s forwards, flicker 3s infinite;
+}
+
+@keyframes blink {
+  0%,
+  22%,
+  36%,
+  75% {
+    color: #ffe6ff;
+    text-shadow: 0 0 0.6rem #e6feff, 0 0 1.5rem #65c7ff,
+      -0.2rem 0.1rem 1rem #2f1dd4, 0.2rem 0.1rem 1rem #65c7ff,
+      0 -0.5rem 2rem #24d3ff, 0 0.5rem 3rem #24ffff;
+  }
+  28%,
+  33% {
+    color: #65c7ff;
+    text-shadow: none;
+  }
+  82%,
+  97% {
+    color: #2471ff;
+    text-shadow: none;
+  }
+}
+
+.flicker {
+  animation: shine 2s forwards, blink 3s 2s infinite;
+}
+
+.fast-flicker {
+  animation: shine 2s forwards, blink 10s 1s infinite;
+}
+
+@keyframes shine {
+  0% {
+    color: #f8f6f49d;
+    text-shadow: none;
+  }
+  100% {
+    color: #e6f9ff8c;
+    text-shadow: 0 0 0.6rem azure, 0 0 1.5rem dodgerblue,
+      -0.2rem 0.1rem 1rem #65c1ff, 0.2rem 0.1rem 1rem #2475ac,
+      0 -0.5rem 2rem #24ffff, 0 0.5rem 3rem #003cff;
+  }
+}
+
+@keyframes flicker {
+  from {
+    opacity: 1;
+  }
+
+  4% {
+    opacity: 0.9;
+  }
+
+  6% {
+    opacity: 0.85;
+  }
+
+  8% {
+    opacity: 0.95;
+  }
+
+  10% {
+    opacity: 0.9;
+  }
+
+  11% {
+    opacity: 0.922;
+  }
+
+  12% {
+    opacity: 0.9;
+  }
+
+  14% {
+    opacity: 0.95;
+  }
+
+  16% {
+    opacity: 0.98;
+  }
+
+  17% {
+    opacity: 0.9;
+  }
+
+  19% {
+    opacity: 0.93;
+  }
+
+  20% {
+    opacity: 0.99;
+  }
+
+  24% {
+    opacity: 1;
+  }
+
+  26% {
+    opacity: 0.94;
+  }
+
+  28% {
+    opacity: 0.98;
+  }
+
+  37% {
+    opacity: 0.93;
+  }
+
+  38% {
+    opacity: 0.5;
+  }
+
+  39% {
+    opacity: 0.96;
+  }
+
+  42% {
+    opacity: 1;
+  }
+
+  44% {
+    opacity: 0.97;
+  }
+
+  46% {
+    opacity: 0.94;
+  }
+
+  56% {
+    opacity: 0.9;
+  }
+
+  58% {
+    opacity: 0.9;
+  }
+
+  60% {
+    opacity: 0.99;
+  }
+
+  68% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0.9;
+  }
+
+  72% {
+    opacity: 0.95;
+  }
+
+  93% {
+    opacity: 0.93;
+  }
+
+  95% {
+    opacity: 0.95;
+  }
+
+  97% {
+    opacity: 0.93;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+.welcomeBut {
+    align-items: center;
+    color: #db3eb1;
+    border: 6px solid #db3eb1;
+    border-radius:15px;
+    padding: 1% 1%;
+    margin-right: 3%;
+    font-family: 'Parry Hotter Regular';
+    font-size: large;
+    letter-spacing:1%;
+    cursor: pointer;
+    font-weight: bold;
+    filter: drop-shadow(0 0 5%px #db3eb1) drop-shadow(0 0 10%px #db3eb1) contrast(2) brightness(2);
+    transition: .5s;
+    top: 70%;
+    left: 70%;
+  }
+  
+  .welcomeBut:hover {
+    color: black;
+    background-color: #db3eb1;
+    filter: drop-shadow(0 0 20px #db3eb1) contrast(2) brightness(2);
+  }
