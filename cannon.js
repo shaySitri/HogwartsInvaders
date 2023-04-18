@@ -3,12 +3,10 @@ var context; // used for drawing on the canvas
 
 // constants for game play
 var TARGET_PIECES = 20; // sections in the target
-var MISS_PENALTY = 2; // seconds deducted on a miss
-var HIT_REWARD = 3; // seconds added on a hit
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
 var SPEEDER = 5000; // axlerate enemies and enemies shot.
 var speed_interval;
-
+var cnt;
 var then;
 var now;
 
@@ -28,12 +26,14 @@ var blockerSound;
 
 // varibales for hero position
 var hero = new Image();
-const HERO_IMG = 80
+// const HERO_IMG = 80
+var HERO_IMG;
 var heroVelocity;
 
 // variables for hero fire
 var heroShoot = new Image();
-const HERO_SHOOT_IMG = 30
+// const HERO_SHOOT_IMG = 30
+var HERO_SHOOT_IMG;
 var heroShootVelocity;
 var heroShoots;
 var hitStates; // is each target piece hit?
@@ -42,7 +42,8 @@ var hitStates; // is each target piece hit?
 var enemy = new Image();
 var enemyShoot = new Image();
 var enemyVelocity;
-const ENEMY_IMG = 60
+// const ENEMY_IMG = 60
+var ENEMY_IMG;
 
 // variables for the enemy shooter indices.
 var iShooter;
@@ -52,7 +53,8 @@ var curjShooter;
 var enemyShootVelocity;
 var enemyShoots;
 var canEnemyShoot;
-const ENEMY_SHOOT_IMG = 40;
+// const ENEMY_SHOOT_IMG = 40;
+var ENEMY_SHOOT_IMG;
 
 const ENEMY_I = 5;
 const ENEMY_J = 4;
@@ -81,7 +83,8 @@ var clock = new Image();
 // visibillity
 var cloap = new Image()
 // var extaraLifeVelocity = 150;
-var IMG_PRIZE = 60;
+var IMG_PRIZE;
+// 60
 
 
 // var countdown =document.getElementById( "#countdown" ).countdown360({
@@ -103,6 +106,9 @@ function setupGame()
    // get the canvas, its context and setup its click event handler
    canvas = document.getElementById( "theCanvas" );
    context = canvas.getContext("2d");
+
+   canvas.height = window.innerHeight;
+   canvas.width = window.innerWidth;
 
    // start a new game when user clicks Start Game button
    document.getElementById( "startButton" ).addEventListener( 
@@ -165,6 +171,7 @@ function setupGame()
    keysDown = {};
    pts = 0;
    life = 3;
+   cnt = 0;
 
    // Check for keys pressed where key represents the keycode captured
 	// Check for keys pressed where key represents the keycode captured
@@ -245,19 +252,24 @@ function resetElements()
    canvasWidth = w; // store the width
    canvasHeight = h; // store the height
 
+   IMG_PRIZE = canvasWidth * 0.0375
+   HERO_IMG = canvasWidth * 0.05
+   HERO_SHOOT_IMG = canvasWidth * 0.0375 / 2
+   ENEMY_IMG = canvasWidth * 0.0375
+   ENEMY_SHOOT_IMG = canvasWidth * 0.025 
 
    // 180, 620
-   enemyPos.start.x = (800 - (ENEMY_I * ENEMY_IMG + 10 * ENEMY_J))/2;
-   enemyPos.end.x = 800 - enemyPos.start.x;
+   enemyPos.start.x = (canvasWidth - (ENEMY_I * ENEMY_IMG + 10 * ENEMY_J))/2;
+   enemyPos.end.x = canvasWidth - enemyPos.start.x;
    enemyPos.start.y = canvasHeight / 25;
    enemyPos.end.y = enemyPos.start.y + 4 * ENEMY_IMG + (ENEMY_J - 1) * 10;
    enemyVelocity = 100;
 
    enemyShootVelocity = 100;
 
-   heroVelocity = 256;
-   heroShootVelocity = 256;
-   heroPos.x = Math.floor(Math.random() * (800 - HERO_IMG));
+   heroVelocity = 250;
+   heroShootVelocity = 250;
+   heroPos.x = Math.floor(Math.random() * (canvasWidth - HERO_IMG));
    initialXpoint = heroPos.x;
    heroPos.y = canvasHeight - HERO_IMG;
 
@@ -333,7 +345,7 @@ function newGame()
 
 
    targetPiecesHit = 0; // no target pieces have been hit
-   timeLeft = 10; // start the countdown at 10 seconds
+   timeLeft = newsec; // start the countdown at 10 seconds
    timerCount = 0; // the timer has fired 0 times so far
    shotsFired = 0; // set the initial number of shots fired
    timeElapsed = 0; // set the time elapsed to zero
@@ -351,6 +363,7 @@ function newGame()
    then = Date.now();
    initPrizes();
    startTimer(); // starts the game loop
+   cnt = 0;
 
 
 } // end function newGame
@@ -424,8 +437,8 @@ function updatePositions()
 
    // update the target's position
    var enemyShootUpdate = TIME_INTERVAL / 1000.0 * enemyShootVelocity;
-   enemyPos.start.x += enemyUpdate;
-   enemyPos.end.x += enemyUpdate;
+   // enemyPos.start.x += enemyUpdate;
+   // enemyPos.end.x += enemyUpdate;
 
    if (canEnemyShoot == true)
    {
@@ -434,7 +447,7 @@ function updatePositions()
 
 
    // if the blocker hit the top or bottom, reverse direction
-   if (enemyPos.start.x < 0 || enemyPos.start.x > 460)
+   if (enemyPos.start.x < 0 || enemyPos.end.x > canvasWidth )
       enemyVelocity *= -1;
 
    if (enemyShoots[iShooter][jShooter].pos.y > 0.75 * canvasHeight)
@@ -449,7 +462,7 @@ function updatePositions()
 
          if (enemyShoots[i][j].on == true)
          {
-            if(enemyShoots[i][j].pos.y < canvasHeight)
+            if(enemyShoots[i][j].pos.y  < canvasHeight)
             {
                enemyShoots[i][j].pos.y += enemyShootUpdate;
 
@@ -522,7 +535,7 @@ function updatePositions()
          }
 
          blockerSound.play(); // play blocker hit 
-
+         cnt += 1
          hitStates[sectionx][sectiony] = true
 
          heroShoots.splice(i, 1) // shoot blow
@@ -534,7 +547,7 @@ function updatePositions()
             pts += 15;
          else if (sectiony == 0)
             pts += 20
-         
+
          timeLeft += MISS_PENALTY; // penalize the user
       } // end if
    }
@@ -654,9 +667,23 @@ function randomShootingEnemy()
    curjShooter = jShooter;
    // only if enemy not kiiled 
 
-   enemyShoots[iShooter][jShooter].on = true;
-   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
-   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
+   // if (enemyShoots[iShooter][jShooter].on == true)
+   // {
+   //    if (enemyShoots[iShooter][jShooter].pos.y < canvasHeight)
+   //    {
+   //       canEnemyShoot = true;
+
+   //    }
+   // }
+   // else
+   // {
+      // if (enemyShoots[iShooter][jShooter].on == false)
+      // {
+      enemyShoots[iShooter][jShooter].on = true;
+      enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
+      enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
+      
+   // }
 
    canEnemyShoot = false;
    
@@ -732,6 +759,7 @@ function draw()
 function showGameOverDialog(message)
 {
    alert(message);
+   updateRecords(pts)
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
