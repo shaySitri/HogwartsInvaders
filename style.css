@@ -1,4 +1,4 @@
-canvas{
+/* canvas{
 
     background: "pic/background.gif";
     -webkit-background-size: cover;
@@ -6,8 +6,19 @@ canvas{
     -o-background-size: cover;
     background-size: cover;
   
-}
+} */
 /* canvas { 
     border: 1px solid black; 
     margin-left: 50px;
 } */
+
+#theCanvas
+{
+    background-color: green;
+}
+
+#cords2
+{
+    color: red;
+    font-size: large;
+}
