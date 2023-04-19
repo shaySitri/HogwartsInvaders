@@ -87,69 +87,78 @@
 
       <section id="registerpage">
 
+         <div id="regContainer" class="slide-rotate-ver-r-fwd">
+         <!-- <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd" > -->
+
          <div id="reg">
 
-            <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd" >
             <!-- <div id="regBack" class="slide-rotate-ver-r-fwd"></div> -->
             
-            <label class="h2">First time in Hogwarts?</label>
+            <p id="p2" class="floating">First time in Hogwarts?</p>
             
-            <form id="regForm" >
+            <form id="regForm" class="slide-rotate-ver-r-fwd">
+               <div class="formWarpper">
+                  <div class="registerBoxes">
+                     <div class="signUpField">
+                   <label>Username</label> 
+                    <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
+                    <label id="errMsg4" class="err"></label>
+                  </div>
+      
+                  <div class="signUpField">
+                     <label>Password</label>
+                     <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
+                  </div>
+                  <div class="showPass">
+                     <label>Show Password</label>
+                     <input type="checkbox" onclick="showPass('pass1')" id="cb1">
+                     </div>
+                     <div class="signUpField">
+                     <label>Password</label>
+                     <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
+                     </div>
+                     <div class="showPass">
+                     <label>Show Password</label>
+                     <input type="checkbox" onclick="showPass('pass2')" id="cb2">
+                  </div>
+                     <label id="errMsg1" class="err"></label>
+                     
+                     <div class="signUpField">
+                        <label>First Name</label>
+                     <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
+                     <label id="errMsg2" class="err"></label>
+                     </div>
+                     <div class="signUpField">
+                        <label>Last Name</label>
+      
+                     <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
+                     <label id="errMsg3" class="err"></label> <br>
+                     </div>
+                     <div class="signUpField">
+                        <label>Email</label>
+      
+                     <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
+                     </div>
+                     <div class="signUpField">
+                        <label>Birthday</label>
+      
+                     <input type="date" id="bday" name="bday" class="signUpField"> 
+                     </div>
+                     <p> <label id="errMsg" class="err"></label>  </p>
+                     
+                     
+                  </div>
 
-               <div class="registerBoxes">
-               <div class="signUpField">
-             <label>Username</label> 
-              <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
-              <label id="errMsg4" class="err"></label>
-            </div>
 
-            <div class="signUpField">
-               <label>Password</label>
-               <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
-            </div>
-            <div class="showPass">
-               <label>Show Password</label>
-               <input type="checkbox" onclick="showPass('pass1')" id="cb1">
-               </div>
-               <div class="signUpField">
-               <label>Password</label>
-               <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
-               </div>
-               <div class="showPass">
-               <label>Show Password</label>
-               <input type="checkbox" onclick="showPass('pass2')" id="cb2">
-            </div>
-               <label id="errMsg1" class="err"></label>
-               
-               <div class="signUpField">
-                  <label>First Name</label>
-               <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
-               <label id="errMsg2" class="err"></label>
-               </div>
-               <div class="signUpField">
-                  <label>Last Name</label>
 
-               <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
-               <label id="errMsg3" class="err"></label> <br>
                </div>
-               <div class="signUpField">
-                  <label>Email</label>
-
-               <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
-               </div>
-               <div class="signUpField">
-                  <label>Birthday</label>
-
-               <input type="date" id="bday" name="bday" class="signUpField"> 
-               </div>
-               <p> <label id="errMsg" class="err"></label>  </p>
-               
-               
-            </div>
             </form> 
             <button id="subForm" onClick="isValid()">Submit </button>
    
          </div>   
+
+      </div>
+
       </section>
 
       <div id="config">

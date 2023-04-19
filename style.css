@@ -246,22 +246,7 @@ html
 {
     position: relative;
     margin-top: -3%;
-    /* margin-top: -20%; */
-    /* margin-left: auto;
-    margin-right: auto; */
     
-}
-
-#regImg
-{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 80%;
-    /* margin-left: auto; */
-    /* margin-right: auto; */
-    height: 50%;
-    width: 50%;
 }
 
 .slide-rotate-ver-r-fwd {
@@ -310,39 +295,22 @@ html
     animation-delay: '21ms';
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
-    
-
 }
 
-#registerpage
+#p2
 {
-    position: flex;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: -5%;
+    text-align: center;
+    font-size: 4vw;
 }
 
 #regForm
 {
-  position: absolute;
-  display: block;
-  text-align: center;
-  padding-left: 30vw;
-  margin-top: -35.5vw;
-  font-size: 1vw;
-  opacity: 1;    
-}
-
-#regImg{
-    opacity: 80%;
-    animation-timing-function: ease-in;
-    animation-duration: '3ms';
-    animation-iteration-count: "1";
-    width: 52vw;
-
-    /* height: 33vw; */
+    text-align: center;
+    display:list-item;
+    font-size: 1vw;
     
 }
+
 
 
 .signUpField input {
@@ -380,11 +348,11 @@ html
     margin-top: 40px;
     letter-spacing: 4px;
 }
+ */
 
-
-/* .signUpField:focus  {
+.signUpField:focus  {
     box-shadow: 5vw 10vw rgba(81, 142, 157, 0.464);
-} */
+}
 
 .signUpField input {
     -webkit-transition: all 0.30s ease-in-out;
@@ -405,7 +373,21 @@ html
     border: 1px solid rgba(81, 203, 238, 1);
   }
 
-  .showPass
-  {
+  .floating {  
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+}
 
-  }
+@keyframes floating {
+    from { transform: translate(0,  0px); }
+    35%  { transform: translate(15px, 15px); }
+    65%  { transform: translate(50px, 30px); }
+    85%  { transform: translate(30px, 40px); }
+    to   { transform: translate(0, -0px); }    
+}
+
+
