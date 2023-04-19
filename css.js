@@ -15,7 +15,16 @@ signs.forEach(el => {
   })
 })
 
-// $( '#regImg' ).on( "onshow", function() {  
-//     $('#regImg').addClass('slide-rotate-ver-r-fwd');
-// })
-// // 
+
+// (window).addEventListener("load", showForm)
+// function showForm()
+// {
+//     var regImg = document.getElementById("regImg");
+//     regImg.addEventListener("load", alert("load"), false)
+// }
+
+// // $( '#regImg' ).on( "load", function() {  
+// //     $('#regForm').show();
+// // });
+// // // 
+

@@ -12,8 +12,8 @@
 	   <script src = "cannon.js"></script>
       <script src="login.js"></script>
       <script src="config.js"></script>
-      <script src="style.css"></script>
-      <link rel="stylesheet" href="style.css">
+      <script src="css.js"></script>
+      <link rel="stylesheet" href="style.css" preload> 
 
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -88,13 +88,10 @@
       <section id="registerpage">
 
          <div id="reg">
-            <p>
-               Register Form
-            </p>
 
-            <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd">
-
-            <form id="regForm">
+            <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd" >
+            <!-- <div id="regBack" class="slide-rotate-ver-r-fwd"></div> -->
+            <form id="regForm" >
                Username: <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
                <span id="errMsg4" class="err"></span> <br>
                <br>
@@ -194,7 +191,8 @@
          $( "#reg" ).show();
          $( "#login" ).hide();
          $( "#config" ).hide();
-         $( "#regForm").hide();
+         // $( "#regForm").hide();
+         // $( '#regImg').css("visibility", "visible")
       }
       
 
@@ -221,6 +219,9 @@
             };
          })
       }
+
+    
+      
 
    </script>
 
