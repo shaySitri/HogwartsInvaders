@@ -40,6 +40,8 @@
          <p id="p2">
          <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button> 
          <button id="gameBut" onclick="showLogin()" class="welcomeBut">Start to Play</button>
+         <button id="aboutBut" onclick="showLogin()" class="welcomeBut">About</button>
+
          </p>
       </div>
 
@@ -89,7 +91,10 @@
             <p>
                Register Form
             </p>
-            <form>
+
+            <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd">
+
+            <form id="regForm">
                Username: <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
                <span id="errMsg4" class="err"></span> <br>
                <br>
