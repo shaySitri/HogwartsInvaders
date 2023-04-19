@@ -17,11 +17,14 @@
     background-color: green;
 } */
 
-body
+html
 {
     background-image: url("pic/background.jpg");
     font-family: 'Parry Hotter Regular';
-    background-size: cover;
+    /* background-size: cover; */
+    object-fit: cover;
+    margin: 0; height: 100%; overflow: hidden
+    
 }
 
 @font-face {
@@ -35,6 +38,7 @@ body
 {
     /* align-items: center;
     align-content: center; */
+    
     text-align: center;
     transition: .5s;
     /* -webkit-animation: glow 1s ease-in-out infinite alternate;
@@ -376,12 +380,21 @@ body
     }
   }
   
-#regForm
+  #regForm
+  {
+      position: relative;
+      display: block;
+      text-align: center;
+      margin-top: -30%;
+      font-size: 100%;
+      
+  }
+
+.slide-rotate-ver-r-fwd {
+	-webkit-animation: slide-rotate-ver-r-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) alternate-reverse both;
+    animation: slide-rotate-ver-r-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) alternate-reverse both;
+}
+#regImg
 {
-    /* position: relative; */
-    display: block;
-    text-align: center;
-    margin-top: -30%;
-    font-size: 100%;
-    
+    opacity: 80%;
 }
