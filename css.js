@@ -14,3 +14,8 @@ signs.forEach(el => {
     mixupInterval(el)
   })
 })
+
+// $( '#regImg' ).on( "onshow", function() {  
+//     $('#regImg').addClass('slide-rotate-ver-r-fwd');
+// })
+// // 

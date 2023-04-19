@@ -380,6 +380,8 @@ html
     }
   }
   
+    
+    
   #regForm
   {
       position: relative;
@@ -393,8 +395,23 @@ html
 .slide-rotate-ver-r-fwd {
 	-webkit-animation: slide-rotate-ver-r-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) alternate-reverse both;
     animation: slide-rotate-ver-r-fwd 0.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) alternate-reverse both;
+    animation-delay: '8ms';
+    animation-iteration-count: 1;
 }
 #regImg
 {
     opacity: 80%;
+    animation-timing-function: ease-in;
+    /* animation-name: "slide-rotate-ver-r-fwd";
+    animation-duration: '3ms';
+    animation-iteration-count: "1"; */
+
+}
+
+#registerpage
+{
+    position: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -8%;
 }
