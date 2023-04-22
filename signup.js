@@ -11,74 +11,99 @@ function isValid() {
 
     var details = document.getElementsByClassName("signUpField");
 
+    flag = true;
     for (let i = 0; i < details.length; i++) {
         if (details[i].value == "")
         {
-            document.getElementById("errMsg").innerHTML = "Please fill in all fields!";
-            return false;
-
+            details[i].style.border = "1px solid red";
+            flag = false;
         }
+        else if (details[i].value != "")
+        {
+            details[i].style.border = "";
+        }
+    
     }
 
-    if(details[1].value != details[2].value)
+
+    if(details[3].value != details[5].value)
     {
         document.getElementById("errMsg1").innerHTML = "Please validate your password again!";
-        return false;
+        details[3].style.border = "1px solid red";
+        details[5].style.border = "1px solid red";
+        flag = false;
     }
 
-    if(details[1].value.length < 8)
+    if(details[3].value.length < 8)
     {
         document.getElementById("errMsg1").innerHTML = "Your password is short.";
-        return false;
+        details[3].style.border = "1px solid red";
+        flag = false;
     }
 
-    if(details[1].value.length < 7)
-    {
-        document.getElementById("errMsg1").innerHTML = "Your password is too short.";
-        return false;
-    }
+    // if(details[1].value.length < 7)
+    // {
+    //     document.getElementById("errMsg1").innerHTML = "Your password is too short.";
+    //     return false;
+    // }
 
-    if(((/[0-9]/i.test(details[3].value))))
+    if(((/[0-9]/i.test(details[7].value))))
     {
         document.getElementById("errMsg2").innerHTML = "Name field conatin only letters";
-        return false;
+        details[7].style.border = "1px solid red";
+        flag = false;
     }
-    if(((/[0-9]/i.test(details[4].value))))
+    if(((/[0-9]/i.test(details[9].value))))
         {
         document.getElementById("errMsg3").innerHTML = "Name field conatin only letters";
-        return false;
+        details[9].style.border = "1px solid red";
+
+        flag = false;
     }
-    if(!(/[a-z]/i.test(details[1].value)))
+    if(!(/[a-z]/i.test(details[3].value)))
     {
         document.getElementById("errMsg1").innerHTML = "Your password weak. Add letters.";
-        return false;
+        details[3].style.border = "1px solid red";
+        details[5].style.border = "1px solid red";
+
+        flag = false;
     }
 
-    if(!(/[0-9]/i.test(details[1].value)))
+    if(!(/[0-9]/i.test(details[3].value)))
     {
         document.getElementById("errMsg1").innerHTML = "Your password weak. Add numbers.";
-        return false;
+        details[3].style.border = "1px solid red";
+        details[5].style.border = "1px solid red";
+        flag = false;
+    }
+    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(details[11].value)))
+    {
+        details[11].style.border = "1px solid red";
+        flag = false;
     }
 
     for(i = 0; i < users.length; i++)
     {
-        if(details[0].value == users[i].username)
+        if(details[1].value == users[i].username)
         {
             document.getElementById("errMsg4").innerHTML = "User already exist.";
-            return false;
+            details[1].style.border = "1px solid red";
+            flag = false;
         }
     }
     i = i+1
 
-    addUser(details[0].value, details[1].value)
+    if (flag == true)
+    {
+        addUser(details[1].value, details[3].value)
+        clearRegFields()
+        $( "#game" ).hide();
+        $( "#reg" ).hide();
+        $( "#login" ).hide();
+        $( "#welcome" ).show();
+    }
 
-    clearRegFields()
-    $( "#game" ).hide();
-    $( "#reg" ).hide();
-    $( "#login" ).hide();
-    $( "#welcome" ).show();
-
-    return true;
+    
 }
 
 function addUser(name, pass)
@@ -104,3 +129,21 @@ function clearRegFields()
     document.getElementById("pass1").type = "password";
     document.getElementById("pass2").type = "password";
 }
+
+function resetRegisterForm()
+{
+    var details = document.getElementsByClassName("signUpField");
+
+    for (let i = 0; i < details.length; i++) {
+        {
+            if (details[i].tagName.toLowerCase() === 'input')
+            {
+                details[i].value = "";
+                details[i].style.border = "";
+            }
+        }
+    }
+
+    return;
+}
+

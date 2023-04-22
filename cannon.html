@@ -48,20 +48,46 @@
       <section id="loginpage">
 
          <div id="login">
-            <p>
+            <p id="p2" class="floating">
                Please log in
             </p>
-      
-            Username: <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> <br>
-   
-            Password: <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
-            <input type="checkbox" onclick="showPass('login_pass')" id="cb3">Show Password <br>
-            <span id="login_errmsg" class="login_errmsg"></span> <br>
-            
-            <button id="login_but" onclick="subLogin(login_username.value, login_pass.value)">Login</button>
-      
-      
+
+            <div class="formWarpper, slide-rotate-ver-r-fwd">
+            <div class="letterBack">
+            <div class="signUpField">
+            <form id="loginForm" class="slide-rotate-ver-r-fwd">
+
+            <div class="signUpField">
+            <label class="loginLabels">Username</label> 
+            <input type="text" id="login_username" name="login_username" class="login_fields" oninput="inputAddEventListner('login_username', 'login_but')"> 
             </div>
+            <div class="signUpField">
+            <label class="loginLabels">Password</label> 
+            <input type="password" id="login_pass" name="login_pass" class="login_fields" oninput="inputAddEventListner('login_pass', 'login_but')">             
+            </div>
+
+         </form>
+
+         <div>
+            <label class="loginLabels">Show Password</label>
+            <input type="checkbox" onclick="showPass('login_pass')" id="cb3">   
+         </div>
+
+         <label id="login_errmsg" class="login_errmsg"></label>
+
+         </div>
+         </div>
+         </div>
+
+                     
+         <div class="loginBut">
+            <button id="login_but" class="welcomeBut" onclick="subLogin(login_username.value, login_pass.value)">Login</button>
+            <button id="login_but_reset" class="welcomeBut" onclick="resetLogin()">Reset</button>
+
+         </div>
+
+         </div>
+         </div>
 
       </section>
 
@@ -87,17 +113,15 @@
 
       <section id="registerpage">
 
-         <div id="regContainer" class="slide-rotate-ver-r-fwd">
-         <!-- <img src="pic\letter.png" id="regImg" class="slide-rotate-ver-r-fwd" > -->
 
          <div id="reg">
 
-            <!-- <div id="regBack" class="slide-rotate-ver-r-fwd"></div> -->
             
             <p id="p2" class="floating">First time in Hogwarts?</p>
-            
+            <div class="formWarpper, slide-rotate-ver-r-fwd">
+            <div class="letterBack" >
             <form id="regForm" class="slide-rotate-ver-r-fwd">
-               <div class="formWarpper">
+               
                   <div class="registerBoxes">
                      <div class="signUpField">
                    <label>Username</label> 
@@ -118,10 +142,11 @@
                      <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
                      </div>
                      <div class="showPass">
-                     <label>Show Password</label>
+                     <label>Show Password</label> 
                      <input type="checkbox" onclick="showPass('pass2')" id="cb2">
-                  </div>
                      <label id="errMsg1" class="err"></label>
+                  </div>
+                     
                      
                      <div class="signUpField">
                         <label>First Name</label>
@@ -148,30 +173,39 @@
                      
                      
                   </div>
-
-
-
                </div>
             </form> 
-            <button id="subForm" onClick="isValid()">Submit </button>
-   
+            <div class="registerBut">
+            <button id="subForm" onClick="isValid()" class="welcomeBut">Submit </button>
+            <button id="resetSUForm" onClick='resetRegisterForm()' class="welcomeBut"> Reset </button>
+         </div>
          </div>   
-
       </div>
 
       </section>
 
       <div id="config">
-         <p> 
-            Insert key to shot with: <input type="text" id="KeyToShot" name="KeyToShot" value="Space" class="configClass" onkeydown="choseKey(event)" maxlength="0" > 
-            <br> <p>
-               Minutes: <input type="number" id="numMin" name="numMin" min="2" onchange="changeMin()" value="2"> 
-               Seconds:  <input type="number" id="numSec" name="numSec" min="0" max="59" onchange="changeSec()" value="0">
-            </p>
-         </p>
-         <button id="saveConfig" onclick="saveConfig()"> Lets play!</button>
+         <p id="p2" class="floating">Game Settings</p>
+         <div class="formWarpper, slide-rotate-ver-r-fwd">
+            <div class="letterBack" > 
+               <div id="welcomemsg">Hello,  <span id="span-username"></span> </div>
+               <div class="regForm">  
+               <div class="configFields">
+                  <div>
+                     <label>Insert key to shot with</label>
+                     <input type="text" id="KeyToShot" name="KeyToShot" value="Space" class="configClass" onkeydown="choseKey(event)" maxlength="0" > 
+                  </div>
+               <div>
+                  <label>Minutes</label> <input type="number" id="numMin" name="numMin" min="2" onchange="changeMin()" value="2">
+                  <label>Seconds</label><input type="number" id="numSec" name="numSec" min="0" max="59" onchange="changeSec()" value="0">
+               </div>
+                  </div>
 
-                       
+
+         <button id="saveConfig" onclick="saveConfig()"> Lets play!</button>
+      </div>
+      </div>
+      </div>       
       </div>
 
    </content>
@@ -202,6 +236,7 @@
          $( "#login" ).hide();
          $( "#config" ).hide();
          $( "#welcome" ).show();
+         setupGame();
          logged=false;
 
       }
@@ -216,6 +251,7 @@
          $( "#reg" ).hide();
          $( "#config" ).hide();
          $( "#login" ).show();
+         resetRegisterForm()
          }
 
          else
