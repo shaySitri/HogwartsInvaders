@@ -25,6 +25,7 @@ function subLogin(uname, pass)
                     logged = true
                     records = new Array()
                     document.getElementById("span-username").innerHTML = uname;
+                    document.getElementById("span-username-conf").innerHTML = uname;
                     document.getElementById("login_username").value = '';
                     document.getElementById("login_pass").value = '';
                     document.getElementById("login_errmsg").innerHTML = '';
