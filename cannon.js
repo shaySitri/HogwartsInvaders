@@ -251,6 +251,7 @@ function startTimer()
 // terminate interval timer
 function stopTimer()
 {
+   
    window.clearInterval( intervalTimer );
    window.clearInterval (speed_interval )
    themesound.pause();
@@ -288,6 +289,9 @@ function resetElements()
    initialXpoint = heroPos.x;
    heroPos.y = canvasHeight - HERO_IMG;
 
+   pts = 0;
+   life = 3;
+   
    initPrizes();
 
 
@@ -806,19 +810,25 @@ function draw()
 // display an alert when the game ends
 function showGameOverDialog(message)
 {
+   
    clearDiv('recordsTable')
    var myTableDiv = document.getElementById('recordsTable');
    var span = document.createElement('span');
    var text1 = document.createTextNode("Current Score: " + pts);
+   span.setAttribute("id", "span-score")
    span.appendChild(text1)
-   span = document.createElement('span');
-   text1 = document.createTextNode(message);
-   span.appendChild(text1)
+   span2 = document.createElement('span');
+   text2 = document.createTextNode(message);
+   span2.setAttribute("id", "span-mes")
+   span2.appendChild(text2)
    myTableDiv.appendChild(span)
+   myTableDiv.appendChild(span2)
+
    // alert(message);
    updateRecords(pts)
    drawTable('recordsTable', records);
    displayModal('recTable')
+   
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
