@@ -13,6 +13,8 @@
       <script src="login.js"></script>
       <script src="config.js"></script>
       <script src="css.js"></script>
+      <script src="records.js"></script>
+
       <link rel="stylesheet" href="style.css" preload> 
 
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -59,8 +61,8 @@
                  </a>
                  
              </li>
-             <li class="has-subnav">
-                 <a href="#">
+             <li class="has-subnav" id="aboutID">
+                 <a href="#about" onclick="displayModal()" >
                     <i class="fa fa-2x">
                      <img src="pic\about-logo.png">
                     </i>
@@ -103,6 +105,8 @@
    <content>
       
       <div id="welcome">
+
+
          <p id="p1">Hogwarts Invaders</p>
          <p id="p2">
          <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button> 
@@ -110,6 +114,12 @@
          <button id="aboutBut" onclick="showLogin()" class="welcomeBut">About</button>
 
          </p>
+
+
+
+
+
+
       </div>
 
       <section id="loginpage">
@@ -280,10 +290,25 @@
       </div>
    </section>
 
-   <section id="recordsTable">
-      <div id="records">
-         <canvas id = "recordCanvas" width = "800" height = "600" autofocus></canvas> 
+   <section id="about">
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+
+         <!-- Modal content -->
+         <div class="modal-content">
+         <button id="close" onclick="hideModal()">X</button>
+         <p3>Hogwarts Invaders</p> <br>
+         Made By:<br>
+         Itai Carmel  ID <br>
+         Shay Sitri  ID
+         
+      
+      
       </div>
+      
+      </div>
+
    </section>
 
 
@@ -294,6 +319,7 @@
    </footer>
 
    <script type="text/javascript"> 
+
 
       var logged = false;
 

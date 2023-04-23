@@ -783,6 +783,7 @@ function showGameOverDialog(message)
 {
    alert(message);
    updateRecords(pts)
+   openRecords();
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);
