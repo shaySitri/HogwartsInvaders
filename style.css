@@ -703,34 +703,30 @@ body
 
   .modal
   {
-    /* position: fixed;
-    display: none;
-    top: 50%;
-    width: 60%;
-    /* transform: translate(-50%, -50%); */
-    /* border: 1px solid black;
-    border-radius: 10px;
-    z-index: 999999999999;
-    background-color: #85bfc192;
-    height: 80%;
-    transition: 200ms ease-in-out;
-    margin-left: 50vw;
-    font-size: 4vw;
-    overflow: auto; */ 
 
-    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
-    top: 15vh;
+    top: 10vh;
     left: 25vw;
-    width: 50%; /* Full width */
-    height: 50%; /* Full height */
-    overflow:visible; /* Enable scroll if needed */
+    width: 53vw; /* Full width */
+    height: 65vh; /* Full height */
+    overflow-y: scroll;
+    overflow-x: hidden; /* Enable scroll if needed */
     background-color: rgba(239, 242, 243, 0.589); /* Black w/ opacity */
     border: 1px solid black; 
-
+    
   
+  }
+
+  #recTable
+  {
+    display: none; /* Hidden by default */
+  }
+
+  #aboutModal
+  {
+    display: none; /* Hidden by default */
   }
 
 
@@ -752,6 +748,23 @@ body
   {
     margin-left: 50vw;
   }
+
+  #recordsTable
+  {
+    display:grid;
+    text-align: center;
+    font-size: 2vw;
+    border: none;
+    align-items: center;
+    text-align: center;
+  }
+
+  #recordsTable table
+  {
+    border: none;
+  }
+
   
+
 
 

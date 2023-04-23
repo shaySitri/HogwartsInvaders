@@ -62,7 +62,7 @@
                  
              </li>
              <li class="has-subnav" id="aboutID">
-                 <a href="#about" onclick="displayModal()" >
+                 <a href="#about" onclick="displayModal('aboutModal')" >
                     <i class="fa fa-2x">
                      <img src="pic\about-logo.png">
                     </i>
@@ -177,7 +177,7 @@
       <audio id = "cannonSound" preload = "auto">
          <source src = "cannon_fire.ogg" type = "audio/ogg"></audio>
       <audio id="themesound" preload="auto">
-         <source src="pic\theme.mp3" type="audio/mpeg">
+         <source src="pic\theme.mp3"  type="audio/mpeg">
       </audio>
       <audio id="heroshotsound" preload="auto">
          <source src="experliamos.mp3" type="audio/mpeg"></audio>
@@ -293,24 +293,29 @@
    <section id="about">
 
       <!-- The Modal -->
-      <div id="myModal" class="modal">
+      <div id="aboutModal" class="modal">
 
          <!-- Modal content -->
          <div class="modal-content">
-         <button id="close" onclick="hideModal()">X</button>
+         <button id="close" onclick="hideModal('aboutModal')">X</button>
          <p3>Hogwarts Invaders</p> <br>
          Made By:<br>
          Itai Carmel  ID <br>
          Shay Sitri  ID
-         
-      
-      
-      </div>
-      
+         </div>
       </div>
 
    </section>
 
+
+   <!-- The Modal -->
+   <div id="recTable" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+      <button id="close" onclick="hideModal('recTable')">X</button>
+      <div id="recordsTable"></div>
+      </div>
+   </div>
 
    </content>
    </body>

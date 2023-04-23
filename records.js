@@ -1,12 +1,56 @@
 // Get the modal
 
-function displayModal()
-{
-    $( ".modal" ).css("display", "block")
+function displayModal(id)
+{   
+    var modal = document.getElementById(id)
+    $( modal ).css("display", "block")
 }
 
-function hideModal()
+function hideModal(id)
 {
-    $( ".modal" ).css("display", "none")
+    var modal = document.getElementById(id)
+    $( modal ).css("display", "none")
 }
 
+function drawTable(tableid, records)
+{
+    var myTableDiv = document.getElementById(tableid);
+
+    var table = document.createElement('TABLE');
+    table.border = '0';
+
+    var tr = document.createElement('tr');
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+    var text1 = document.createTextNode("Place");
+    var text2 = document.createTextNode("Points");
+    td1.appendChild(text1);
+    td2.appendChild(text2);
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    table.appendChild(tr);
+
+  
+    for (let i = 0; i < records.length; i++)
+    {
+            var tr = document.createElement('tr');   
+        
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+        
+            var text1 = document.createTextNode((i+1) + " - ");
+            var text2 = document.createTextNode(records[i]);
+        
+            td1.appendChild(text1);
+            td2.appendChild(text2);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+        
+            table.appendChild(tr);
+    }
+
+    myTableDiv.appendChild(table);
+
+
+        
+}

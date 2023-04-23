@@ -114,6 +114,7 @@ function setupGame()
    cannonSound = document.getElementById( "cannonSound" );
    blockerSound = document.getElementById( "blockerSound" );
    themesound = document.getElementById( "themesound" );
+   themesound.loop = true;
    heroshotsound = document.getElementById( "heroshotsound");
    
    hero.src = "pic/hero.png"
@@ -229,6 +230,11 @@ function startTimer()
 {
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
    speed_interval = window.setInterval (updateSpeed, SPEEDER);
+   if (themesound.currentTime != 0)
+   {
+      themesound.currentTime = 0;
+      
+   }
    themesound.play();
    themesound.volume = 0.2;
 
@@ -783,7 +789,8 @@ function showGameOverDialog(message)
 {
    alert(message);
    updateRecords(pts)
-   openRecords();
+   drawTable('recordsTable', records);
+   displayModal('recTable')
 } // end function showGameOverDialog
 
 window.addEventListener("load", setupGame, false);

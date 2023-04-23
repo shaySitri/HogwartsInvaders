@@ -1,4 +1,4 @@
-var records;
+var records = []
 
 function subLogin(uname, pass)
 {
