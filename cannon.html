@@ -23,55 +23,22 @@
 
    </header>
    <body>
-      <!-- <menu>
-         <div class="nav-links">
-
-               <ul>
-                  <li>
-                     <img id="logoImg" src="pic\icon.png">
-                  </li>
-                  <li>
-                     <i class="NavImg"><img src="pic\hat-reg.png"></i>
-                     <span class="navClass">
-                        <a href="#registerpage" onclick="showReg()">
-                           Register
-                        </a>
-                        </span>
-                  </li>
-                  
-                  <li>
-                     <i class="NavImg"><img id="NavImg" src="pic\login.png"></i>
-                     <span class="navClass">
-                     <a href="#loginpage" onclick="showLogin()">
-                        Login
-                     </a>
-                  </span>
-                  </li>
-                  <li>
-                     <i class="NavImg"><img id="NavImg" src="pic\about-logo.png"></i>
-                     <span class="navClass">
-                     <a href="#about">
-                        About
-                     </a>
-                  </span>
-                     </li>
-               </ul>
-          </div>
-      </menu> -->
       <div class="area"></div>
       <nav class="main-menu">
+         <td>
          <ul>
              <li>
-                 <a href="#welcome">
+               <tr>
+                 <a href="">
                      <i class="fa fa-2x"> <img src="pic\icon.png"> </i>
                      <span class="nav-text">
-                        Hello
+                        <label id="span-username"></label>
                      </span>
                  </a>
-               
+               </tr>
              </li>
              <li class="has-subnav">
-                 <a href="#">
+                 <a href="#registerpage" onclick="showReg()">
                      <i class="fa fa-2x">
                         <img src="pic\hat-reg.png">
                      </i>
@@ -82,7 +49,7 @@
                  
              </li>
              <li class="has-subnav">
-                 <a href="#">
+                 <a href="#loginpage" onclick="showLogin()">
                     <i class="fa fa-2x">
                      <img src="pic\login.png">
                     </i>
@@ -98,63 +65,40 @@
                      <img src="pic\about-logo.png">
                     </i>
                      <span class="nav-text">
-                         Abou
-                     </span>
-                 </a>
-                
-             </li>
-             <!-- <li>
-                 <a href="#">
-                     <i class="fa fa-film fa-2x"></i>
-                     <span class="nav-text">
-                         Surveying Tutorials
+                         About
                      </span>
                  </a>
              </li>
-             <li>
-                 <a href="#">
-                     <i class="fa fa-book fa-2x"></i>
-                     <span class="nav-text">
-                        Surveying Jobs
-                     </span>
-                 </a>
-             </li>
-             <li>
-                <a href="#">
-                    <i class="fa fa-cogs fa-2x"></i>
-                     <span class="nav-text">
-                         Tools & Resources
-                     </span>
-                 </a>
-             </li>
-             <li>
-                <a href="#">
-                     <i class="fa fa-map-marker fa-2x"></i>
-                     <span class="nav-text">
-                         Member Map
-                     </span>
-                 </a>
-             </li>
-             <li>
-                 <a href="#">
-                    <i class="fa fa-info fa-2x"></i>
-                     <span class="nav-text">
-                         Documentation
-                     </span>
-                 </a>
-             </li> -->
-         </ul>
-
-         <!-- <ul class="logout">
-             <li>
-                <a href="#">
-                      <i class="fa fa-power-off fa-2x"></i>
-                     <span class="nav-text">
-                         Logout
-                     </span>
-                 </a>
-             </li>  
-         </ul> -->
+             <li class="loginOnly">
+               <a href="#game" onclick="">
+                  <i class="fa fa-2x">
+                   <img src="pic\play.png">
+                  </i>
+                   <span class="nav-text">
+                       New Game
+                   </span>
+               </a>
+           </li>
+           <li class="loginOnly">
+            <a href="#game" onclick="">
+               <i class="fa fa-2x">
+                <img src="pic\records.png">
+               </i>
+                <span class="nav-text">
+                    Your Records
+                </span>
+            </a>
+        </li>
+             <li class="loginOnly">
+               <a href="#welcome" onclick="logout()">
+                  <i class="fa fa-2x">
+                   <img src="pic\logout.png">
+                  </i>
+                   <span class="nav-text">
+                       Log Out
+                   </span>
+               </a>
+           </li>
      </nav>
    <content>
       
@@ -216,9 +160,6 @@
 
 
       <div id="game">
-         <div id="welcomemsg">Hello,  <label id="span-username"></label> </div>
-         <div id="logout"> <button id="logout_but">Log Out</button> </div>
-         <!-- <div id="countdown"></div> -->
          <audio id = "blockerSound" preload = "auto">
          <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "targetSound" preload = "auto">
@@ -344,30 +285,41 @@
 
       var logged = false;
 
+      if(logged == true)
+      {
+         $( ".loginOnly" ).show();
+      }
+      else
+      {
+         $( ".loginOnly" ).hide();
+      }
+
       $(window ).load( function()
       {
          $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#config" ).hide();
-         $( "#welcome" ).show();    
-
+         $( "#welcome" ).show(); 
       }  
       );
 
-      $('#logout_but' ).click( function()
+      $('#logout_but' ).click( logout());
+
+      function logout()
       {
-         $( "#game" ).hide();
-         $( "#reg" ).hide();
-         $( "#login" ).hide();
-         $( "#config" ).hide();
-         $( "#welcome" ).show();
-         setupGame();
-         logged=false;
-
+         if(logged)
+         {
+            $( "#game" ).hide();
+            $( "#reg" ).hide();
+            $( "#login" ).hide();
+            $( "#config" ).hide();
+            $( "#welcome" ).show();
+            $(" #loginOnly ").hide(); 
+            setupGame();
+            logged=false;
+         }
       }
-      );
-
 
       function showLogin()
       {
