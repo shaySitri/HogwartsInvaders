@@ -166,6 +166,12 @@
          <source src = "target_hit.ogg" type = "audio/ogg"></audio>
       <audio id = "cannonSound" preload = "auto">
          <source src = "cannon_fire.ogg" type = "audio/ogg"></audio>
+      <audio id="themesound" preload="auto">
+         <source src="pic\theme.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="heroshotsound" preload="auto">
+         <source src="experliamos.mp3" type="audio/mpeg"></audio>
+
       <canvas id = "theCanvas" width = "800" height = "600" autofocus></canvas> 
       <span id="cords"></span> <br>
       
@@ -271,9 +277,15 @@
                <button id="saveConfig" onclick="saveConfig()" class="welcomeBut"> Lets play!</button>
       </div>
       </div>
-       
       </div>
    </section>
+
+   <section id="recordsTable">
+      <div id="records">
+         <canvas id = "recordCanvas" width = "800" height = "600" autofocus></canvas> 
+      </div>
+   </section>
+
 
    </content>
    </body>

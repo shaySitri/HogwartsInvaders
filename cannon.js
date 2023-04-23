@@ -23,6 +23,8 @@ var canvasHeight; // height of the canvas
 var targetSound;
 var cannonSound;
 var blockerSound;
+var themesound;
+var heroshotsound;
 
 // varibales for hero position
 var hero = new Image();
@@ -85,17 +87,9 @@ var cloap = new Image()
 // var extaraLifeVelocity = 150;
 var IMG_PRIZE;
 // 60
+var LIFE_DRAW;
 
-
-// var countdown =document.getElementById( "#countdown" ).countdown360({
-//    radius      : 60,
-//    seconds     : 100,
-//    fontColor   : '#FFFFFF',
-//    autostart   : false,
-//    onComplete  : function () { console.log('done') }
-// });
-
-
+var calcCenter;
 
 // called when the app first launches
 function setupGame()
@@ -107,8 +101,8 @@ function setupGame()
    canvas = document.getElementById( "theCanvas" );
    context = canvas.getContext("2d");
 
-   canvas.height = window.innerHeight;
-   canvas.width = window.innerWidth;
+   canvas.height = window.innerHeight * 0.7;
+   canvas.width = window.innerWidth * 0.7;
 
    // start a new game when user clicks Start Game button
    document.getElementById( "startButton" ).addEventListener( 
@@ -119,6 +113,8 @@ function setupGame()
    targetSound = document.getElementById( "targetSound" );
    cannonSound = document.getElementById( "cannonSound" );
    blockerSound = document.getElementById( "blockerSound" );
+   themesound = document.getElementById( "themesound" );
+   heroshotsound = document.getElementById( "heroshotsound");
    
    hero.src = "pic/hero.png"
    enemy.src = "pic/enemy.png"
@@ -233,6 +229,9 @@ function startTimer()
 {
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
    speed_interval = window.setInterval (updateSpeed, SPEEDER);
+   themesound.play();
+   themesound.volume = 0.2;
+
    // countdown.start();
 } // end function startTimer
 
@@ -241,22 +240,25 @@ function stopTimer()
 {
    window.clearInterval( intervalTimer );
    window.clearInterval (speed_interval )
+   themesound.pause();
 } // end function stopTimer
 
 // called by function newGame to scale the size of the game elements
 // relative to the size of the canvas before the game begins
 function resetElements()
 {
-   var w = canvas.width;
+   var w = canvas.width * 0.9;
    var h = canvas.height;
    canvasWidth = w; // store the width
    canvasHeight = h; // store the height
 
    IMG_PRIZE = canvasWidth * 0.0375
+   LIFE_DRAW = canvasWidth * 0.08
    HERO_IMG = canvasWidth * 0.05
    HERO_SHOOT_IMG = canvasWidth * 0.0375 / 2
    ENEMY_IMG = canvasWidth * 0.0375
    ENEMY_SHOOT_IMG = canvasWidth * 0.025 
+
 
    // 180, 620
    enemyPos.start.x = (canvasWidth - (ENEMY_I * ENEMY_IMG + 10 * ENEMY_J))/2;
@@ -528,13 +530,13 @@ function updatePositions()
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          hitStates[sectionx][sectiony] == false)
       {
-         if (blockerSound.currentTime != 0)
+         if (heroshotsound.currentTime != 0)
          {
-            blockerSound.pause()
-            blockerSound.currentTime = 0;
+            heroshotsound.pause()
+            heroshotsound.currentTime = 0;
          }
 
-         blockerSound.play(); // play blocker hit 
+         heroshotsound.play(); // play blocker hit 
          cnt += 1
          hitStates[sectionx][sectiony] = true
 
@@ -697,15 +699,36 @@ function draw()
    // context.rotate(-90 * Math.PI / 180);
    // context.translate(-canvas.width, 0);
    // display time remaining
-   context.fillStyle = "black";
-   context.font = "bold 24px serif";
+   context.fillStyle = "white";
+   context.font = "15px Parry Hotter Regular";
    context.textBaseline = "top";
-   context.fillText("Time remaining: " + timeLeft, 5, 5);
+   context.fillText("Time remaining:", canvasWidth, 8 * (LIFE_DRAW/2));
 
+   context.font = "23px Parry Hotter Regular";
+   context.textBaseline = "middle";
+
+   context.fillText(timeLeft + "Seconds...", canvasWidth, 9 * (LIFE_DRAW/2));
+
+   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+   
+   // draw life
+   
+   for (var i = 0; i < life; i++)
+   {
+      if (i >= 5)
+      {
+         context.fillStyle = "white";
+         context.font = "25px Parry Hotter Regular";
+         context.textBaseline = "center";
+         context.fillText("Lifes: " + life, canvasWidth, 5 * (LIFE_DRAW/2));
+      }
+      else
+      {
+         context.drawImage(prizes[0].pic,canvasWidth + 0.025 * canvas.width , i * (LIFE_DRAW/2), LIFE_DRAW, LIFE_DRAW / 2);
+      }
+   }
 
    
-   context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
-      
    
    // draw the target
    for (var i = 0; i < ENEMY_I; ++i)

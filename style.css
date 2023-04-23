@@ -692,3 +692,11 @@ body
     margin-left: 10vw;
   }
 
+  #theCanvas
+  {
+    margin-left: 15vw;
+    margin-top: 8vh;
+    background-image: url("pic/chambers.png");
+    background-size: cover;
+  }
+
