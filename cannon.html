@@ -180,12 +180,17 @@
          <source src="pic\theme.mp3"  type="audio/mpeg">
       </audio>
       <audio id="heroshotsound" preload="auto">
-         <source src="experliamos.mp3" type="audio/mpeg"></audio>
-
+         <source src="pic\experliamos.mp3" type="audio/mpeg"></audio>
+      <audio id="enemyshootsound" preload="auto">
+         <source src="pic\enemyshoot.mp3" type="audio/mpeg"></audio>
+      <audio id="timesound" preload="auto">
+            <source src="pic\timesound.mp4" type="audio/mpeg"></audio>
+      <audio id="vanishsound" preload="auto">
+         <source src="pic\vanish.mp3" type="audio/mpeg"></audio>
+      <audio id="lifesound" preload="auto">
+            <source src="pic\lifesound.mp3" type="audio/mpeg"></audio>
       <canvas id = "theCanvas" width = "800" height = "600" autofocus></canvas> 
-      <span id="cords"></span> <br>
       
-      <p id="cords2"></p>
 
       <p><input id = "startButton" type = "button" value = "Start Game">
       </p>
@@ -312,7 +317,7 @@
    <div id="recTable" class="modal">
       <!-- Modal content -->
       <div class="modal-content">
-      <button id="close" onclick="hideModal('recTable')">X</button>
+      <button id="closeRecord" onclick="hideModal('recTable')">X</button>
       <div id="recordsTable"></div>
       </div>
    </div>

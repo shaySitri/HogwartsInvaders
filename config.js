@@ -50,7 +50,6 @@ function changeMin(){
 function saveConfig(){
 
     newsec = sec
-    alert(newsec);
     
     
     document.getElementById("numMin").value = 2

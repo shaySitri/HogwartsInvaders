@@ -49,8 +49,13 @@ function drawTable(tableid, records)
             table.appendChild(tr);
     }
 
-    myTableDiv.appendChild(table);
+    myTableDiv.appendChild(table);     
+}
 
-
-        
+function clearDiv(id)
+{
+    var div = document.getElementById(id);
+    while(div.firstChild){
+        div.removeChild(div.firstChild);
+    }
 }

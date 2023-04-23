@@ -20,12 +20,12 @@ var canvasWidth; // width of the canvas
 var canvasHeight; // height of the canvas
 
 // variables for sounds
-var targetSound;
-var cannonSound;
-var blockerSound;
 var themesound;
-var heroshotsound;
-
+var heroShotSound;
+var enemyShootSound;
+var timeSound;
+var lifeSound;
+var vanishSound;
 // varibales for hero position
 var hero = new Image();
 // const HERO_IMG = 80
@@ -115,8 +115,13 @@ function setupGame()
    blockerSound = document.getElementById( "blockerSound" );
    themesound = document.getElementById( "themesound" );
    themesound.loop = true;
-   heroshotsound = document.getElementById( "heroshotsound");
-   
+   heroShotSound = document.getElementById( "heroshotsound");
+   enemyShootSound = document.getElementById( "enemyshootsound");
+   lifeSound = document.getElementById( "lifesound");
+   vanishSound = document.getElementById( "vanishsound");
+   timeSound = document.getElementById( "timesound");
+
+
    hero.src = "pic/hero.png"
    enemy.src = "pic/enemy.png"
    enemyShoot.src = "pic/enemyshoot.png"
@@ -142,7 +147,8 @@ function setupGame()
          pic: extaraLife,
          on: false,
          posx: new Object(),
-         posy: new Object()
+         posy: new Object(),
+         sound: lifeSound
       },
 
       // clock
@@ -150,7 +156,8 @@ function setupGame()
          pic: clock,
          on: false,
          posx: new Object(),
-         posy: new Object()
+         posy: new Object(),
+         sound: timeSound
       },
       // visibility
       {
@@ -159,7 +166,8 @@ function setupGame()
          posx: new Object(),
          posy: new Object(),
          active: false,
-         time : 0
+         time : 0,
+         sound: vanishSound
       }
 
    ]
@@ -233,7 +241,6 @@ function startTimer()
    if (themesound.currentTime != 0)
    {
       themesound.currentTime = 0;
-      
    }
    themesound.play();
    themesound.volume = 0.2;
@@ -289,34 +296,35 @@ function resetElements()
 
 function initPrizes()
 {
-   prizes = 
-   [
-      // extra life
-      {
-         pic: extaraLife,
-         on: false,
-         posx: new Object(),
-         posy: new Object()
-      },
+   prizes = [
+   // extra life
+   {
+      pic: extaraLife,
+      on: false,
+      posx: new Object(),
+      posy: new Object(),
+      sound: lifeSound
+   },
 
-      // clock
-      {
-         pic: clock,
-         on: false,
-         posx: new Object(),
-         posy: new Object()
-      },
-      // visibility
-      {
-         pic: cloap,
-         on: false,
-         posx: new Object(),
-         posy: new Object(),
-         active: false,
-         time : 0
-      }
-
-   ]
+   // clock
+   {
+      pic: clock,
+      on: false,
+      posx: new Object(),
+      posy: new Object(),
+      sound: timeSound
+   },
+   // visibility
+   {
+      pic: cloap,
+      on: false,
+      posx: new Object(),
+      posy: new Object(),
+      active: false,
+      time : 0,
+      sound: vanishSound
+   }
+]
 
 }
 
@@ -435,7 +443,6 @@ function updateHeroPos()
 // called every TIME_INTERVAL milliseconds
 function updatePositions()
 {
-   document.getElementById("cords").innerHTML = life;
 
    updateHeroPos();
    // update the target's position
@@ -483,13 +490,13 @@ function updatePositions()
                   enemyShoots[i][j].pos.y <= heroPos.y + HERO_IMG
                   )
                {
-                  if (blockerSound.currentTime != 0)
+                  if (enemyShootSound.currentTime != 0)
                   {
-                     blockerSound.pause()
-                     blockerSound.currentTime = 0;
+                     enemyShootSound.pause()
+                     enemyShootSound.currentTime = 0;
                   }
          
-                  blockerSound.play(); // play blocker hit 
+                  enemyShootSound.play(); // play blocker hit 
                   life = life - 1 // update player life
                   canEnemyShoot = true;
                   enemyShoots[i][j].on == false
@@ -536,13 +543,13 @@ function updatePositions()
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          hitStates[sectionx][sectiony] == false)
       {
-         if (heroshotsound.currentTime != 0)
+         if (heroShotSound.currentTime != 0)
          {
-            heroshotsound.pause()
-            heroshotsound.currentTime = 0;
+            heroShotSound.pause()
+            heroShotSound.currentTime = 0;
          }
 
-         heroshotsound.play(); // play blocker hit 
+         heroShotSound.play(); // play blocker hit 
          cnt += 1
          hitStates[sectionx][sectiony] = true
 
@@ -579,16 +586,22 @@ function updatePositions()
                {
                   life += 1
                   prizes[i].on = false;
+                  prizes[i].sound.currentTime = 0
+                  prizes[i].sound.play();
                }
                else if(i == 1 )
                {
                   timeLeft += 5
                   prizes[i].on = false;
+                  prizes[i].sound.currentTime = 0
+                  prizes[i].sound.play();
                }
                else if( i == 2 )
                {
                   prizes[2].on = false;
                   prizes[2].active = true
+                  prizes[i].sound.currentTime = 0
+                  prizes[i].sound.play();
                }
             }
          else if (prizes[i].posy > canvasHeight)
@@ -632,12 +645,12 @@ function updatePositions()
       showGameOverDialog("Champion!");
    }
    // if the timer reached zero
-   if ((life == 0))
+   else if ((life == 0))
    {
       stopTimer();
       showGameOverDialog("You lost"); // show the losing dialog
    } // end if
-   if (timeLeft <= 0)
+   else if (timeLeft <= 0)
    {
       stopTimer();
       if (pts < 100)
@@ -715,6 +728,12 @@ function draw()
 
    context.fillText(timeLeft + "Seconds...", canvasWidth, 9 * (LIFE_DRAW/2));
 
+
+   context.fillText("Points", canvasWidth, 11 * (LIFE_DRAW/2));
+   context.fillText(pts, canvasWidth, 12 * (LIFE_DRAW/2));
+
+
+
    context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
    
    // draw life
@@ -787,7 +806,16 @@ function draw()
 // display an alert when the game ends
 function showGameOverDialog(message)
 {
-   alert(message);
+   clearDiv('recordsTable')
+   var myTableDiv = document.getElementById('recordsTable');
+   var span = document.createElement('span');
+   var text1 = document.createTextNode("Current Score: " + pts);
+   span.appendChild(text1)
+   span = document.createElement('span');
+   text1 = document.createTextNode(message);
+   span.appendChild(text1)
+   myTableDiv.appendChild(span)
+   // alert(message);
    updateRecords(pts)
    drawTable('recordsTable', records);
    displayModal('recTable')
