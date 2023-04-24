@@ -753,10 +753,20 @@ body
   {
     display:grid;
     text-align: center;
-    font-size: 2vw;
+    font-size: 1.5vw;
     border: none;
     align-items: center;
     text-align: center;
+  }
+
+  #span-score
+  {
+    color: #128fe3be;
+  }
+
+  #span-mes
+  {
+    color: #cf9312e3;
   }
 
   #recordsTable table
@@ -764,7 +774,10 @@ body
     border: none;
   }
 
-  
-
-
+  #startButton
+  {
+    margin-left: 45vw;
+    margin-top: -15vh;
+  }
+ 
 
