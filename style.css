@@ -701,6 +701,11 @@ body
     background-size: cover;
   }
 
+  .game
+  {
+    display: flex;
+  }
+
 
   .modal
   {
