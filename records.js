@@ -4,12 +4,15 @@ function displayModal(id)
 {   
     var modal = document.getElementById(id)
     $( modal ).css("display", "block")
+    $( ".overlay" ).css("pointer-events", "none")
 }
 
 function hideModal(id)
 {
     var modal = document.getElementById(id)
     $( modal ).css("display", "none")
+    $( ".overlay" ).css("pointer-events", "all")
+
 }
 
 function drawTable(tableid, records)
