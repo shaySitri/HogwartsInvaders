@@ -37,7 +37,8 @@ function subLogin(uname, pass)
                     $( "#welcome" ).hide();
                     $( "#reg" ).hide();
                     $( "#login" ).hide();
-
+                    $ ('#regNav').hide();
+                    $( ".loginOnly" ).show();
                     return;
                 }                
 

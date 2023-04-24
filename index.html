@@ -5,7 +5,7 @@
 <html>
    <head>
       <meta charset = "utf-8">
-      <title>Cannon Game</title>
+      <title>Hogwarts Invaders</title>
       <!-- <script src= "game.js"></script> -->
       <script src= "signup.js"></script>
       <script src= "welcome.js"></script>
@@ -31,7 +31,7 @@
          <ul>
              <li>
                <tr>
-                 <a href="">
+                 <a href="#welcome">
                      <i class="fa fa-2x"> <img src="pic\icon.png"> </i>
                      <span class="nav-text">
                         <label id="span-username"></label>
@@ -39,7 +39,7 @@
                  </a>
                </tr>
              </li>
-             <li class="has-subnav">
+             <li class="has-subnav" id="regNav">
                  <a href="#registerpage" onclick="showReg()">
                      <i class="fa fa-2x">
                         <img src="pic\hat-reg.png">
@@ -111,7 +111,7 @@
          <p id="p2">
          <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button> 
          <button id="gameBut" onclick="showLogin()" class="welcomeBut">Start to Play</button>
-         <button id="aboutBut" onclick="showLogin()" class="welcomeBut">About</button>
+         <button id="aboutBut" onclick="displayModal('aboutModal')" class="welcomeBut">About</button>
 
          </p>
 
@@ -170,12 +170,6 @@
 
 
       <div id="game">
-         <audio id = "blockerSound" preload = "auto">
-         <source src = "blocker_hit.ogg" type = "audio/ogg"></audio>
-      <audio id = "targetSound" preload = "auto">
-         <source src = "target_hit.ogg" type = "audio/ogg"></audio>
-      <audio id = "cannonSound" preload = "auto">
-         <source src = "cannon_fire.ogg" type = "audio/ogg"></audio>
       <audio id="themesound" preload="auto">
          <source src="pic\theme.mp3"  type="audio/mpeg">
       </audio>
@@ -192,7 +186,7 @@
       <canvas id = "theCanvas" width = "800" height = "600" autofocus></canvas> 
       
 
-      <p><input id = "startButton" type = "button" value = "Start Game">
+      <p><input id = "startButton" class="welcomeBut" type = "button" value = "Start Game">
       </p>
       </div>
 
@@ -337,7 +331,7 @@
       {
          $( ".loginOnly" ).show();
       }
-      else
+      else if (logged == false)
       {
          $( ".loginOnly" ).hide();
       }
@@ -356,17 +350,16 @@
 
       function logout()
       {
-         if(logged)
-         {
             $( "#game" ).hide();
             $( "#reg" ).hide();
             $( "#login" ).hide();
             $( "#config" ).hide();
             $( "#welcome" ).show();
+            $ ('#regNav').show();
             $(" #loginOnly ").hide(); 
             setupGame();
             logged=false;
-         }
+
       }
 
       function showLogin()
@@ -390,11 +383,14 @@
 
       function showReg()
       {
-         $( "#welcome" ).hide();
-         $( "#game" ).hide();
-         $( "#reg" ).show();
-         $( "#login" ).hide();
-         $( "#config" ).hide();
+         if(logged == false)
+         {
+            $( "#welcome" ).hide();
+            $( "#game" ).hide();
+            $( "#reg" ).show();
+            $( "#login" ).hide();
+            $( "#config" ).hide();
+         }
          // $( "#regForm").hide();
          // $( '#regImg').css("visibility", "visible")
       }
