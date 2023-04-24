@@ -31,7 +31,7 @@
          <ul>
              <li>
                <tr>
-                 <a href="#welcome">
+                 <a href="#welcome" onclick="showWelcome();return false;">
                      <i class="fa fa-2x"> <img src="pic\icon.png"> </i>
                      <span class="nav-text">
                         <label id="span-username"></label>
@@ -40,7 +40,7 @@
                </tr>
              </li>
              <li class="has-subnav" id="regNav">
-                 <a href="#registerpage" onclick="showReg()">
+                 <a href="#registerpage" onclick="showReg();return false;">
                      <i class="fa fa-2x">
                         <img src="pic\hat-reg.png">
                      </i>
@@ -51,7 +51,7 @@
                  
              </li>
              <li class="has-subnav">
-                 <a href="#loginpage" onclick="showLogin()">
+                 <a href="#loginpage" onclick="showLogin();return false;">
                     <i class="fa fa-2x">
                      <img src="pic\login.png">
                     </i>
@@ -62,7 +62,7 @@
                  
              </li>
              <li class="has-subnav" id="aboutID">
-                 <a href="#about" onclick="displayModal('aboutModal')" >
+                 <a href="#about" onclick="displayModal('aboutModal');return false;" >
                     <i class="fa fa-2x">
                      <img src="pic\about-logo.png">
                     </i>
@@ -92,7 +92,7 @@
             </a>
         </li>
              <li class="loginOnly">
-               <a href="#welcome" onclick="logout()">
+               <a href="#welcome" onclick="logout();return false;">
                   <i class="fa fa-2x">
                    <img src="pic\logout.png">
                   </i>
@@ -104,21 +104,19 @@
      </nav>
    <content>
       
+
       <div id="welcome">
 
 
          <p id="p1">Hogwarts Invaders</p>
          <p id="p2">
+         <!-- <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button>  -->
          <button id="regBut" onclick="showReg()" class="welcomeBut">Register</button> 
+
          <button id="gameBut" onclick="showLogin()" class="welcomeBut">Start to Play</button>
          <button id="aboutBut" onclick="displayModal('aboutModal')" class="welcomeBut">About</button>
 
          </p>
-
-
-
-
-
 
       </div>
 
@@ -204,13 +202,13 @@
                   <div class="registerBoxes">
                      <div class="signUpField">
                    <label>Username</label> 
-                    <input type="text" id="username" name="username" class="signUpField" oninput="inputAddEventListner('username', 'subForm')">             
+                    <input type="text" id="username" name="username" class="signUpField fill" oninput="inputAddEventListner('username', 'subForm')">             
                     <label id="errMsg4" class="err"></label>
                   </div>
       
                   <div class="signUpField">
                      <label>Password</label>
-                     <input type="password" id="pass1" name="pass1" class="signUpField" oninput="inputAddEventListner('pass1', 'subForm')"> 
+                     <input type="password" id="pass1" name="pass1" class="signUpField fill" oninput="inputAddEventListner('pass1', 'subForm')"> 
                   </div>
                   <div class="showPass">
                      <label>Show Password</label>
@@ -218,7 +216,7 @@
                      </div>
                      <div class="signUpField">
                      <label>Password</label>
-                     <input type="password" id="pass2" name="pass2" class="signUpField" oninput="inputAddEventListner('pass2', 'subForm')"> 
+                     <input type="password" id="pass2" name="pass2" class="signUpField fill" oninput="inputAddEventListner('pass2', 'subForm')"> 
                      </div>
                      <div class="showPass">
                      <label>Show Password</label> 
@@ -229,24 +227,24 @@
                      
                      <div class="signUpField">
                         <label>First Name</label>
-                     <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')" > 
+                     <input type="text" id="fname" name="fname" class="signUpField fill" oninput="inputAddEventListner('fname', 'subForm')" placeholder="Enter alphabetic characters only." > 
                      <label id="errMsg2" class="err"></label>
                      </div>
                      <div class="signUpField">
                         <label>Last Name</label>
       
-                     <input type="text" id="lname" name="lname" class="signUpField" oninput="inputAddEventListner('lname', 'subForm')">
+                     <input type="text" id="lname" name="lname" class="signUpField fill" oninput="inputAddEventListner('lname', 'subForm')" placeholder="Enter alphabetic characters only.">
                      <label id="errMsg3" class="err"></label> <br>
                      </div>
                      <div class="signUpField">
                         <label>Email</label>
       
-                     <input type="email" id="email" name="email" class="signUpField" oninput="inputAddEventListner('email', 'subForm')">             
+                     <input type="email" id="email" name="email" class="signUpField fill" oninput="inputAddEventListner('email', 'subForm')">             
                      </div>
                      <div class="signUpField">
                         <label>Birthday</label>
       
-                     <input type="date" id="bday" name="bday" class="signUpField"> 
+                     <input type="date" id="bday" name="bday" class="signUpField fill"> 
                      </div>
                      <p> <label id="errMsg" class="err"></label>  </p>
                      
@@ -325,30 +323,36 @@
    <script type="text/javascript"> 
 
 
-      var logged = false;
+      
 
       if(logged == true)
       {
          $( ".loginOnly" ).show();
       }
-      else if (logged == false)
+      else
       {
          $( ".loginOnly" ).hide();
       }
 
       $(window ).load( function()
       {
+         showWelcome();
+      }  
+      );
+
+      $('#logout_but' ).click( logout());
+
+      function showWelcome()
+      {
          $( "#game" ).hide();
          $( "#reg" ).hide();
          $( "#login" ).hide();
          $( "#config" ).hide();
          $( "#welcome" ).show(); 
-         $( ".loginOnly" ).show();
-
-      }  
-      );
-
-      $('#logout_but' ).click( logout());
+         // $( ".loginOnly" ).show();
+         stopTimer();
+         setupGame();
+      }
 
       function logout()
       {
@@ -358,10 +362,12 @@
             $( "#config" ).hide();
             $( "#welcome" ).show();
             $ ('#regNav').show();
-            $(" #loginOnly ").hide(); 
+            $(" .loginOnly ").hide();
+            userLogged = "" 
+            document.getElementById("span-username").innerHTML = "";
+            stopTimer();
             setupGame();
             logged=false;
-
       }
 
       function showLogin()
@@ -385,16 +391,11 @@
 
       function showReg()
       {
-         if(logged == false)
-         {
             $( "#welcome" ).hide();
             $( "#game" ).hide();
             $( "#reg" ).show();
             $( "#login" ).hide();
             $( "#config" ).hide();
-         }
-         // $( "#regForm").hide();
-         // $( '#regImg').css("visibility", "visible")
       }
       
 

@@ -1,4 +1,6 @@
 var records = []
+var logged = false;
+var userLogged = ""
 
 function subLogin(uname, pass)
 {
@@ -22,10 +24,11 @@ function subLogin(uname, pass)
                 }
                 else
                 {
+                    userLogged = uname
                     logged = true
                     records = new Array()
-                    document.getElementById("span-username").innerHTML = "Hello,     " + uname;
-                    document.getElementById("span-username-conf").innerHTML = uname;
+                    document.getElementById("span-username").innerHTML = "Hello,     " + userLogged;
+                    document.getElementById("span-username-conf").innerHTML = userLogged;
                     document.getElementById("login_username").value = '';
                     document.getElementById("login_pass").value = '';
                     document.getElementById("login_errmsg").innerHTML = '';
@@ -59,5 +62,7 @@ function resetLogin()
 {
         document.getElementById("login_username").value = '';
         document.getElementById("login_pass").value = '';
+        document.getElementById("login_username").style.border = "";
+        document.getElementById("login_pass").style.border = "";
 
 }
