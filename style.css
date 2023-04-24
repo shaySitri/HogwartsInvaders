@@ -709,7 +709,7 @@ body
 
   .modal
   {
-
+    display: flex;
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     left: 0;
@@ -794,9 +794,23 @@ body
     align-items: center;
     font-size: 6vh;
     font-weight: bold;
+  
   }
+
+
+  .modal-content label image:hover {
+    box-shadow: none;
+    text-shadow: rgba(81, 203, 238, 1) 4px 0 6px;
+    
+  }
+
   .aboutHeadlines
   {
     padding-left: 15vw;
   }
-
+  .subHeader
+  {
+    color: #efc74c;
+    font-size: large;
+    text-align: center;
+  }
