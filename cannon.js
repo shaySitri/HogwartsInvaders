@@ -415,17 +415,17 @@ function updateSpeed()
       prizeFlag = false;
       createPrizes();
    }
-   if (Math.abs(enemyVelocity) < 300 && enemyShootVelocity < 300)
+   if (Math.abs(enemyVelocity) < 390 && enemyShootVelocity < 390)
    {
       if (enemyVelocity > 0)
       {
-         enemyVelocity += 50;
+         enemyVelocity += 60;
       }
       else
       {
-         enemyVelocity -= 50;
+         enemyVelocity -= 60;
       }
-      enemyShootVelocity += 50;
+      enemyShootVelocity += 60;
    }
 }
 
@@ -722,9 +722,9 @@ function randomShootingEnemy()
    // {
       // if (enemyShoots[iShooter][jShooter].on == false)
       // {
-      enemyShoots[iShooter][jShooter].on = true;
-      enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
-      enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
+   enemyShoots[iShooter][jShooter].on = true;
+   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
+   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
       
    // }
 
