@@ -782,5 +782,15 @@ body
   {
     pointer-events: all;
   }
- 
+
+  .aboutTitle
+  {
+    align-items: center;
+    font-size: 6vh;
+    font-weight: bold;
+  }
+  .aboutHeadlines
+  {
+    padding-left: 15vw;
+  }
 
