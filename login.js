@@ -34,14 +34,8 @@ function subLogin(uname, pass)
                     document.getElementById("login_errmsg").innerHTML = '';
                     document.getElementById("cb3").checked = false;
                     document.getElementById("login_pass").type = "password"
-                    alert('Login Succeed!')
-                    $( "#game" ).hide();
-                    $( "#config" ).show();
-                    $( "#welcome" ).hide();
-                    $( "#reg" ).hide();
-                    $( "#login" ).hide();
-                    $ ('#regNav').hide();
-                    $( ".loginOnly" ).show();
+                    alert('Login Succeeded!')
+                    showGame();
                     return;
                 }                
 
@@ -65,4 +59,16 @@ function resetLogin()
         document.getElementById("login_username").style.border = "";
         document.getElementById("login_pass").style.border = "";
 
+}
+
+function showGame()
+{
+    $( "#game" ).hide();
+    $( "#config" ).show();
+    $( "#welcome" ).hide();
+    $( "#reg" ).hide();
+    $( "#login" ).hide();
+    $ ('#regNav').hide();
+    $ ('#logNav').hide();
+    $( ".loginOnly" ).show();
 }

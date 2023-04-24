@@ -4,7 +4,7 @@ var numSec = 0
 var sec = 120
 var newsec = 120
 var background = "pic/chambers.png";
-
+var charcter = "pic/hero.png"
 
 function choseKey (event){
     var shotKey =  document.getElementById("KeyToShot");
@@ -62,7 +62,7 @@ function saveConfig(){
     var src = 'url("pic/' + background + '")';
 
     $('#theCanvas').css("background-image", src);
-
+    charcter = document.getElementById("playChar").value;
 
     $( "#config" ).hide();
     $( "#welcome" ).hide();

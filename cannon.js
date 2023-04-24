@@ -22,6 +22,7 @@ var canvasHeight; // height of the canvas
 // variables for sounds
 var themesound;
 var heroShotSound;
+
 var enemyShootSound;
 var timeSound;
 var lifeSound;
@@ -123,14 +124,28 @@ function setupGame()
    blockerSound = document.getElementById( "blockerSound" );
    themesound = document.getElementById( "themesound" );
    themesound.loop = true;
-   heroShotSound = document.getElementById( "heroshotsound");
+
+   if (charcter = "pic/hero.png")
+   {
+      heroShotSound = document.getElementById( "heroshotsound");
+   }
+   else if(charcter == "pic/wisley.png")
+   {
+      heroShotSound = document.getElementById( "ronSound");
+   }
+   else
+   {
+      heroShotSound = document.getElementById( "hermaionieSound");
+   }
+
+
    enemyShootSound = document.getElementById( "enemyshootsound");
    lifeSound = document.getElementById( "lifesound");
    vanishSound = document.getElementById( "vanishsound");
    timeSound = document.getElementById( "timesound");
 
 
-   hero.src = "pic/hero.png"
+   hero.src = charcter;
 
    enemy1.src = "pic/enemy.png" // lord 
    enemy2.src = "pic/beatrix.png" // beatrix
@@ -267,10 +282,11 @@ function startTimer()
 // terminate interval timer
 function stopTimer()
 {
-   
    window.clearInterval( intervalTimer );
    window.clearInterval (speed_interval )
    themesound.pause();
+   heroShotSound.pause();
+   enemyShootSound.pause();
 } // end function stopTimer
 
 // called by function newGame to scale the size of the game elements
@@ -394,12 +410,26 @@ function newGame()
    heroShoots = new Array();
 	updatePositions();
    life = 3;
+   hero.src = charcter;
 
    // prevent double shooting from hero player
    then = Date.now();
    initPrizes();
    startTimer(); // starts the game loop
    cnt = 0;
+
+   if (charcter == "pic/hero.png")
+   {
+      heroShotSound = document.getElementById( "heroshotsound");
+   }
+   else if(charcter == "pic/wisley.png")
+   {
+      heroShotSound = document.getElementById( "ronSound");
+   }
+   else
+   {
+      heroShotSound = document.getElementById( "hermaionieSound");
+   }
 
 
 } // end function newGame

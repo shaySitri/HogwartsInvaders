@@ -492,7 +492,7 @@ body
   width: 80%;
   height: 80%;
   padding-top: 0vh;
-  font-size: 2.25vh;
+  font-size: 3vh;
 }
 
 .configFields input
@@ -513,16 +513,22 @@ body
 .configFields select
 {
   width: 16vw;
-  height: 4.7vh;
+  height: 4.8vh;
   color: rgb(135, 34, 27);
+  bottom: 1vh;
   /* margin-bottom: 2%; */
   border: none;
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
-  font-size: 3vh;
+  font-size: 2vh;
   font-family: 'Parry Hotter Regular';
   text-align: center;
+}
+
+.configFields image
+{
+  box-shadow: 0px 0px 5px #fff;
 }
 
 #welcomeConfig
@@ -547,12 +553,15 @@ body
     
 }
 
+
 #saveConfig
 {
   position: absolute;
   margin-left: 45vw;
   margin-top: 45vh;
 }
+
+
 
 .welcomeConfig
 {
@@ -814,7 +823,7 @@ body
   }
 
 
-  .modal-content label image:hover {
+  .modal-content label:hover {
     box-shadow: none;
     text-shadow: rgba(81, 203, 238, 1) 4px 0 6px;
     

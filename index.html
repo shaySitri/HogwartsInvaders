@@ -6,6 +6,8 @@
    <head>
       <meta charset = "utf-8">
       <title>Hogwarts Invaders</title>
+      <link rel="icon" type="image/x-icon" href="pic\icon-2.png">
+
       <!-- <script src= "game.js"></script> -->
       <script src= "signup.js"></script>
       <script src= "welcome.js"></script>
@@ -50,7 +52,7 @@
                  </a>
                  
              </li>
-             <li class="has-subnav">
+             <li class="has-subnav" id="logNav">
                  <a href="#loginpage" onclick="showLogin();return false;">
                     <i class="fa fa-2x">
                      <img src="pic\login.png">
@@ -64,7 +66,7 @@
              <li class="has-subnav" id="aboutID">
                  <a href="#about" onclick="displayModal('aboutModal');return false;" >
                     <i class="fa fa-2x">
-                     <img src="pic\about-logo.png">
+                     <img src="pic\about.png">
                     </i>
                      <span class="nav-text">
                          About
@@ -72,9 +74,9 @@
                  </a>
              </li>
              <li class="loginOnly">
-               <a href="#game" onclick="">
+               <a href="#game" onclick="showGame();return false;"">
                   <i class="fa fa-2x">
-                   <img src="pic\play.png">
+                   <img src="pic\game.png">
                   </i>
                    <span class="nav-text">
                        New Game
@@ -82,7 +84,7 @@
                </a>
            </li>
            <li class="loginOnly">
-            <a href="#game" onclick="">
+            <a href="#records" onclick="displayModal('recTable');return false;" >
                <i class="fa fa-2x">
                 <img src="pic\records.png">
                </i>
@@ -92,7 +94,7 @@
             </a>
         </li>
              <li class="loginOnly">
-               <a href="#welcome" onclick="logout();return false;">
+               <a href="#lpgout" onclick="logout();return false;">
                   <i class="fa fa-2x">
                    <img src="pic\logout.png">
                   </i>
@@ -182,6 +184,12 @@
          <source src="pic\vanish.mp3" type="audio/mpeg"></audio>
       <audio id="lifesound" preload="auto">
             <source src="pic\lifesound.mp3" type="audio/mpeg"></audio>
+      <audio id="hermaionieSound" preload="auto">
+         <source src="pic\hermaionieSound.mp3" type="audio/mpeg"></audio>
+      <audio id="ronSound" preload="auto">
+            <source src="pic\ronSound.mp3" type="audio/mpeg"></audio>
+
+
       <canvas id = "theCanvas" width = "800" height = "600" autofocus></canvas> 
       
 
@@ -284,9 +292,18 @@
 
                   <select name="My location is..." id="playLoc">
                      <option value="chambers.png">The Chamber of Secret</option>
-                     <option value="quditch.png">Quiditch Field</option>
-                     <option value="station.png">Moaning Myrtle Bathroom</option>
-                     <option value="hagrid.png">Diagon Alley</option>
+                     <option value="quiditch.png">Quiditch Field</option>
+                     <option value="mirtletoilet.png">Moaning Myrtle Bathroom</option>
+                     <option value="diagon.png">Diagon Alley</option>
+                   </select>
+               </div>
+               <div>
+                  <label>Charcter</label>
+
+                  <select name="My charcter is..." id="playChar">
+                     <option value="pic/hero.png">Harry Potter</option>
+                     <option value="pic/herma.png">Hermione Granger</option>
+                     <option value="pic/wisley.png">Ron Weasley</option>
                    </select>
                </div>
                
@@ -312,7 +329,35 @@
          </div>  
          <div class="aboutTxt">
          <label> Our game based on "Harry Potter" movies. </label> <br>
-            
+         <label class="subHeader">
+            You can play with:
+         </label>
+         <br>
+         <table>
+            <tr>
+               <td>
+                  <label><b>Harry Potter</b></label>
+               </td>
+               <td>
+                  <img src="pic\harry.gif" width="85" height="100">
+               </td>
+               <td>
+                  <label><b>Hermaionie Granger</b></label>
+               </td>
+               <td>
+                  <img src="pic\herm.gif" width="85" height="100">
+               </td>
+
+               <td>
+                  <label><b>Ron Weasley</b></label>
+               </td>
+               <td>
+                  <img src="pic\ron.gif"  width="100" height="100">
+               </td>
+            </tr>
+         </table>
+
+
             <label class="subHeader">
             Include game vs. Harry's enmies: 
             </label>
@@ -377,7 +422,6 @@
                   <td>
                      <img src="https://64.media.tumblr.com/aad2e25a5d34b952ff0e8c87b13f1e67/11c950656f86f939-e4/s250x400/7ffdf634d46ba0b2e0a606d5549aa144e1a06d43.gif"  width="150" height="80">
                   </td>
-
                </tr>
             </table>
          </label>
@@ -433,6 +477,8 @@
          // $( ".loginOnly" ).show();
          stopTimer();
          setupGame();
+         resetLogin();
+         resetRegisterForm();
       }
 
       function logout()
@@ -459,7 +505,7 @@
          $( "#reg" ).hide();
          $( "#config" ).hide();
          $( "#login" ).show();
-         resetRegisterForm()
+         resetLogin();
          }
 
          else
@@ -477,6 +523,7 @@
             $( "#reg" ).show();
             $( "#login" ).hide();
             $( "#config" ).hide();
+            resetRegisterForm();
       }
       
 
