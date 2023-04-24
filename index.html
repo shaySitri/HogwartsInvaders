@@ -229,7 +229,7 @@
                      
                      <div class="signUpField">
                         <label>First Name</label>
-                     <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')"> 
+                     <input type="text" id="fname" name="fname" class="signUpField" oninput="inputAddEventListner('fname', 'subForm')" > 
                      <label id="errMsg2" class="err"></label>
                      </div>
                      <div class="signUpField">
@@ -327,14 +327,14 @@
 
       var logged = false;
 
-      // if(logged == true)
-      // {
-      //    $( ".loginOnly" ).show();
-      // }
-      // else if (logged == false)
-      // {
-      //    $( ".loginOnly" ).hide();
-      // }
+      if(logged == true)
+      {
+         $( ".loginOnly" ).show();
+      }
+      else if (logged == false)
+      {
+         $( ".loginOnly" ).hide();
+      }
 
       $(window ).load( function()
       {
