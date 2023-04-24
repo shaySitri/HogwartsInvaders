@@ -342,6 +342,7 @@ body
     font-size: 1.7vh;
   }
 
+
   .signUpField label {
 
     pointer-events: none;
@@ -497,6 +498,21 @@ body
 .configFields input
 {
   width: 10vw;
+  height: 4.7vh;
+  color: rgb(135, 34, 27);
+  /* margin-bottom: 2%; */
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+  font-size: 3vh;
+  font-family: 'Parry Hotter Regular';
+  text-align: center;
+}
+
+.configFields select
+{
+  width: 16vw;
   height: 4.7vh;
   color: rgb(135, 34, 27);
   /* margin-bottom: 2%; */
@@ -794,7 +810,7 @@ body
     align-items: center;
     font-size: 6vh;
     font-weight: bold;
-  
+    
   }
 
 

@@ -3,6 +3,7 @@ var numMin = 2
 var numSec = 0
 var sec = 120
 var newsec = 120
+var background = "pic/chambers.png";
 
 
 function choseKey (event){
@@ -56,6 +57,11 @@ function saveConfig(){
     document.getElementById("numSec").value = 0
     document.getElementById("KeyToShot").value = "Space"
     sec = 120
+    background = document.getElementById("playLoc").value;
+
+    var src = 'url("pic/' + background + '")';
+
+    $('#theCanvas').css("background-image", src);
 
 
     $( "#config" ).hide();

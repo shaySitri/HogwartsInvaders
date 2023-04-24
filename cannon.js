@@ -284,14 +284,14 @@ function resetElements()
 
    IMG_PRIZE = canvasWidth * 0.0375
    LIFE_DRAW = canvasWidth * 0.08
-   HERO_IMG = canvasWidth * 0.05
+   HERO_IMG = canvasWidth * 0.064
    HERO_SHOOT_IMG = canvasWidth * 0.0375 / 2
-   ENEMY_IMG = canvasWidth * 0.0375
-   ENEMY_SHOOT_IMG = canvasWidth * 0.025 
+   ENEMY_IMG = canvasWidth * 0.045
+   ENEMY_SHOOT_IMG = canvasWidth * 0.032 
 
 
    // 180, 620
-   enemyPos.start.x = (canvasWidth - (ENEMY_I * ENEMY_IMG + 10 * ENEMY_J))/2;
+   enemyPos.start.x = (canvasWidth - (ENEMY_I * ENEMY_IMG + 25 * ENEMY_J))/2;
    enemyPos.end.x = canvasWidth - enemyPos.start.x;
    enemyPos.start.y = canvasHeight / 25;
    enemyPos.end.y = enemyPos.start.y + 4 * ENEMY_IMG + (ENEMY_J - 1) * 10;
@@ -723,7 +723,7 @@ function randomShootingEnemy()
       // if (enemyShoots[iShooter][jShooter].on == false)
       // {
    enemyShoots[iShooter][jShooter].on = true;
-   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (10 * iShooter) - (ENEMY_IMG / 2)
+   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (25 * iShooter) - (ENEMY_IMG / 2)
    enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
       
    // }
@@ -740,23 +740,48 @@ function draw()
    // context.rotate(-90 * Math.PI / 180);
    // context.translate(-canvas.width, 0);
    // display time remaining
-   context.fillStyle = "white";
-   context.font = "15px Parry Hotter Regular";
-   context.textBaseline = "top";
-   context.fillText("Time remaining:", canvasWidth, 8 * (LIFE_DRAW/2));
+   
+   if (timeLeft < 30)
+   {
+      context.strokeStyle = "red";
+      context.fillStyle = "red";
+   }
+   else if (timeLeft < 100)
+   {
+      context.strokeStyle = "#ff8400";
+      context.fillStyle = "#ff8400";
 
-   context.font = "23px Parry Hotter Regular";
+   }
+   else
+   {
+      context.strokeStyle = "#efc74c";
+      context.fillStyle = "#efc74c";
+
+   }
+
+   var radius = canvasWidth * 0.0442
+   
+   context.beginPath();
+   context.arc(canvasWidth*1.1 - radius, 5 * (LIFE_DRAW/2) + 3*radius, radius, 50, 0, 2 * Math.PI);
+   context.stroke();
+
+   context.font = "30px Parry Hotter Regular";
    context.textBaseline = "middle";
-
-   context.fillText(timeLeft + "Seconds...", canvasWidth, 9 * (LIFE_DRAW/2));
-
-
-   context.fillText("Points", canvasWidth, 11 * (LIFE_DRAW/2));
-   context.fillText(pts, canvasWidth, 12 * (LIFE_DRAW/2));
+   context.fillText(timeLeft , canvasWidth*1.1 - radius * 1.25 , 5 * (LIFE_DRAW/2) + 3*radius);
 
 
+   context.fillStyle = "#efc74c";
+   context.font = "22px Parry Hotter Regular";
+   context.fillText("Points", canvasWidth +  0.6 * radius, 11 * (LIFE_DRAW/2));
+   context.font = "27px Parry Hotter Regular";
+   context.fillText(pts, canvasWidth +  1.05 * radius, 12 * (LIFE_DRAW/2));
 
+
+   // draw hero
    context.drawImage(hero, heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
+
+
+   
    
    // draw life
    
@@ -764,14 +789,13 @@ function draw()
    {
       if (i >= 5)
       {
-         context.fillStyle = "white";
-         context.font = "25px Parry Hotter Regular";
+         context.font = "22px Parry Hotter Regular";
          context.textBaseline = "center";
-         context.fillText("Lifes: " + life, canvasWidth, 5 * (LIFE_DRAW/2));
+         context.fillText("Lifes: " + life, canvasWidth +  0.5 * radius, 5.5 * (LIFE_DRAW/2));
       }
       else
       {
-         context.drawImage(lifeDisplay,canvasWidth + 0.025 * canvas.width , i * (LIFE_DRAW/2), LIFE_DRAW, LIFE_DRAW / 2);
+         context.drawImage(lifeDisplay,canvasWidth + 0.012 * canvas.width , i * (LIFE_DRAW/2), LIFE_DRAW, LIFE_DRAW / 2);
       }
    }
 
@@ -782,7 +806,7 @@ function draw()
    {
       for (var j = 0; j < ENEMY_J; j++)
       {
-         extrai = (ENEMY_IMG + 10) * i
+         extrai = (ENEMY_IMG + 25) * i
          extraj = (ENEMY_IMG + 10) * j
          if (hitStates[i][j] == false)
          {
@@ -819,6 +843,17 @@ function draw()
          context.clearRect(heroPos.x, heroPos.y, HERO_IMG, HERO_IMG);
       }
    }
+
+      
+      // set line stroke and line width
+      context.strokeStyle = '#efc74c';
+      context.lineWidth = 0.8;
+      // draw a red line
+      context.beginPath();
+      context.moveTo(canvasWidth, 0);
+      context.lineTo(canvasWidth, canvasHeight);
+      context.stroke();
+   
 
 
 } // end function draw
