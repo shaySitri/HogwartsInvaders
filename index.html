@@ -327,14 +327,14 @@
 
       var logged = false;
 
-      if(logged == true)
-      {
-         $( ".loginOnly" ).show();
-      }
-      else if (logged == false)
-      {
-         $( ".loginOnly" ).hide();
-      }
+      // if(logged == true)
+      // {
+      //    $( ".loginOnly" ).show();
+      // }
+      // else if (logged == false)
+      // {
+      //    $( ".loginOnly" ).hide();
+      // }
 
       $(window ).load( function()
       {
@@ -343,6 +343,8 @@
          $( "#login" ).hide();
          $( "#config" ).hide();
          $( "#welcome" ).show(); 
+         $( ".loginOnly" ).show();
+
       }  
       );
 
