@@ -41,7 +41,12 @@ var heroShoots;
 var hitStates; // is each target piece hit?
 
 // variables for detremain the enemys
-var enemy = new Image();
+var enemy1 = new Image();
+var enemy2 = new Image();
+var enemy3 = new Image();
+var enemy4 = new Image();
+var enemies = []
+
 var enemyShoot = new Image();
 var enemyVelocity;
 // const ENEMY_IMG = 60
@@ -91,6 +96,9 @@ var LIFE_DRAW;
 
 var calcCenter;
 
+var lifeDisplay = new Image();
+
+
 // called when the app first launches
 function setupGame()
 {
@@ -123,12 +131,18 @@ function setupGame()
 
 
    hero.src = "pic/hero.png"
-   enemy.src = "pic/enemy.png"
+
+   enemy1.src = "pic/enemy.png" // lord 
+   enemy2.src = "pic/beatrix.png" // beatrix
+   enemy3.src = "pic/darco.png" // darco
+   enemy4.src = "pic/dolores.png"
+
    enemyShoot.src = "pic/enemyshoot.png"
    heroShoot.src = "pic/heroshoot.png"
-   extaraLife.src = "pic/snitch.gif"
+   extaraLife.src = "pic/newsnitch.png"
    clock.src = "pic/clock.png"
    cloap.src = "pic/visible.png"
+   lifeDisplay.src = "pic/snitch.gif"
 
    enemyPos = new Object();
    enemyPos.start = new Object();
@@ -171,6 +185,8 @@ function setupGame()
       }
 
    ]
+
+   enemies = [enemy1, enemy2, enemy3, enemy4]
 
 
    keysDown = {};
@@ -223,7 +239,7 @@ function createPrizes()
 // delay between shoots
 function validSpacePress()
 {
-   if ((now - then) < 0.75)
+   if ((now - then) < 50)
    {
       now = then
       return false
@@ -243,7 +259,7 @@ function startTimer()
       themesound.currentTime = 0;
    }
    themesound.play();
-   themesound.volume = 0.2;
+   themesound.volume = 0.1;
 
    // countdown.start();
 } // end function startTimer
@@ -547,17 +563,19 @@ function updatePositions()
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          hitStates[sectionx][sectiony] == false)
       {
+         heroShoots.splice(i, 2);  // shoot blow
+
          if (heroShotSound.currentTime != 0)
          {
             heroShotSound.pause()
             heroShotSound.currentTime = 0;
          }
-
          heroShotSound.play(); // play blocker hit 
+
+
          cnt += 1
          hitStates[sectionx][sectiony] = true
 
-         heroShoots.splice(i, 1) // shoot blow
          if (sectiony == 3)
             pts += 5
          else if (sectiony == 2)
@@ -753,7 +771,7 @@ function draw()
       }
       else
       {
-         context.drawImage(prizes[0].pic,canvasWidth + 0.025 * canvas.width , i * (LIFE_DRAW/2), LIFE_DRAW, LIFE_DRAW / 2);
+         context.drawImage(lifeDisplay,canvasWidth + 0.025 * canvas.width , i * (LIFE_DRAW/2), LIFE_DRAW, LIFE_DRAW / 2);
       }
    }
 
@@ -768,7 +786,7 @@ function draw()
          extraj = (ENEMY_IMG + 10) * j
          if (hitStates[i][j] == false)
          {
-            context.drawImage(enemy, extrai + enemyPos.start.x, canvasHeight / 25 + extraj, ENEMY_IMG, ENEMY_IMG);
+            context.drawImage(enemies[j], extrai + enemyPos.start.x, canvasHeight / 25 + extraj, ENEMY_IMG, ENEMY_IMG);
          }
 
       }

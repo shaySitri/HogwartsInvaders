@@ -87,7 +87,7 @@ function isValid() {
     {
         if(details[4].value == users[i].username)
         {
-            details[4].value = "User name already exist."
+            // details[4].value = "User name already exist."
             details[4].style.border = "1px solid red";
             flag = false;
         }
