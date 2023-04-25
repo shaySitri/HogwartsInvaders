@@ -1,10 +1,12 @@
 // Get the modal
 
 function displayModal(id)
-{   
+{  
+    
     var modal = document.getElementById(id)
     $( modal ).css("display", "block")
     $( ".overlay" ).css("pointer-events", "none")
+    drawTable('recordsTable', records);
 }
 
 function hideModal(id)
@@ -12,6 +14,7 @@ function hideModal(id)
     var modal = document.getElementById(id)
     $( modal ).css("display", "none")
     $( ".overlay" ).css("pointer-events", "all")
+    clearDiv('recordsTable')
 
 }
 

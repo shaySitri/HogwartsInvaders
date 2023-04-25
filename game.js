@@ -906,7 +906,7 @@ function showGameOverDialog(message)
 
    // alert(message);
    updateRecords(pts)
-   drawTable('recordsTable', records);
+   // drawTable('recordsTable', records);
    displayModal('recTable')
    
 } // end function showGameOverDialog
