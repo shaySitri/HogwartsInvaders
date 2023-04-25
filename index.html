@@ -23,8 +23,9 @@
 
    </head>
    <header>
-
-
+      Hogwarts
+      Invaders
+      <img src="pic\icon.png" height="30" width="30">
    </header>
    <body>
       <div class="area"></div>
@@ -74,7 +75,7 @@
                  </a>
              </li>
              <li class="loginOnly">
-               <a href="#game" onclick="showGame();return false;"">
+               <a href="#game" onclick="showGame();return false;">
                   <i class="fa fa-2x">
                    <img src="pic\game.png">
                   </i>
@@ -442,7 +443,17 @@
    </content>
    </body>
    <footer>
+      <div id="footerContent">
+         <label id="footerSign">&copy</label>
+      
+      <b>Itai Carmel </b>         <a href="mailto:carmelit@post.bgu.ac.il">carmelit@post.bgu.ac.il</a>
+      
+      <label id="footerSign">|</label>
 
+      <b>Shay Sitri </b>         <a href="mailto:sitri@post.bgu.ac.il">sitri@post.bgu.ac.il</a>
+
+      <label id="footerSign">&copy</label>
+   </div>
    </footer>
 
    <script type="text/javascript"> 
@@ -474,6 +485,7 @@
          $( "#login" ).hide();
          $( "#config" ).hide();
          $( "#welcome" ).show(); 
+         $( "footer" ).show(); 
          // $( ".loginOnly" ).show();
          stopTimer();
          setupGame();
@@ -483,18 +495,22 @@
 
       function logout()
       {
+           if (logged == true)
+           {
             $( "#game" ).hide();
             $( "#reg" ).hide();
             $( "#login" ).hide();
             $( "#config" ).hide();
             $( "#welcome" ).show();
             $ ('#regNav').show();
+            $ ('#logNav').show();
             $(" .loginOnly ").hide();
             userLogged = "" 
             document.getElementById("span-username").innerHTML = "";
             stopTimer();
             setupGame();
             logged=false;
+           }
       }
 
       function showLogin()

@@ -6,7 +6,7 @@ html
     object-fit: cover;
     margin: 0; 
     height: 100%; 
-    overflow: hidden
+    overflow:hidden
     
 }
 
@@ -822,11 +822,9 @@ body
     
   }
 
-
   .modal-content label:hover {
     box-shadow: none;
     text-shadow: rgba(81, 203, 238, 1) 4px 0 6px;
-    
   }
 
   .aboutHeadlines
@@ -838,4 +836,45 @@ body
     color: #efc74c;
     font-size: large;
     text-align: center;
+  }
+
+  header
+  {
+    
+    color: rgba(255, 255, 255, 0.549);
+    margin-left: 43vw;
+  }
+  footer
+  {
+    font-family:sans-serif;
+    position: absolute;
+    display: flex;
+    font-size: 2vh;
+    bottom: 0;
+    color: rgba(78, 78, 78, 0.308);
+    margin-left: 35vw;
+  }
+  #footerContent
+  {
+    align-items: center;
+    text-align: center;
+    align-self: center;
+  }
+
+  footer label
+  {
+    font-weight: bold;
+    font-size: 2.5vh
+  }
+
+  footer a
+  {
+    color: rgba(78, 78, 78, 0.308);
+    transition: 0.3s ease;
+  }
+
+  footer a:visited
+  {
+    color: black;
+
   }

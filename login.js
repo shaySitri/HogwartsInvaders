@@ -71,4 +71,6 @@ function showGame()
     $ ('#regNav').hide();
     $ ('#logNav').hide();
     $( ".loginOnly" ).show();
+    stopTimer();
+    setupGame();
 }
