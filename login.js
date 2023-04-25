@@ -48,8 +48,9 @@ function subLogin(uname, pass)
 
 function updateRecords(pts)
 {
-    records.push(pts);
-    records.reverse();
+    var newPts = parseInt(pts)
+    records.push(newPts);
+    records = records.sort().reverse();
 }
 
 function resetLogin()

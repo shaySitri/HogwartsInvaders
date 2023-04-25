@@ -4,8 +4,10 @@ var context; // used for drawing on the canvas
 // constants for game play
 var TARGET_PIECES = 20; // sections in the target
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
+var SPACE_INTERVAL = 550 // evry 750 ms you can press on shoot
 var SPEEDER = 5000; // axlerate enemies and enemies shot.
 var speed_interval;
+var intervalSpace;
 var cnt;
 var then;
 var now;
@@ -70,6 +72,7 @@ const ENEMY_J = 4;
 
 // keys
 var keysDown;
+var spacwDown;
 
 // player points
 var pts;
@@ -99,7 +102,7 @@ var calcCenter;
 
 var lifeDisplay = new Image();
 
-
+var conyter = 0
 // called when the app first launches
 function setupGame()
 {
@@ -205,6 +208,7 @@ function setupGame()
 
 
    keysDown = {};
+   spacwDown = 0;
    pts = 0;
    life = 3;
    cnt = 0;
@@ -215,10 +219,11 @@ function setupGame()
 
 	addEventListener("keyup", function (e) {
 
-      now = Date.now()
-      if (e.keyCode == keyCode && validSpacePress) { 
+      // now = Date.now()
+      if (e.keyCode == keyCode && (spacwDown == 0)) { 
 
          updateHeroShoots();
+         spacwDown = 1;
       }
       else
       {
@@ -228,10 +233,6 @@ function setupGame()
 
    }, false);
    
-
-
-
-
 
 } // end function setupGame
 
@@ -251,24 +252,14 @@ function createPrizes()
    prizes[rand].posy = 0
 }
 
-// delay between shoots
-function validSpacePress()
-{
-   if ((now - then) < 50)
-   {
-      now = then
-      return false
-   }
-   else
-      now = then 
-      return true;
-}
+
 
 // set up interval timer to update game
 function startTimer()
 {
    intervalTimer = window.setInterval( updatePositions, TIME_INTERVAL );
    speed_interval = window.setInterval (updateSpeed, SPEEDER);
+   intervalSpace = window.setInterval( function() {spacwDown = 0;} , SPACE_INTERVAL)
    if (themesound.currentTime != 0)
    {
       themesound.currentTime = 0;
@@ -283,7 +274,8 @@ function startTimer()
 function stopTimer()
 {
    window.clearInterval( intervalTimer );
-   window.clearInterval (speed_interval )
+   window.clearInterval (speed_interval );
+   window.clearInterval( intervalSpace );
    themesound.pause();
    heroShotSound.pause();
    enemyShootSound.pause();
@@ -380,6 +372,7 @@ function initEnemyShoots()
          enemyShoots[i][j].on = new Object();
          enemyShoots[i][j].pos = new Object();
          hitStates[i][j] = false
+         enemyShoots[i][j].on = false;
       }
    }
 
@@ -549,7 +542,7 @@ function updatePositions()
                   enemyShootSound.play(); // play blocker hit 
                   life = life - 1 // update player life
                   canEnemyShoot = true;
-                  enemyShoots[i][j].on == false
+                  enemyShoots[i][j].on = false
                   enemyShoots[i][j].pos = new Object();
                   // back player to start point
                   heroPos.x = initialXpoint;
@@ -560,7 +553,7 @@ function updatePositions()
             }
             else
             {
-               enemyShoots[i][j].on == false
+               enemyShoots[i][j].on = false
                enemyShoots[i][j].pos = new Object();
             }
 
@@ -752,9 +745,13 @@ function randomShootingEnemy()
    // {
       // if (enemyShoots[iShooter][jShooter].on == false)
       // {
-   enemyShoots[iShooter][jShooter].on = true;
-   enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (25 * iShooter) - (ENEMY_IMG / 2)
-   enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
+   if (enemyShoots[iShooter][jShooter].on == false)
+   {
+      enemyShoots[iShooter][jShooter].on = true;
+      enemyShoots[iShooter][jShooter].pos.x = enemyPos.start.x + ENEMY_IMG * (iShooter + 1) + (25 * iShooter) - (ENEMY_IMG / 2)
+      enemyShoots[iShooter][jShooter].pos.y = enemyPos.start.y + ENEMY_IMG * (jShooter + 1) + (10 * jShooter)
+   
+   }
       
    // }
 
