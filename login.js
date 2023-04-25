@@ -50,7 +50,6 @@ function updateRecords(pts)
 {
     var newPts = parseInt(pts)
     records.push(newPts);
-    records = records.sort().reverse();
 }
 
 function resetLogin()
