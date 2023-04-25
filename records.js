@@ -17,6 +17,9 @@ function hideModal(id)
 
 function drawTable(tableid, records)
 {
+
+    var sortedRec = records.sort((a, b) => b - a);
+
     var myTableDiv = document.getElementById(tableid);
 
     var table = document.createElement('TABLE');
@@ -33,8 +36,10 @@ function drawTable(tableid, records)
     tr.appendChild(td2);
     table.appendChild(tr);
 
+    
+
   
-    for (let i = 0; i < records.length; i++)
+    for (let i = 0; i < sortedRec.length; i++)
     {
             var tr = document.createElement('tr');   
         
@@ -42,7 +47,7 @@ function drawTable(tableid, records)
             var td2 = document.createElement('td');
         
             var text1 = document.createTextNode((i+1) + " - ");
-            var text2 = document.createTextNode(records[i]);
+            var text2 = document.createTextNode(sortedRec[i]);
         
             td1.appendChild(text1);
             td2.appendChild(text2);
