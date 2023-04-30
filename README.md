@@ -7,13 +7,14 @@
 
 <a href="https://web-development-environments-2023.github.io/assignment2-208909416_209405042/">Go to Hagwarts Invaders adventure!</a>.
 
-<p>Deafulat username: p< <br> Password: testuser</p>
+<p>Default Username: p <br> Password: testuser
+  </p>
 
 <ul>
   <li>Choose player: Harry, Ron or Hermaionie.</li>
   <li>Chose scene.<br>
   <li>Catch prizes</li>
-<ul\>
+<\ul>
 <br>
 <p><b>Enjoy!</b></p>
 
