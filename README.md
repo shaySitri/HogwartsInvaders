@@ -1,1 +1,20 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=10809676&assignment_repo_type=AssignmentRepo)
+  <header>
+    <h1>Web Development Environments</h1>
+  </header>
+
+<body>
+<p>Itai Carmel 208909416<br>Shay Sitri 209405042</p>
+
+<a href="https://web-development-environments-2023.github.io/assignment2-208909416_209405042/">Go to Hagwarts Invaders adventure!</a>.
+
+<p>Deafulat username: p< <br> Password: testuser</p>
+
+<ul>
+  <li>Choose player: Harry, Ron or Hermaionie.</li>
+  <li>Chose scene.<br>
+  <li>Catch prizes</li>
+<ul\>
+
+<p><b>Enjoy!</b></p>
+
+ </body>
