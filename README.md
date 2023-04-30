@@ -14,7 +14,7 @@
   <li>Choose player: Harry, Ron or Hermaionie.</li>
   <li>Chose scene.<br>
   <li>Catch prizes</li>
-<\ul>
+</ul>
 <br>
 <p><b>Enjoy!</b></p>
 
