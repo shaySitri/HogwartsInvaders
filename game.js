@@ -4,7 +4,7 @@ var context; // used for drawing on the canvas
 // constants for game play
 var TARGET_PIECES = 20; // sections in the target
 var TIME_INTERVAL = 25; // screen refresh interval in milliseconds
-var SPACE_INTERVAL = 550 // evry 750 ms you can press on shoot
+var SPACE_INTERVAL = 250 // evry 750 ms you can press on shoot
 var SPEEDER = 5000; // axlerate enemies and enemies shot.
 var speed_interval;
 var intervalSpace;
@@ -586,7 +586,7 @@ function updatePositions()
          heroShoots[i].y + HERO_SHOOT_IMG <= enemyPos.end.y &&
          hitStates[sectionx][sectiony] == false)
       {
-         heroShoots.splice(i, 2);  // shoot blow
+         heroShoots.splice(i, 1);  // shoot blow
 
          if (heroShotSound.currentTime != 0)
          {
