@@ -36,7 +36,7 @@ You can play the game directly [here](https://web-development-environments-2023.
      - **Register** 📝: Navigate to the registration page.
      - **Login** 🔑: Navigate to the login page.
     
-        ![Uploading image.png…]()
+   ![Alt text](URL-to-your-image)
 
 
 2. **Registration Page ✍️**
