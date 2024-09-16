@@ -6,9 +6,9 @@ Welcome to **Hogwarts Invaders**, a magical Space Invaders-inspired game where y
 
 You can play the game directly [here](https://web-development-environments-2023.github.io/assignment2-208909416_209405042/) 🌟
 
-👥 Authors
-Itay Carmel (📧: carmelit@post.bgu.ac.il)
-Shay Sitri (📧: sitri@post.bgu.ac.il)
+## 👥 Authors
+- Itay Carmel (📧: carmelit@post.bgu.ac.il)
+- Shay Sitri (📧: sitri@post.bgu.ac.il)
 
 
 ## Features ✨
