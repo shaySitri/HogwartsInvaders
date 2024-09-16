@@ -36,7 +36,7 @@ You can play the game directly [here](https://web-development-environments-2023.
      - **Register** 📝: Navigate to the registration page.
      - **Login** 🔑: Navigate to the login page.
     
-   ![Alt text](URL-to-your-image)
+   ![Home Screen]([https://github.com/shaySitri/HogwartsInvaders/blob/main/hogInvReadmeImg/home.jpg])
 
 
 2. **Registration Page ✍️**
@@ -52,6 +52,7 @@ You can play the game directly [here](https://web-development-environments-2023.
      - Passwords must match and be at least 8 alphanumeric characters.
      - First and last names must not contain numbers.
      - Email must be valid.
+   ![Registration Page]([https://github.com/shaySitri/HogwartsInvaders/blob/main/hogInvReadmeImg/reg.jpg])
 
 3. **Login Page 🔓**
    - Contains fields for:
@@ -61,6 +62,7 @@ You can play the game directly [here](https://web-development-environments-2023.
    - Validates credentials against a predefined user array.
    - Allows login with default user (`username: p`, `password: testuser`).
    - Successful login leads to the game screen; invalid credentials show an error message.
+   ![Login Page]([https://github.com/shaySitri/HogwartsInvaders/blob/main/hogInvReadmeImg/login.jpg])
 
 4. **Game Screen 🛡️**
    - Features the main Hogwarts Invaders game with:
@@ -75,6 +77,7 @@ You can play the game directly [here](https://web-development-environments-2023.
        - "You can do better" if time runs out with a score below 100.
        - "Winner!" if score is 100 or more.
        - "Champion!" if all Death Eaters are defeated.
+   ![Game Screen]([https://github.com/shaySitri/HogwartsInvaders/blob/main/hogInvReadmeImg/board.jpg])
 
 5. **About Screen 📜**
    - Displayed in a modal dialog.
@@ -87,6 +90,7 @@ You can play the game directly [here](https://web-development-environments-2023.
      - Set the game duration (minimum 2 minutes).
      - Adjust other options (e.g., spaceship colors).
    - Includes a "Start Game" button that leads to the game screen.
+   ![Configuration Screen]([https://github.com/shaySitri/HogwartsInvaders/blob/main/hogInvReadmeImg/gamesettings.jpg])
 
 ## Design and Sound 🎨🔊
 
