@@ -35,6 +35,9 @@ You can play the game directly [here](https://web-development-environments-2023.
    - Displays Hogwarts' logo and name with two buttons:
      - **Register** 📝: Navigate to the registration page.
      - **Login** 🔑: Navigate to the login page.
+    
+        ![Uploading image.png…]()
+
 
 2. **Registration Page ✍️**
    - Allows users to register with the following fields:
