@@ -91,7 +91,7 @@ You can play the game directly [here](https://web-development-environments-2023.
    - Allows users to:
      - Choose a key for shooting.
      - Set the game duration (minimum 2 minutes).
-     - Adjust other options (e.g., spaceship colors).
+     - Change charcter and scene.
    - Includes a "Start Game" button that leads to the game screen.
      
    ![Configuration Screen](hogInvReadmeImg/gamesettings.jpg)
